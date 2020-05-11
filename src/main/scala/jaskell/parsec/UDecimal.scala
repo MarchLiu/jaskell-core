@@ -11,7 +11,7 @@ import scala.collection.mutable
  */
 class UDecimal extends Parsec[String, Char]{
   val uint = new jaskell.parsec.UInt()
-  val dot = new Ch('.')
+  val dot: Ch = Ch('.')
   override def apply[S <: State[Char]](s: S): String = {
     val sb: mutable.StringBuilder = new mutable.StringBuilder();
     sb ++ uint(s)
@@ -23,4 +23,8 @@ class UDecimal extends Parsec[String, Char]{
         sb.mkString.asInstanceOf
     }
   }
+}
+
+object UDecimal {
+  def apply(): UDecimal = new UDecimal()
 }

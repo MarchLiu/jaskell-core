@@ -10,7 +10,7 @@ import scala.collection.mutable
  * @since 2020/05/09 14:21
  */
 class Decimal extends Parsec[String, Char]{
-  val sign = new Ch('-')
+  val sign = Ch('-')
   val udicemal = new UDecimal()
   override def apply[S <: State[Char]](s: S): String = {
     val sb: mutable.StringBuilder = new mutable.StringBuilder()
@@ -18,4 +18,8 @@ class Decimal extends Parsec[String, Char]{
     sb ++ udicemal(s)
     sb.mkString.asInstanceOf
   }
+}
+
+object Decimal {
+  def apply(): Decimal = new Decimal()
 }

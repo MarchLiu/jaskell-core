@@ -1,5 +1,7 @@
 package jaskell.parsec
 
+import jaskell.parsec
+
 /**
  * TODO
  *
@@ -20,10 +22,15 @@ class Between[T, E](val open: Parsec[_, E], val close: Parsec[_, E], val parsec:
 }
 
 object Between {
-
-  class In[T, E](val open: Parsec[_, E], val close: Parsec[_, E]) {
-    def pack(parser: Parsec[T, E]) = new Between[T, E](this.open, this.close, parser)
+  class Btw[T, E](val open: Parsec[_, E], val close: Parsec[_, E]) {
+    def in(parsec: Parsec[T, E]) = new Between[T, E](this.open, this.close, parsec)
   }
+
+  def apply[T, E](open: Parsec[_, E], close: Parsec[_, E]) = new parsec.Between.Btw[T, E](open, close)
+
+  def apply[T, E](open: Parsec[_, E], close: Parsec[_, E], parsec: Parsec[T, E]) =
+    new Between[T, E](open, close, parsec)
+
 
 }
 

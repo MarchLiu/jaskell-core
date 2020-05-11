@@ -19,3 +19,6 @@ class NoneOf[E](val items: Set[E]) extends Parsec[E, E] {
   }
 }
 
+object NoneOf {
+  def apply[E](items: Set[E]): NoneOf[E] = new NoneOf(items)
+}

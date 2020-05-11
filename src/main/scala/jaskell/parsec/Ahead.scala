@@ -16,5 +16,8 @@ class Ahead[T, E](var parser: Parsec[T, E]) extends Parsec[T, E] {
     try parser(s)
     finally s.rollback(tran)
   }
+}
 
+object Ahead {
+  def apply[T, E](parser: Parsec[T, E]): Ahead[T, E] = new Ahead[T, E](parser)
 }

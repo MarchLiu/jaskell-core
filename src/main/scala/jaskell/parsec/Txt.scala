@@ -8,36 +8,45 @@ package jaskell.parsec
  * @since 2020/05/09 17:36
  */
 object Txt {
-  def ch(value: Char) = new Ch(value)
+  def ch(value: Char): Ch = Ch(value)
+  def ch(value: Char, caseSensitive: Boolean): Ch = Ch(value, caseSensitive)
 
-  def chIn(data: String) = new ChIn(data)
+  def nch(value: Char): NeCh = NeCh(value)
+  def nch(value: Char, caseSensitive: Boolean): NeCh = NeCh(value, caseSensitive)
 
-  def chNone(data: String) = new ChNone(data)
+  def chIn(data: String): ChIn = ChIn(data)
+  def chIn(data: String, caseSensitive: Boolean): ChIn = ChIn(data, caseSensitive)
 
-  def crlf = new Crlf
+  def chNone(data: String): ChNone = ChNone(data)
+  def chNone(data: String, caseSensitive: Boolean): ChNone = ChNone(data, caseSensitive)
 
-  def decimal = new Decimal
+  def crlf: Crlf = new Crlf
 
-  def udecimal = new UDecimal
+  def decsimal: Decimal = Decimal()
 
-  def digit = new Digit
+  def udecimal: UDecimal = new UDecimal
 
-  def integer = new Int
+  def digit: Digit = new Digit
 
-  def uinteger = new UInt
+  def integer: Int = new Int
 
-  def eol = new EndOfLine
+  def uInteger: UInt = new UInt
 
-  def newline = new Newline
+  def eol: EndOfLine = new EndOfLine
 
-  def space = new Space
+  def newline: Newline = new Newline
 
-  def whitespace = new Whitespace
+  def space: Space = new Space
 
-  def skipSpaces = new SkipSpaces
+  def whitespace: Whitespace = new Whitespace
 
-  def skipWhiteSpaces = new Whitespace
+  def noWhitespace: NoWhitespace = new NoWhitespace
 
-  def text(value: String) = new Text(value)
+  def skipSpaces: SkipSpaces = new SkipSpaces
+
+  def skipWhiteSpaces: Whitespace = new Whitespace
+
+  def text(value: String): Text = Text(value)
+  def text(value: String, caseSensitive: Boolean): Text = Text(value, caseSensitive)
 
 }

@@ -18,6 +18,11 @@ class Many[T, E](val parsec: Parsec[T, E]) extends Parsec[List[T], E] {
       while (true) {
         re += psc(s)
       }
+    } catch {
+      case e:EofException =>
+        throw e
+      case _: ParsecException =>
+        re.toList
     }
     re.toList
   }

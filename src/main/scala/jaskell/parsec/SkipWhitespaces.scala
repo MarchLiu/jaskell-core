@@ -13,3 +13,7 @@ class SkipWhitespaces extends Parsec[Unit, Char] {
     parsec(s)
   }
 }
+
+object SkipWhitespaces {
+  def apply(): SkipWhitespaces = new SkipWhitespaces()
+}

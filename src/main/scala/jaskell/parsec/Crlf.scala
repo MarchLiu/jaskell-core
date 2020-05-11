@@ -11,7 +11,7 @@ package jaskell.parsec
  * Created by Mars Liu on 2016-01-11.
  * Crlf 即 haskell parsec 的 crlf 算子,匹配 \r\n .
  */
-class Crlf(val r:Ch = new Ch('\r'), val n:Ch = new Ch('\n')) extends Parsec[String, Char] {
+class Crlf(val r:Ch = Ch('\r'), val n:Ch = Ch('\n')) extends Parsec[String, Char] {
   @throws[EofException]
   @throws[ParsecException]
   override def apply[S <: State[Char]](s: S): String = {
@@ -19,4 +19,8 @@ class Crlf(val r:Ch = new Ch('\r'), val n:Ch = new Ch('\n')) extends Parsec[Stri
     n(s)
     "\r\n"
   }
+}
+
+object Crlf {
+  def apply(): Crlf = new Crlf()
 }

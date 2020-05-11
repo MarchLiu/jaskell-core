@@ -29,3 +29,7 @@ class ManyTill[T, L, E](val parser: Parsec[T, E], val end: Parsec[L, E]) extends
     re.toList
   }
 }
+
+object ManyTill {
+  def apply[T, L,  E](parser: Parsec[T, E], end: Parsec[L, E]): ManyTill[T, L, E] = new ManyTill(parser, end)
+}

@@ -21,3 +21,6 @@ class Space extends Parsec[Char, Char] {
   }
 }
 
+object Space {
+  def apply(): Space = new Space()
+}

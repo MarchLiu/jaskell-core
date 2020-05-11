@@ -14,3 +14,7 @@ class UInt extends Parsec[String, Char]{
     cs.mkString
   }
 }
+
+object UInt {
+  def apply(): UInt = new UInt()
+}

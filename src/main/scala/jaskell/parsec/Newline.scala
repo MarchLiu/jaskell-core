@@ -17,3 +17,7 @@ class Newline extends Parsec[Char, Char]{
     }
   }
 }
+
+object Newline {
+  def apply(): Newline = new Newline()
+}

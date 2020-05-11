@@ -20,3 +20,7 @@ class Try[T, E](val parsec: Parsec[T, E]) extends Parsec[T, E] {
     }
   }
 }
+
+object Try {
+  def apply[T, E](parsec: Parsec[T, E]): Try[T, E] = new Try(parsec)
+}

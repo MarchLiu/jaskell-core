@@ -30,3 +30,7 @@ class SepBy1[T, E](val parsec: Parsec[T, E], val by: Parsec[_, E]) extends Parse
     }
   }
 }
+
+object SepBy1 {
+  def apply[T, E](parsec: Parsec[T, E], by: Parsec[_, E]): SepBy1[T, E] = new SepBy1(parsec, by)
+}

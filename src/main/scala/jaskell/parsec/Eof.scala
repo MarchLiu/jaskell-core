@@ -17,3 +17,7 @@ class Eof[E] extends Parsec [Unit, E]{
     case _: EofException =>
   }
 }
+
+object Eof {
+  def apply[E](): Eof[E] = new Eof()
+}

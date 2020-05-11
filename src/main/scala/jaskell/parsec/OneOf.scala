@@ -19,3 +19,7 @@ class OneOf[T](val items:Set[T]) extends Parsec[T, T] {
     }
   }
 }
+
+object OneOf {
+  def apply[T](items: Set[T]): OneOf[T] = new OneOf(items)
+}

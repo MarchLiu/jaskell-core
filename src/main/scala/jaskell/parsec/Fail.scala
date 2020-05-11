@@ -13,3 +13,8 @@ class Fail[E](val msg: String, val objects: Any*) extends Parsec[E, E] {
   @throws[ParsecException]
   override def apply[S <: State[E]](s: S) = throw new ParsecException(s.status(), message)
 }
+
+object Fail {
+  def apply[E](msg: String, objects: Any*): Fail[E] = new Fail(msg, objects)
+
+}

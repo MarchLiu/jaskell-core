@@ -17,3 +17,7 @@ class Eq[E](val element: E) extends Parsec[E, E] {
     }
   }
 }
+
+object Eq {
+  def apply[E](element: E): Eq[E] = new Eq(element)
+}

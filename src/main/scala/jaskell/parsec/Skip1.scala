@@ -16,3 +16,7 @@ class Skip1[E](val psc: Parsec[_, E]) extends Parsec[Unit, E] {
     skip(s)
   }
 }
+
+object Skip1 {
+  def apply[E](psc: Parsec[_, E]): Skip1[E] = new Skip1[E](psc)
+}

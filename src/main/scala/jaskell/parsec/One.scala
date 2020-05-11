@@ -11,3 +11,7 @@ class One [E] extends Parsec[E, E]{
   @throws[EofException]
   override def apply[S <: State[E]](s: S): E = s.next()
 }
+
+object One {
+  def apply[E](): One[E] = new One()
+}

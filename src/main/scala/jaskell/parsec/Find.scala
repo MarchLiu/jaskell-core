@@ -15,16 +15,22 @@ class Find[T, E](val psc: Parsec[T, E]) extends Parsec[T, E] {
       psc.either(s) match {
         case Right(value) =>
           re = Some(value)
-        case Left(err: EofException) => {
-          throw err
-        }
-        case Left(err: ParsecException) => {
+        case Left(err: ParsecException) =>
           if (error == null) {
             error = err
           }
-        }
+        case Left(err: Exception) =>
+          if (error != null) {
+            throw error
+          } else {
+            throw err
+          }
       }
     }
     re.get
   }
+}
+
+object Find {
+  def apply[T, E](psc: Parsec[T, E]): Find[T, E] = new Find(psc)
 }

@@ -19,3 +19,7 @@ class Digit extends Parsec[Char, Char] {
     }
   }
 }
+
+object Digit {
+  def apply(): Digit = new Digit()
+}
