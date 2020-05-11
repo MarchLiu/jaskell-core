@@ -28,6 +28,13 @@ trait Parsec[T, E] {
         Option.empty[T]
     }
   }
+}
 
+object Parsec {
+  def apply[T, E](parser: State[E] => T): Parsec[T, E] = {
+    new Parsec[T, E] {
+      override def apply[St <: State[E]](s: St): T = parser(s)
+    }
+  }
 }
 

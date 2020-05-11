@@ -16,45 +16,40 @@ class AheadSpec extends AnyFlatSpec with Matchers {
   import Combinator.ahead
 
   "Simple" should "Expect status stop after this" in {
-    val content:String = "this is a string data."
+    val content: String = "this is a string data."
     val state = State.apply(content)
-    val parser: Parsec[String, Char] = new Parsec[String, Char] {
-      override def apply[S <: State[Char]](s: S): String = {
-        val re = text("this")(s)
-        ahead(text(" is"))(s)
-        re
-      }
+    val parser = Parsec[String, Char] { s =>
+      val re = text("this")(s)
+      ahead(text(" is"))(s)
+      re
     }
-    parser(state) should be ("this")
-    state.status should be (4)
+    parser(state) should be("this")
+    state.status should be(4)
   }
 
   "Then" should "Check status get result and stop at is" in {
     val content: String = "this is a string data."
     val state = State.apply(content)
-    val parser: Parsec[String, Char] = new Parsec[String, Char] {
-      override def apply[S <: State[Char]](s: S): String = {
-        text("this")(s)
-        space.apply(s)
-        ahead(text("is"))(s)
-      }
+    val parser = Parsec[String, Char] { s =>
+      text("this")(s)
+      space.apply(s)
+      ahead(text("is"))(s)
     }
     val re = parser(state)
-    re should be ("is")
-    state.status should be (5)
+    re should be("is")
+    state.status should be(5)
   }
 
   "Fail" should "throw parsec exception from parser" in {
     val content: String = "this is a string data."
     val state = State apply content
-    val parser = new Parsec[String, Char] {
-      override def apply[S <: State[Char]](s: S): String = {
-        text("this")(s)
-        space apply s
-        ahead(text(" is"))(s)
-      }
+    val parser = Parsec[String, Char] { s =>
+      text("this")(s)
+      space apply s
+      ahead(text(" is"))(s)
     }
-    a [ParsecException] should be thrownBy {
+
+    a[ParsecException] should be thrownBy {
       parser(state)
     }
   }
