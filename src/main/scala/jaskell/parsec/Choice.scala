@@ -10,7 +10,7 @@ package jaskell.parsec
 class Choice[T, E](val parsecs: Seq[Parsec[T, E]]) extends Parsec[T, E] {
 
   override def apply[S <: State[E]](s: S): T = {
-    var err = null
+    var err: Throwable = null
     val status = s.status()
     for (psc <- this.parsecs) {
       try return psc(s)
@@ -32,7 +32,5 @@ class Choice[T, E](val parsecs: Seq[Parsec[T, E]]) extends Parsec[T, E] {
 
 object Choice {
   def apply[T, E](parsecs: Parsec[T, E]*): Choice[T, E] = new Choice(parsecs.toSeq)
-
-  def apply[T, E](parsecs: Seq[Parsec[T, E]]): Choice[T, E] = new Choice(parsecs.toSeq)
 
 }

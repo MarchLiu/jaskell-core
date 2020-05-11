@@ -10,15 +10,13 @@ package jaskell.parsec
 class Try[T, E](val parsec: Parsec[T, E]) extends Parsec[T, E] {
   override def apply[S <: State[E]](s: S): T = {
     val tran = s.begin()
-    try {
-      val re = parsec(s)
-      s.commit(tran)
-      re
-    } catch {
-      e: Exception => {
-        s.rollback(tran)
+    parsec either s match {
+      case Right(result) =>
+        s commit tran
+        result
+      case Left(e) =>
+        s rollback tran
         throw e
-      }
     }
   }
 }

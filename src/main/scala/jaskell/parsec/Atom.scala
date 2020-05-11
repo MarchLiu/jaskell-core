@@ -12,7 +12,7 @@ object Atom {
     new One[E]
   }
 
-  def eof[E, S <: State[E]]: Eof = {
+  def eof[E, S <: State[E]]: Eof[E] = {
     new Eof
   }
 

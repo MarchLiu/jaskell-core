@@ -14,7 +14,7 @@ package jaskell.parsec
 class Crlf(val r:Ch = new Ch('\r'), val n:Ch = new Ch('\n')) extends Parsec[String, Char] {
   @throws[EofException]
   @throws[ParsecException]
-  override def apply[S <: State[Ch]](s: S): String = {
+  override def apply[S <: State[Char]](s: S): String = {
     r(s)
     n(s)
     "\r\n"

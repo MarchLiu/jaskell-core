@@ -40,8 +40,4 @@ object Txt {
 
   def text(value: String) = new Text(value)
 
-  def joining = new JoinText
-
-  def joinChars = new JoinCharacters
-
 }

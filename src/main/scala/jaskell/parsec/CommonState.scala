@@ -11,7 +11,7 @@ trait CommonState[T] extends State[T] {
   override type Status = scala.Int
   override type Tran = scala.Int
 
-  val content: Seq[T] with Dynamic
+  val content: Seq[T]
   var current: scala.Int = 0
   var tran: scala.Int = -1
 
