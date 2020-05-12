@@ -1,5 +1,7 @@
 package jaskell.parsec
 
+import java.io.EOFException
+
 import scala.collection.mutable
 
 /**
@@ -13,7 +15,7 @@ class SepBy1[T, E](val parsec: Parsec[T, E], val by: Parsec[_, E]) extends Parse
   val b = new Try(by)
   val p = new Try[T, E](parsec)
 
-  @throws[EofException]
+  @throws[EOFException]
   @throws[ParsecException]
   override def apply[S <: State[E]](s: S): List[T] = {
     val re = new mutable.MutableList[T]
@@ -25,7 +27,7 @@ class SepBy1[T, E](val parsec: Parsec[T, E], val by: Parsec[_, E]) extends Parse
       }
       re.toList
     } catch {
-      case _@(_: EofException | _: ParsecException) =>
+      case _@(_: EOFException | _: ParsecException) =>
         re.toList
     }
   }

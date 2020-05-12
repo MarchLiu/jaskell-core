@@ -1,5 +1,7 @@
 package jaskell.parsec
 
+import java.io.EOFException
+
 /**
  * TODO
  *
@@ -11,11 +13,11 @@ class Choice[T, E](val parsecs: Seq[Parsec[T, E]]) extends Parsec[T, E] {
 
   override def apply[S <: State[E]](s: S): T = {
     var err: Throwable = null
-    val status = s.status()
+    val status = s.status
     for (psc <- this.parsecs) {
       try return psc(s)
       catch {
-        case e@(_: EofException | _: ParsecException) =>
+        case e@(_: EOFException | _: ParsecException) =>
           err = e
           if (s.status != status) throw e
       }

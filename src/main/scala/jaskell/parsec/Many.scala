@@ -1,5 +1,7 @@
 package jaskell.parsec
 
+import java.io.EOFException
+
 import scala.collection.mutable
 
 /**
@@ -19,9 +21,7 @@ class Many[T, E](val parsec: Parsec[T, E]) extends Parsec[List[T], E] {
         re += psc(s)
       }
     } catch {
-      case e:EofException =>
-        throw e
-      case _: ParsecException =>
+      case e@(_: EOFException| _: ParsecException) =>
         re.toList
     }
     re.toList

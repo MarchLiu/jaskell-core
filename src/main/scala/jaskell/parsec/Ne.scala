@@ -13,7 +13,7 @@ class Ne[E](val element: E) extends Parsec[E, E] {
     if(element != data){
       data
     } else {
-      throw new ParsecException(status = s.status(), s"expect a object not $element at ${s.status()} but $data")
+      throw new ParsecException(status = s.status, s"expect a object not $element at ${s.status} but $data")
     }
   }
 }

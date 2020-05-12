@@ -1,5 +1,7 @@
 package jaskell.parsec
 
+import java.io.EOFException
+
 /**
  * TODO
  *
@@ -9,7 +11,7 @@ package jaskell.parsec
  */
 class Skip1[E](val psc: Parsec[_, E]) extends Parsec[Unit, E] {
   val skip = new Skip(psc)
-  @throws[EofException]
+  @throws[EOFException]
   @throws[ParsecException]
   override def apply[S <: State[E]](s: S): Unit = {
     psc(s)

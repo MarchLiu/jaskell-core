@@ -1,5 +1,7 @@
 package jaskell.parsec
 
+import java.io.EOFException
+
 /**
  * TODO
  *
@@ -12,9 +14,9 @@ class Eof[E] extends Parsec [Unit, E]{
   @throws[ParsecException]
   override def apply[S <: State[E]](s: S): Unit = try {
     val re = s.next()
-    throw new ParsecException(s.status(), s"exception eof but $re")
+    throw new ParsecException(s.status, s"exception eof but $re")
   } catch {
-    case _: EofException =>
+    case _: EOFException =>
   }
 }
 

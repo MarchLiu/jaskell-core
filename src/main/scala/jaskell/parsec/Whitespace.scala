@@ -13,7 +13,7 @@ class Whitespace extends Parsec [Char, Char]{
     if(c.isWhitespace){
       c
     } else {
-      throw new ParsecException(s.status(), s"expect a whitespace but get $c")
+      throw new ParsecException(s.status, s"expect a whitespace but get $c")
     }
   }
 }

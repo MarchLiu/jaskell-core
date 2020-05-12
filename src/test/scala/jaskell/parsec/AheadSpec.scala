@@ -18,7 +18,7 @@ class AheadSpec extends AnyFlatSpec with Matchers {
   "Simple" should "Expect status stop after this" in {
     val content: String = "this is a string data."
     val state = State.apply(content)
-    val parser = Parsec[String, Char] { s =>
+    val parser =  Parsec[String, Char] { s =>
       val re = text("this")(s)
       ahead(text(" is"))(s)
       re

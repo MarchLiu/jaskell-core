@@ -1,5 +1,7 @@
 package jaskell.parsec
 
+import java.io.EOFException
+
 import scala.collection.mutable
 
 /**
@@ -13,7 +15,7 @@ class ManyTill[T, L, E](val parser: Parsec[T, E], val end: Parsec[L, E]) extends
   val psc = new Try[T, E](parser)
   val till = new Try[L, E](end)
 
-  @throws[EofException]
+  @throws[EOFException]
   @throws[ParsecException]
   override def apply[S <: State[E]](s: S): List[T] = {
     val re = new mutable.MutableList[T]
@@ -21,7 +23,7 @@ class ManyTill[T, L, E](val parser: Parsec[T, E], val end: Parsec[L, E]) extends
       till(s)
       return re.toList
     } catch {
-      case error: EofException =>
+      case error: EOFException =>
         throw error
       case _: ParsecException =>
         re += parser(s)

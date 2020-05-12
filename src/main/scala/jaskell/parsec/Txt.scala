@@ -49,4 +49,7 @@ object Txt {
   def text(value: String): Text = Text(value)
   def text(value: String, caseSensitive: Boolean): Text = Text(value, caseSensitive)
 
+  implicit def stringToText(content: String) : Parsec[String, Char] = Text(content)
+  implicit def charToCh(ch: Char) : Parsec[Char, Char] = Ch(ch)
+
 }

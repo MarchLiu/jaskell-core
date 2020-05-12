@@ -1,5 +1,7 @@
 package jaskell.parsec
 
+import java.io.EOFException
+
 /**
  * TODO
  *
@@ -10,7 +12,7 @@ package jaskell.parsec
 class EndOfLine extends Parsec[String, Char] {
   final private val parsec = Choice[String, Char](Text("\n"), Text("\r\n"))
 
-  @throws[EofException]
+  @throws[EOFException]
   @throws[ParsecException]
   override def apply[S <: State[Char]](s: S): String = parsec(s)
 }

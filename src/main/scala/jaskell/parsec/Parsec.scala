@@ -1,5 +1,7 @@
 package jaskell.parsec
 
+import java.io.EOFException
+
 /**
  * TODO
  *
@@ -8,7 +10,7 @@ package jaskell.parsec
  * @since 2020/05/08 22:28
  */
 trait Parsec[T, E] {
-  @throws[EofException]
+  @throws[EOFException]
   @throws[ParsecException]
   def apply[S <: State[E]](s: S): T
 

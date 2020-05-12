@@ -1,5 +1,7 @@
 package jaskell.parsec
 
+import java.io.EOFException
+
 /**
  * TODO
  *
@@ -15,10 +17,10 @@ trait CommonState[T] extends State[T] {
   var current: scala.Int = 0
   var tran: scala.Int = -1
 
-  @throws[EofException]
+  @throws[EOFException]
   def next(): T = {
     if (content.size <= current) {
-      throw new EofException();
+      throw new EOFException();
     } else {
       val re = content(current)
       current += 1
@@ -26,7 +28,7 @@ trait CommonState[T] extends State[T] {
     }
   }
 
-  def status(): scala.Int = {
+  def status: scala.Int = {
     current
   }
 

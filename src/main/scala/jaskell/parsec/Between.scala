@@ -1,5 +1,7 @@
 package jaskell.parsec
 
+import java.io.EOFException
+
 import jaskell.parsec
 
 /**
@@ -11,7 +13,7 @@ import jaskell.parsec
  */
 class Between[T, E](val open: Parsec[_, E], val close: Parsec[_, E], val parsec: Parsec[T, E])
   extends Parsec[T, E] {
-  @throws[EofException]
+  @throws[EOFException]
   @throws[ParsecException]
   override def apply[S <: State[E]](s: S): T = {
     open(s)

@@ -1,5 +1,7 @@
 package jaskell.parsec
 
+import java.io.EOFException
+
 /**
  * TODO
  *
@@ -12,7 +14,7 @@ package jaskell.parsec
  * Crlf 即 haskell parsec 的 crlf 算子,匹配 \r\n .
  */
 class Crlf(val r:Ch = Ch('\r'), val n:Ch = Ch('\n')) extends Parsec[String, Char] {
-  @throws[EofException]
+  @throws[EOFException]
   @throws[ParsecException]
   override def apply[S <: State[Char]](s: S): String = {
     r(s)

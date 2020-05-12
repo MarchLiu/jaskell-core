@@ -13,7 +13,7 @@ class Newline extends Parsec[Char, Char]{
     if(c == '\n') {
       c
     } else {
-      throw new ParsecException(s.status(), s"Expect a newline char but get $c")
+      throw new ParsecException(s.status, s"Expect a newline char but get $c")
     }
   }
 }

@@ -21,7 +21,7 @@ class ChNone(val content: String, val caseSensitive: Boolean) extends Parsec[Cha
         return c
       }
     }
-    throw new ParsecException(s.status(),
+    throw new ParsecException(s.status,
       s"expect any char none of $content (case sensitive $caseSensitive) but get $c")
   }
 }

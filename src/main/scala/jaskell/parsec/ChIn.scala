@@ -21,7 +21,7 @@ class ChIn(val content: String, val caseSensitive: Boolean) extends Parsec[Char,
         return c
       }
     }
-    throw new ParsecException(s.status(), s"expect any char in $content (case sensitive $caseSensitive) but get $c")
+    throw new ParsecException(s.status, s"expect any char in $content (case sensitive $caseSensitive) but get $c")
   }
 }
 

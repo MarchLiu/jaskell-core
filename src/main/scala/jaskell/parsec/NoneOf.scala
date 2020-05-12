@@ -1,5 +1,7 @@
 package jaskell.parsec
 
+import java.io.EOFException
+
 /**
  * TODO
  *
@@ -8,12 +10,12 @@ package jaskell.parsec
  * @since 2020/05/09 14:00
  */
 class NoneOf[E](val items: Set[E]) extends Parsec[E, E] {
-  @throws[EofException]
+  @throws[EOFException]
   @throws[ParsecException]
   override def apply[S <: State[E]](s: S): E = {
     val re = s.next()
     if (items.contains(re)) {
-      throw new ParsecException(s.status(), s"expect a item none of $items but got $re")
+      throw new ParsecException(s.status, s"expect a item none of $items but got $re")
     }
     re
   }

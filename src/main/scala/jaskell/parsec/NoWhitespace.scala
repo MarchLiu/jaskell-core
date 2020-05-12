@@ -11,7 +11,7 @@ class NoWhitespace extends Parsec [Char, Char]{
   override def apply[S <: State[Char]](s: S): Char = {
     val c = s.next()
     if(c.isWhitespace){
-      throw new ParsecException(s.status(), s"expect a char not whitespace but get $c")
+      throw new ParsecException(s.status, s"expect a char not whitespace but get $c")
     } else {
       c
     }

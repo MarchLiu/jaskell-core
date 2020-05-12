@@ -1,5 +1,7 @@
 package jaskell.parsec
 
+import java.io.EOFException
+
 /**
  * TODO
  *
@@ -9,7 +11,7 @@ package jaskell.parsec
  */
 class Ahead[T, E](var parser: Parsec[T, E]) extends Parsec[T, E] {
 
-  @throws[EofException]
+  @throws[EOFException]
   @throws[ParsecException]
   override def apply[S <: State[E]](s: S): T = {
     val tran = s.begin()

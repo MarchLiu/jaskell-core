@@ -20,7 +20,7 @@ class Ch(val char: Char, val caseSensitive: Boolean) extends Parsec[Char, Char] 
         return c
       }
     }
-    throw new ParsecException(s.status(), s"expect char $char (case sensitive $caseSensitive) but get $c")
+    throw new ParsecException(s.status, s"expect char $char (case sensitive $caseSensitive) but get $c")
   }
 }
 
