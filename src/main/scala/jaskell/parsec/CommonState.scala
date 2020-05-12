@@ -17,7 +17,7 @@ trait CommonState[T] extends State[T] {
 
   @throws[EofException]
   def next(): T = {
-    if (content.size < current) {
+    if (content.size <= current) {
       throw new EofException();
     } else {
       val re = content(current)
