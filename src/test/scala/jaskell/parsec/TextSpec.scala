@@ -11,7 +11,7 @@ import org.scalatest.matchers.should.Matchers
  * @since 2020/05/12 12:35
  */
 class TextSpec extends AnyFlatSpec with Matchers {
-  "Simple" should "Reun some simple tests" in {
+  "Simple" should "Run some simple tests" in {
     import Txt._
     val state = State("Hello World");
     for {
