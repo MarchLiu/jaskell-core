@@ -7,7 +7,7 @@ package jaskell.parsec
  * @version 1.0.0
  * @since 2020/05/09 16:47
  */
-class NeCh(val char: Char, val caseSensitive: Boolean) extends Parsec[Char, Char] {
+class NCh(val char: Char, val caseSensitive: Boolean) extends Parsec[Char, Char] {
   val chr: Char = if (caseSensitive) char else char.toLower
 
   override def apply[S <: State[Char]](s: S): Char = {
@@ -25,9 +25,9 @@ class NeCh(val char: Char, val caseSensitive: Boolean) extends Parsec[Char, Char
   }
 }
 
-object NeCh {
-  def apply(char: Char, caseSensitive: Boolean): NeCh = new NeCh(char, caseSensitive)
+object NCh {
+  def apply(char: Char, caseSensitive: Boolean): NCh = new NCh(char, caseSensitive)
 
-  def apply(char: Char): NeCh = new NeCh(char, true)
+  def apply(char: Char): NCh = new NCh(char, true)
 
 }

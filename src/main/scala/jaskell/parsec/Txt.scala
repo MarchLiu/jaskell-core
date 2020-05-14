@@ -11,8 +11,8 @@ object Txt {
   def ch(value: Char): Ch = Ch(value)
   def ch(value: Char, caseSensitive: Boolean): Ch = Ch(value, caseSensitive)
 
-  def nch(value: Char): NeCh = NeCh(value)
-  def nch(value: Char, caseSensitive: Boolean): NeCh = NeCh(value, caseSensitive)
+  def nch(value: Char): NCh = NCh(value)
+  def nch(value: Char, caseSensitive: Boolean): NCh = NCh(value, caseSensitive)
 
   def chIn(data: String): ChIn = ChIn(data)
   def chIn(data: String, caseSensitive: Boolean): ChIn = ChIn(data, caseSensitive)
