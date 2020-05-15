@@ -9,7 +9,7 @@ import scala.collection.{SortedMap, mutable}
  * @version 1.0.0
  * @since 2020/05/15 17:34
  */
-class TextState(val txt: String, val newLine:Char = '\n') extends CommonState[Char] {
+class TxtState(val txt: String, val newLine:Char = '\n') extends CommonState[Char] {
   override val content: Seq[Char] = txt.toCharArray.toSeq
   val lines: SortedMap[scala.Int, scala.Int] = {
     val result = new mutable.TreeMap[scala.Int, scala.Int]();
@@ -36,4 +36,8 @@ class TextState(val txt: String, val newLine:Char = '\n') extends CommonState[Ch
     }
     -1
   }
+}
+
+object TxtState {
+  def apply(txt: String, newLine: Char='\n'): TxtState = new TxtState(txt, newLine)
 }
