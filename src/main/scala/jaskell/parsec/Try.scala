@@ -15,7 +15,7 @@ class Try[T, E](val parsec: Parsec[T, E]) extends Parsec[T, E] {
       s commit tran
       re
     } catch {
-      case error: _ =>
+      case error: Exception =>
         s rollback tran
         throw error
     }
