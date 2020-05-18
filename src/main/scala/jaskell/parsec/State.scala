@@ -24,9 +24,7 @@ trait State[+E] {
 }
 
 object State {
-  def apply(c: String): CommonState[Char] = new CommonState[Char] {
-    override val content: Seq[Char] = c.seq
-  }
+  def apply(str: String): TxtState = new TxtState(str)
 
   def apply[T](c: Seq[T]): CommonState[T] = new CommonState[T] {
     override val content: Seq[T] = c
