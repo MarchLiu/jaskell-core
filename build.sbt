@@ -7,8 +7,6 @@ scalaVersion := "2.12.8"
 libraryDependencies += "org.scalactic" %% "scalactic" % "3.1.1"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.1.1" % "test"
 
-useGpg := true
-
 ThisBuild / organization := "io.github.marchliu"
 ThisBuild / organizationName := "Mars Liu"
 ThisBuild / organizationHomepage := Some(url("https://marchliu.github.io/"))

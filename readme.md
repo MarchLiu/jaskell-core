@@ -9,4 +9,10 @@ Jaskell Core 重新提炼 Jaskell 中的 Parsec 和 SQL 组件库，利用 Scala
 
  - 重新实现了 parsec 组件，对有序列表（Seq）和文本提供更有针对性的支持
  
-## 0.2-SNAPSHOT
+## 0.2
+
+ - 提供了支持位置查询的 txt state
+ - State apply string 生成 txt state。
+ 
+## 0.3
+

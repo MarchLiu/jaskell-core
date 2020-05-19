@@ -1,0 +1,22 @@
+package jaskell.sql
+
+/**
+ * TODO
+ *
+ * @author mars
+ * @version 1.0.0
+ * @since 2020/05/18 16:03
+ */
+class Name(val name: String, var quoted: Boolean = false) extends Directive with Expression {
+  override def script: String = {
+    if (name.contains('"') || quoted) {
+      "\"%s\"".format(script.replace("\"", "\\\""))
+    } else {
+      name
+    }
+  }
+
+  override def parameters: Seq[Parameter[_]] = {
+    Seq.empty
+  }
+}
