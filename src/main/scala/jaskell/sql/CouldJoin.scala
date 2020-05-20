@@ -9,7 +9,20 @@ package jaskell.sql
  */
 trait CouldJoin extends Directive {
   def join(jo: CouldBeJoin): Join = new Join {
+    override val opt = ""
+    override val prefix: Directive = CouldJoin.this
     override val j: CouldBeJoin = jo
-    override val prefix: Directive = this
+  }
+
+  def leftJoin(jo: CouldBeJoin): Join = new Join {
+    override val opt: String = "LEFT"
+    override val prefix: Directive = CouldJoin.this
+    override val j: CouldBeJoin = jo
+  }
+
+  def rightJoin(jo: CouldBeJoin): Join = new Join {
+    override val opt: String = "RIGHT"
+    override val prefix: Directive = CouldJoin.this
+    override val j: CouldBeJoin = jo
   }
 }

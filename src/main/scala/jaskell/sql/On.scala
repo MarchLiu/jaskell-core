@@ -7,8 +7,8 @@ package jaskell.sql
  * @version 1.0.0
  * @since 2020/05/18 18:56
  */
-trait On extends Directive with CouldJoin with CouldGroup with CouldOrder with CouldLimit with CouldOffset
-    with CouldCondition {
+trait On extends Directive with CouldJoin with CouldWhere with CouldGroup with CouldOrder
+  with CouldLimit with CouldOffset with CouldCondition {
   val prefix: Directive
   val condition: Condition
 

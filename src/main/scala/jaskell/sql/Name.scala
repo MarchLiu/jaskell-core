@@ -7,7 +7,8 @@ package jaskell.sql
  * @version 1.0.0
  * @since 2020/05/18 16:03
  */
-class Name(val name: String, var quoted: Boolean = false) extends Directive with Expression {
+class Name(val name: String, var quoted: Boolean = false) extends Directive with Expression with CouldAs
+  with CouldBeCondition with CouldBeColumn {
   override def script: String = {
     if (name.contains('"') || quoted) {
       "\"%s\"".format(script.replace("\"", "\\\""))
