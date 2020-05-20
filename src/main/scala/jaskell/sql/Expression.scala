@@ -7,6 +7,6 @@ package jaskell.sql
  * @version 1.0.0
  * @since 2020/05/18 15:50
  */
-trait Expression extends Directive {
+trait Expression extends Directive with CouldBeQuote with CouldIn with CouldBeColumn {
 
 }

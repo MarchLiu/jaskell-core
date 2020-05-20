@@ -9,6 +9,6 @@ import javax.swing.text.Segment
  * @version 1.0.0
  * @since 2020/05/18 20:14
  */
-trait Query extends Directive {
+trait Query extends Directive with CouldBeQuote {
 
 }

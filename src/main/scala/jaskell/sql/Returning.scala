@@ -7,14 +7,15 @@ import scala.collection.mutable
  *
  * @author mars
  * @version 1.0.0
- * @since 2020/05/18 15:49
+ * @since 2020/05/20 18:08
  */
-class Select extends Statement with CouldFrom {
+trait Returning extends Directive with CouldBeQuote {
+  val prefix: Directive
 
   val columns: mutable.MutableList[CouldBeColumn] = new mutable.MutableList
 
   override def script: String = {
-    val sb: mutable.StringBuilder = new mutable.StringBuilder("SELECT ")
+    val sb: mutable.StringBuilder = new mutable.StringBuilder("RETURNING ")
     sb ++= columns.map(_.script).mkString(", ")
     sb.mkString
   }
@@ -35,9 +36,9 @@ class Select extends Statement with CouldFrom {
   def +=(name: Any): this.type = {
     this.columns += {
       name match {
-      case n:String => new Name(n)
-      case c:CouldBeColumn => c
-    }}
+        case n:String => new Name(n)
+        case c:CouldBeColumn => c
+      }}
 
     this
   }
@@ -48,14 +49,4 @@ class Select extends Statement with CouldFrom {
     }
     this
   }
-
-}
-
-
-object Select {
-
-  trait From extends jaskell.sql.From with CouldGroup with CouldOrder
-    with CouldLimit with CouldOffset with CouldBeJoin {
-  }
-
 }
