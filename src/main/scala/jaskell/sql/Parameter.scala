@@ -4,11 +4,11 @@ import java.util
 import java.util.{ArrayList, List, Optional}
 
 
-class Parameter[T] extends Directive with Expression {
+class Parameter[T] extends Directive with Expression with CouldBeCondition {
   var value: Option[T] = None
   var key: Any = _
   var _order: Int = _
-  var placeHolder: String = _
+  val placeHolder: String = "?"
 
   def set(v: T): Unit = {
     value = Option[T](v)
@@ -32,14 +32,12 @@ class Parameter[T] extends Directive with Expression {
 
 object Parameter {
 
-  def apply[T](ph: String, k: Any): Parameter[T] = new Parameter[T]() {
-    placeHolder = ph
+  def apply[T](k: Any): Parameter[T] = new Parameter[T]() {
     key = k
     value = None
   }
 
-  def apply[T](ph: String, k: Any, v:T): Parameter[T] = new Parameter[T]() {
-    placeHolder = ph
+  def apply[T](k: Any, v: T): Parameter[T] = new Parameter[T]() {
     key = k
     value = Some(v)
   }

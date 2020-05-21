@@ -7,7 +7,7 @@ package jaskell.sql
  * @version 1.0.0
  * @since 2020/05/18 15:50
  */
-trait Expression extends Directive with CouldBeQuote with CouldIn with CouldBeColumn {
+trait Expression extends Directive with CouldBeQuote with CouldIn with CouldBeColumn with CouldCondition with Condition {
   def +(other: Expression): Expression = new Expression {
     override def script: String = s"${Expression.this.script} + ${other.script}"
 

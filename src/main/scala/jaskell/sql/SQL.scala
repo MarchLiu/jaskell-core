@@ -45,15 +45,7 @@ object SQL {
 
   def p[T](name: String): Parameter[T] = {
     val parameter = new Parameter[T]
-    parameter.placeHolder = name
     parameter.key = name
-    parameter
-  }
-
-  def p[T](name: String, key:Any): Parameter[T] = {
-    val parameter = new Parameter[T]
-    parameter.placeHolder = name
-    parameter.key = key
     parameter
   }
 

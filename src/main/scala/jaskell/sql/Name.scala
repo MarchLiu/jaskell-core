@@ -26,4 +26,10 @@ class Name(val name: String, var quoted: Boolean = false) extends Directive with
 
     override def parameters: Seq[Parameter[_]] = Name.this.parameters
   }
+
+  def isNotNull: Expression with Condition = new Expression with Condition {
+    override def script: String = s"${Name.this.script} IS NOT sNULL"
+
+    override def parameters: Seq[Parameter[_]] = Name.this.parameters
+  }
 }
