@@ -18,7 +18,7 @@ class ManyTill[T, L, E](val parser: Parsec[T, E], val end: Parsec[L, E]) extends
   @throws[EOFException]
   @throws[ParsecException]
   override def apply[S <: State[E]](s: S): List[T] = {
-    val re = new mutable.MutableList[T]
+    val re = new mutable.ListBuffer[T]
     while (true) try {
       till(s)
       return re.toList

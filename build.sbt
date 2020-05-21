@@ -1,11 +1,12 @@
 name := "jaskell-core"
 
-version := "0.3-SNAPSHOT"
+version := "0.3"
 
-scalaVersion := "2.12.8"
+scalaVersion := "2.13.2"
 
 libraryDependencies += "org.scalactic" %% "scalactic" % "3.1.1"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.1.1" % "test"
+libraryDependencies += "org.xerial" % "sqlite-jdbc" % "3.31.1" % "test"
 
 ThisBuild / organization := "io.github.marchliu"
 ThisBuild / organizationName := "Mars Liu"

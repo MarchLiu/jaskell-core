@@ -18,7 +18,7 @@ class SepBy1[T, E](val parsec: Parsec[T, E], val by: Parsec[_, E]) extends Parse
   @throws[EOFException]
   @throws[ParsecException]
   override def apply[S <: State[E]](s: S): List[T] = {
-    val re = new mutable.MutableList[T]
+    val re = new mutable.ListBuffer[T]
     re += parsec(s)
     try {
       while (true) {

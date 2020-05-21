@@ -9,11 +9,11 @@ import scala.collection.mutable
  * @version 1.0.0
  * @since 2020/05/18 16:52
  */
-trait By extends Directive {
+trait By extends Directive with CouldUnion {
   val _prefix: Directive
   val _operator: String
 
-  val columns: mutable.MutableList[_ <: Directive]
+  val columns: mutable.ListBuffer[_ <: Directive]
   override def script: String =  {
     _prefix.script + " " + _operator + " BY " + columns.map(_.script).mkString(", ")
   }

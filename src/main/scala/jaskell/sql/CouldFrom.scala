@@ -12,11 +12,11 @@ trait CouldFrom extends Directive {
   def from(f: CouldBeFrom): From = new From {
     override def script: String = CouldFrom.this.script + " FROM " + f.script
 
-    override def parameters: Seq[Parameter[_]] = this.parameters ++ f.parameters
+    override def parameters: Seq[Parameter[_]] = CouldFrom.this.parameters ++ f.parameters
   }
 
-  def from(tableName: String): From = new From {
-    override def script: String = CouldFrom.this.script + " FROM " + tableName
+  def from(f: String): From = new From {
+    override def script: String = CouldFrom.this.script + " FROM " + f
 
     override def parameters: Seq[Parameter[_]] = CouldFrom.this.parameters
   }

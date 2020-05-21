@@ -22,14 +22,14 @@ class Insert extends Directive {
 object Insert {
 
   class Into(val name: Name) extends Directive {
-    val columns: mutable.MutableList[Name] = new mutable.MutableList[Name]
+    val columns: mutable.ListBuffer[Name] = new mutable.ListBuffer[Name]
 
     def apply(names: Name*): this.type = {
       columns ++= names
       this
     }
 
-    def values(literals: Literal*): Values = new Values(this, literals.toSeq)
+    def values(expression: Expression *): Values = new Values(this, expression)
 
     def select: Select = new Select(this)
 
@@ -47,7 +47,7 @@ object Insert {
     override def parameters: Seq[Parameter[_]] = prefix.parameters ++ super.parameters
   }
 
-  class Values(val prefix: Directive, val values: Seq[Literal]) extends Directive with CouldReturning {
+  class Values(val prefix: Directive, val values: Seq[Expression]) extends Directive with CouldReturning with Statement {
     override def script: String = {
       val vs = values.map(_.script).mkString(", ")
       s"${prefix.script} VALUES($vs)"

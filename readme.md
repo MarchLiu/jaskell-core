@@ -16,3 +16,6 @@ Jaskell Core 重新提炼 Jaskell 中的 Parsec 和 SQL 组件库，利用 Scala
  
 ## 0.3
 
+ - upgrade to scala 2.13
+ - finish sql specs
+

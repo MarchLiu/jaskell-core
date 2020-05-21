@@ -21,8 +21,8 @@ object Quote {
     override val segment: Condition = condition
   }
 
-  def apply(query: Query): Quote = new Quote with Query {
-    override val segment: Query = query
+  def apply(qry: Query): Quote = new Quote with Query {
+    override val segment: Query = qry
   }
 
   def apply(expression: Expression): Quote = new Quote with Expression {

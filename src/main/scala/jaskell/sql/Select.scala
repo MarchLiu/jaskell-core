@@ -9,9 +9,9 @@ import scala.collection.mutable
  * @version 1.0.0
  * @since 2020/05/18 15:49
  */
-class Select extends Statement with CouldFrom {
+class Select extends Statement with CouldFrom with Query with CouldUnion {
 
-  val columns: mutable.MutableList[CouldBeColumn] = new mutable.MutableList
+  val columns: mutable.ListBuffer[CouldBeColumn] = new mutable.ListBuffer[CouldBeColumn]
 
   override def script: String = {
     val sb: mutable.StringBuilder = new mutable.StringBuilder("SELECT ")
@@ -55,7 +55,7 @@ class Select extends Statement with CouldFrom {
 object Select {
 
   trait From extends jaskell.sql.From with CouldGroup with CouldOrder
-    with CouldLimit with CouldOffset with CouldBeJoin {
+    with CouldLimit with CouldOffset with CouldBeJoin with CouldUnion {
   }
 
 }

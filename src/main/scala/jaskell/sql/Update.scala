@@ -12,7 +12,7 @@ import scala.collection.mutable
  * @since 2020/05/20 18:00
  */
 class Update(val name: Name) extends Directive with CouldWhere with CouldReturning with CouldBeQuote {
-  val pairs: mutable.MutableList[(Name, Expression)] = new mutable.MutableList[(Name, Expression)]
+  val pairs: mutable.ListBuffer[(Name, Expression)] = new mutable.ListBuffer[(Name, Expression)]
 
   def set(name: Name, exp: Expression): this.type = {
     pairs += Tuple2(name, exp)

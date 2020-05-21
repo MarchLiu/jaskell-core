@@ -9,10 +9,10 @@ import scala.collection.mutable
  * @version 1.0.0
  * @since 2020/05/20 18:08
  */
-trait Returning extends Directive with CouldBeQuote {
+trait Returning extends Directive with CouldBeQuote with Query with CouldUnion {
   val prefix: Directive
 
-  val columns: mutable.MutableList[CouldBeColumn] = new mutable.MutableList
+  val columns: mutable.ListBuffer[CouldBeColumn] = new mutable.ListBuffer[CouldBeColumn]
 
   override def script: String = {
     val sb: mutable.StringBuilder = new mutable.StringBuilder("RETURNING ")

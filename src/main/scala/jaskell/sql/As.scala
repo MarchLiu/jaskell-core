@@ -7,7 +7,7 @@ package jaskell.sql
  * @version 1.0.0
  * @since 2020/05/18 20:18
  */
-trait As extends Directive with Expression with CouldBeColumn with CouldBeJoin {
+trait As extends Directive with Expression with CouldBeColumn with CouldBeFrom with CouldBeJoin {
   val prefix: Directive
   val name: Name
 

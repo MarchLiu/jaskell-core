@@ -4,7 +4,7 @@ import java.util
 import java.util.{ArrayList, List, Optional}
 
 
-class Parameter[T] protected() extends Directive {
+class Parameter[T] extends Directive with Expression {
   var value: Option[T] = None
   var key: Any = _
   var _order: Int = _
@@ -31,6 +31,7 @@ class Parameter[T] protected() extends Directive {
 }
 
 object Parameter {
+
   def apply[T](ph: String, k: Any): Parameter[T] = new Parameter[T]() {
     placeHolder = ph
     key = k

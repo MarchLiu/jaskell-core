@@ -15,7 +15,7 @@ trait Order {
     new By with CouldOrder {
       override val _prefix: Directive = prefix
       override val _operator: String = "ORDER"
-      override val columns:  mutable.MutableList[_ <: Directive] = new mutable.MutableList[Directive]
+      override val columns:  mutable.ListBuffer[_ <: Directive] = new mutable.ListBuffer[Directive]
     }
   }
 }

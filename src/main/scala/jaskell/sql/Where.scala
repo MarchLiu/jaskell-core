@@ -7,7 +7,7 @@ package jaskell.sql
  * @version 1.0.0
  * @since 2020/05/18 17:27
  */
-trait Where extends Directive with CouldBeQuote {
+trait Where extends Directive with CouldBeQuote with Query with CouldUnion {
   val prefix: Directive
   val condition: Directive
 
