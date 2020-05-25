@@ -19,16 +19,16 @@ class Update(val name: Name) extends Directive with CouldWhere with CouldReturni
     this
   }
 
-  override def where(c: Condition): Where = new Where with CouldReturning {
+  override def where(c: Condition): Where with CouldReturning = new Where with CouldReturning {
     override val prefix: Directive = Update.this
     override val condition: Directive = c
   }
 
   override def script: String =
-    s"UPDATE ${name.script}" + pairs.map({ pair =>
+    s"UPDATE ${name.script} SET " + (pairs.map({ pair =>
       val (n, exp) = pair
       s"${n.script} = ${exp.script}"
-    }) mkString ", "
+    }) mkString ", ")
 
   override def parameters: Seq[Parameter[_]] = name.parameters ++ pairs.flatMap({ pair =>
     val (n, exp) = pair

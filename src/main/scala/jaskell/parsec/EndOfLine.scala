@@ -3,7 +3,7 @@ package jaskell.parsec
 import java.io.EOFException
 
 /**
- * TODO
+ * check next content if a \n char or \r\n
  *
  * @author mars
  * @version 1.0.0

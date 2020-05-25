@@ -3,7 +3,7 @@ package jaskell.parsec
 import java.io.EOFException
 
 /**
- * TODO
+ * Choice just the operator <|> in Haskell parsec
  *
  * @author mars
  * @version 1.0.0
@@ -33,6 +33,6 @@ class Choice[T, E](val parsecs: Seq[Parsec[T, E]]) extends Parsec[T, E] {
 }
 
 object Choice {
-  def apply[T, E](parsecs: Parsec[T, E]*): Choice[T, E] = new Choice(parsecs.toSeq)
+  def apply[T, E](parsecs: Parsec[T, E]*): Choice[T, E] = new Choice(parsecs)
 
 }

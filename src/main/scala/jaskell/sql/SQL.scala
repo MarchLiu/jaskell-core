@@ -73,6 +73,14 @@ object SQL {
     Func(name, args :_*)
   }
 
+  def `case`: Case = {
+    new Case()
+  }
+
+  def `case`(base: Expression): Case = {
+    new Case(base)
+  }
+
   implicit def strToName(str:String):Expression = stringRegex.findFirstIn(str) match {
     case Some(txt) => new Text(string = txt)
     case None => new Name(str)

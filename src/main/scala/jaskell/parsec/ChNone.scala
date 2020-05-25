@@ -1,7 +1,7 @@
 package jaskell.parsec
 
 /**
- * TODO
+ * Char None get next char, return it if none of content chars match.
  *
  * @author mars
  * @version 1.0.0
@@ -30,5 +30,4 @@ object ChNone {
   def apply(content: String, caseSensitive: Boolean): ChNone = new ChNone(content, caseSensitive)
 
   def apply(content: String): ChNone = new ChNone(content, true)
-
 }

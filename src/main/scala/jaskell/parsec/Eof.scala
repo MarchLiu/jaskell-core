@@ -3,7 +3,7 @@ package jaskell.parsec
 import java.io.EOFException
 
 /**
- * TODO
+ * Eof check state if get to end, It return nothing. Eof just success or failed.
  *
  * @author mars
  * @version 1.0.0

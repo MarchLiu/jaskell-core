@@ -1,7 +1,7 @@
 package jaskell.parsec
 
 /**
- * TODO
+ * If get a char match any of content, return it.
  *
  * @author mars
  * @version 1.0.0

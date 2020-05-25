@@ -3,9 +3,10 @@ package jaskell.parsec
 import scala.collection.{SortedMap, mutable}
 
 /**
- * TODO
+ * Txt State extends Common State trait. It special for text content analyst.
+ * Txt state could mark a status point in which line.
  *
- * @author mars
+ * @author Mars Liu
  * @version 1.0.0
  * @since 2020/05/15 17:34
  */

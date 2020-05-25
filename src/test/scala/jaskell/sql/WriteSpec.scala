@@ -45,10 +45,9 @@ class WriteSpec extends AnyFlatSpec with Matchers {
   }
 
   "Update" should "Test update" in {
-    var id = 0
     val findIdQuery = select(max(n("id")).as("id")).from(table)
     val i: Option[Int] = findIdQuery.scalar[Int](conn)
-    id = i.get
+    val id = i.get
     val statement =
       update(table).set(c("content"), p("data")).where(n("id") == p[Int]("id"))
     statement.setParameter("id", id)

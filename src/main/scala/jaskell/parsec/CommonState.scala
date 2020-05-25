@@ -3,9 +3,9 @@ package jaskell.parsec
 import java.io.EOFException
 
 /**
- * TODO
+ * Common State has int status and transaction market. It can apply to Seq[T] or any serial collection.
  *
- * @author mars
+ * @author Mars Liu
  * @version 1.0.0
  * @since 2020/05/08 14:47
  */
@@ -50,7 +50,7 @@ trait CommonState[T] extends State[T] {
   def commit(tran: scala.Int): Unit = {
     if (this.tran == tran) this.tran = -1
   }
-
 }
+
 
 

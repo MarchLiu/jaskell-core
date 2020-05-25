@@ -5,7 +5,7 @@ import java.io.EOFException
 import scala.collection.mutable
 
 /**
- * TODO
+ * SepBy1 p sep parses one or more occurrences of p, separated by sep. Returns a list of values returned by p.
  *
  * @author mars
  * @version 1.0.0

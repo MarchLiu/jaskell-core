@@ -3,7 +3,7 @@ package jaskell.parsec
 import java.io.EOFException
 
 /**
- * TODO
+ * trait of Parsec parsers.
  *
  * @author mars
  * @version 1.0.0
@@ -28,6 +28,19 @@ trait Parsec[T, E] {
     } catch {
       case _: Exception =>
         Option.empty[T]
+    }
+  }
+
+  def `<|>`(parsec: Parsec[T, E]): Parsec[T, E] = new Choice(Seq(this, parsec))
+
+  def `<?>`(message: String): Parsec[T, E] = new Parsec[T, E] {
+    override def apply[S <: State[E]](s: S): T = try {
+      this (s)
+    } catch {
+      case _: ParsecException =>
+        throw new ParsecException(s.status, message)
+      case _: EOFException =>
+        throw new ParsecException(s.status, message)
     }
   }
 }

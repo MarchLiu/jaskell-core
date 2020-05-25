@@ -1,7 +1,7 @@
 package jaskell.parsec
 
 /**
- * TODO
+ * If get one char equals the Ch prepared, return it.
  *
  * @author mars
  * @version 1.0.0

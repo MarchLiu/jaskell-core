@@ -3,7 +3,7 @@ package jaskell.parsec
 import scala.collection.mutable
 
 /**
- * TODO
+ * UDecimal parser parse a decimal number without signed
  *
  * @author mars
  * @version 1.0.0

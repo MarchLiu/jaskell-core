@@ -3,7 +3,7 @@ package jaskell.parsec
 import java.io.EOFException
 
 /**
- * TODO
+ * Digit parser return char if it is a digit
  *
  * @author mars
  * @version 1.0.0

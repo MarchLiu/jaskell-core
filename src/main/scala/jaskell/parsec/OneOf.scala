@@ -3,7 +3,7 @@ package jaskell.parsec
 import java.io.EOFException
 
 /**
- * TODO
+ * OneOf success if item equals one of prepared.
  *
  * @author mars
  * @version 1.0.0

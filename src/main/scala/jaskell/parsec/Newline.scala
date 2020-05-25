@@ -1,7 +1,7 @@
 package jaskell.parsec
 
 /**
- * TODO
+ * Newline match \n char
  *
  * @author mars
  * @version 1.0.0

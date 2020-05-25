@@ -1,7 +1,7 @@
 package jaskell.parsec
 
 /**
- * TODO
+ * Fail do nothing but failed.
  *
  * @author mars
  * @version 1.0.0

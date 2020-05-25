@@ -3,9 +3,9 @@ package jaskell.parsec
 import scala.math.Ordering.String
 
 /**
- * TODO
+ * Parser throw ParsecException if failed.
  *
- * @author mars
+ * @author Mars Liu
  * @version 1.0.0
  * @since 2020/05/08 22:29
  */

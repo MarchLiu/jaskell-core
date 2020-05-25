@@ -5,9 +5,10 @@ import java.io.EOFException
 import scala.collection.mutable
 
 /**
- * TODO
+ * Many try to parse the parse more times, and collect all results into a Seq.
+ * Many must success once at lest
  *
- * @author mars
+ * @author Mars Liu
  * @version 1.0.0
  * @since 2020/05/09 15:22
  */

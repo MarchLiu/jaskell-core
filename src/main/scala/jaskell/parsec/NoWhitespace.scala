@@ -1,7 +1,7 @@
 package jaskell.parsec
 
 /**
- * TODO
+ * NoWhitespace success if the char is't any whitespace.
  *
  * @author mars
  * @version 1.0.0

@@ -5,7 +5,7 @@ import java.io.EOFException
 import jaskell.parsec
 
 /**
- * TODO
+ * Between parse the open parser, and then sub parser, and then close parser, return sub parser result if success.
  *
  * @author mars
  * @version 1.0.0
@@ -32,7 +32,6 @@ object Between {
 
   def apply[T, E](open: Parsec[_, E], close: Parsec[_, E], parsec: Parsec[T, E]) =
     new Between[T, E](open, close, parsec)
-
 
 }
 

@@ -3,7 +3,7 @@ package jaskell.parsec
 import java.io.EOFException
 
 /**
- * TODO
+ * Skip1 p applies the parser p one or more times, skipping its result.
  *
  * @author mars
  * @version 1.0.0

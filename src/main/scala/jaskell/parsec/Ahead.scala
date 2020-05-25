@@ -3,7 +3,7 @@ package jaskell.parsec
 import java.io.EOFException
 
 /**
- * TODO
+ * Ahead use a parser to parse state, return the result and rollback whatever
  *
  * @author mars
  * @version 1.0.0

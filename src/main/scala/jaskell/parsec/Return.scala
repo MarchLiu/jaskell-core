@@ -1,7 +1,7 @@
 package jaskell.parsec
 
 /**
- * TODO
+ * Return just lift a value to Parsec Parser.
  *
  * @author mars
  * @version 1.0.0

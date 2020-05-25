@@ -1,7 +1,7 @@
 package jaskell.parsec
 
 /**
- * TODO
+ * Functions Helper include parsers for Text
  *
  * @author mars
  * @version 1.0.0
@@ -22,7 +22,7 @@ object Txt {
 
   def crlf: Crlf = new Crlf
 
-  def decsimal: Decimal = Decimal()
+  def decimal: Decimal = Decimal()
 
   def udecimal: UDecimal = new UDecimal
 

@@ -5,9 +5,10 @@ import java.io.EOFException
 import scala.collection.mutable
 
 /**
- * TODO
+ * manyTill p end applies parser p zero or more times until parser end succeeds. Returns the list of
+ * values returned by p. This parser can be used to scan comments.
  *
- * @author mars
+ * @author Mars Liu
  * @version 1.0.0
  * @since 2020/05/09 16:39
  */

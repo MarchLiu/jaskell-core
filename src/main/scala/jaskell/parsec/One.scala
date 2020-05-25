@@ -3,7 +3,7 @@ package jaskell.parsec
 import java.io.EOFException
 
 /**
- * TODO
+ * One just take state.next, It maybe throw eof exception.
  *
  * @author mars
  * @version 1.0.0

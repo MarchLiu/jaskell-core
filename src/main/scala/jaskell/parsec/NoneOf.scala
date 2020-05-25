@@ -3,9 +3,9 @@ package jaskell.parsec
 import java.io.EOFException
 
 /**
- * TODO
+ * NoneOf success if get a item none of any in prepared
  *
- * @author mars
+ * @author Mars Liu
  * @version 1.0.0
  * @since 2020/05/09 14:00
  */

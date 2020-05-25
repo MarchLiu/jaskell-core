@@ -1,7 +1,7 @@
 package jaskell.parsec
 
 /**
- * TODO
+ * Atom parsers, like one, eof, return and failed, equals and not equals, etc.
  *
  * @author mars
  * @version 1.0.0

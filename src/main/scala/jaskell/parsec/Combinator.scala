@@ -1,7 +1,7 @@
 package jaskell.parsec
 
 /**
- * TODO
+ * Parsec Combinators
  *
  * @author mars
  * @version 1.0.0

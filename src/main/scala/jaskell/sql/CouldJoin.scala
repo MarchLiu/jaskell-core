@@ -14,6 +14,12 @@ trait CouldJoin extends Directive {
     override val j: CouldBeJoin = jo
   }
 
+  def innerJoin(jo: CouldBeJoin): Join = new Join {
+    override val opt: String = "INNER"
+    override val prefix: Directive = CouldJoin.this
+    override val j: CouldBeJoin = jo
+  }
+
   def leftJoin(jo: CouldBeJoin): Join = new Join {
     override val opt: String = "LEFT"
     override val prefix: Directive = CouldJoin.this
@@ -22,6 +28,18 @@ trait CouldJoin extends Directive {
 
   def rightJoin(jo: CouldBeJoin): Join = new Join {
     override val opt: String = "RIGHT"
+    override val prefix: Directive = CouldJoin.this
+    override val j: CouldBeJoin = jo
+  }
+
+  def crossJoin(jo: CouldBeJoin): Join = new Join {
+    override val opt: String = "CROSS"
+    override val prefix: Directive = CouldJoin.this
+    override val j: CouldBeJoin = jo
+  }
+
+  def fullJoin(jo: CouldBeJoin): Join = new Join {
+    override val opt: String = "FULL"
     override val prefix: Directive = CouldJoin.this
     override val j: CouldBeJoin = jo
   }

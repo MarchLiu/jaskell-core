@@ -21,7 +21,7 @@ trait Statement extends Directive {
     val statement: PreparedStatement = connection.prepareStatement(this.script)
     try {
       syncParameters(statement)
-      statement.execute
+      statement.execute()
     } finally {
       if (statement != null) statement.close()
     }
@@ -31,7 +31,11 @@ trait Statement extends Directive {
   @throws[IllegalStateException]
   def execute(statement: PreparedStatement): Boolean = {
     syncParameters(statement)
-    statement.execute
+    try {
+      statement.execute()
+    }finally {
+      if (statement != null) statement.close()
+    }
   }
 
   @throws[IllegalArgumentException]
@@ -43,7 +47,7 @@ trait Statement extends Directive {
         flag = true
       }
     }
-    if (!(flag)) {
+    if (!flag) {
       throw new IllegalArgumentException("parameter named %s not found".format(key))
     }
     this
@@ -65,7 +69,7 @@ trait Statement extends Directive {
     val params = parameters
     setOrder(params)
     for (parameter <- params) { //TODO: overload by parameter.valueClass
-      statement.setObject(parameter.order, parameter.value)
+      statement.setObject(parameter.order, parameter.value.orNull)
     }
   }
 

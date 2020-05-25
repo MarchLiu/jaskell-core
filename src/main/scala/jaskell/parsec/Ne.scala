@@ -1,9 +1,9 @@
 package jaskell.parsec
 
 /**
- * TODO
+ * Ne success if get item not equals the prepared one.
  *
- * @author mars
+ * @author Mars Liu
  * @version 1.0.0
  * @since 2020/05/09 13:20
  */

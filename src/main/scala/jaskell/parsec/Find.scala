@@ -1,7 +1,7 @@
 package jaskell.parsec
 
 /**
- * TODO
+ * Find try and next util success or eof.
  *
  * @author mars
  * @version 1.0.0

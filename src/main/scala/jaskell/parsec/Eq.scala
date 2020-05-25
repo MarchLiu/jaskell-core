@@ -1,7 +1,7 @@
 package jaskell.parsec
 
 /**
- * TODO
+ * Eq return from state if get a item equals its.
  *
  * @author mars
  * @version 1.0.0

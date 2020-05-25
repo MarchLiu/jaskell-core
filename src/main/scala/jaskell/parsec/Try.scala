@@ -1,9 +1,14 @@
 package jaskell.parsec
 
 /**
- * TODO
+ * The parser try p behaves like parser p, except that it pretends that it hasn't consumed any input
+ * when an error occurs.
  *
- * @author mars
+ * This combinator is used whenever arbitrary look ahead is needed. Since it pretends that it hasn't
+ * consumed any input when p fails, the (<|>) combinator will try its second alternative even when the
+ * first parser failed while consuming input.
+ *
+ * @author Mars Liu
  * @version 1.0.0
  * @since 2020/05/09 14:22
  */

@@ -1,7 +1,7 @@
 package jaskell.parsec
 
 /**
- * TODO
+ * Int try to parse a long as long int from state and without signed.
  *
  * @author mars
  * @version 1.0.0

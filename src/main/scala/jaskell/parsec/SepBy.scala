@@ -5,9 +5,9 @@ import java.io.EOFException
 import scala.collection.mutable
 
 /**
- * TODO
+ * sepBy p sep parses zero or more occurrences of p, separated by sep. Returns a list of values returned by p.
  *
- * @author mars
+ * @author Mars Liu
  * @version 1.0.0
  * @since 2020/05/09 16:55
  */

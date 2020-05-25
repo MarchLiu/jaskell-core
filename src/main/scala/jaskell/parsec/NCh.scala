@@ -1,9 +1,9 @@
 package jaskell.parsec
 
 /**
- * TODO
+ * NCh return if get a char not equals prepared.
  *
- * @author mars
+ * @author Mars Liu
  * @version 1.0.0
  * @since 2020/05/09 16:47
  */
