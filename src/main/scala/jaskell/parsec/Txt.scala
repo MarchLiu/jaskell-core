@@ -44,7 +44,7 @@ object Txt {
 
   def skipSpaces: SkipSpaces = new SkipSpaces
 
-  def skipWhiteSpaces: Whitespace = new Whitespace
+  def skipWhiteSpaces: SkipWhitespaces = new SkipWhitespaces
 
   def text(value: String): Text = Text(value)
   def text(value: String, caseSensitive: Boolean): Text = Text(value, caseSensitive)

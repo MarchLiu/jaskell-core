@@ -17,11 +17,11 @@ class Int extends Parsec[String, Char] {
       sb += '-'
     }
 
-    sb ++ uint(s)
-    sb.toString().asInstanceOf
+    sb ++= uint(s)
+    sb.toString()
   }
 }
 
 object Int {
-  def apply(): Int = new Int()
+  def apply: Int = new Int()
 }
