@@ -43,6 +43,20 @@ trait Parsec[T, E] {
         throw new ParsecException(s.status, message)
     }
   }
+
+  def >> [O](p: Parsec[O, E]): Parsec[O, E] = new Parsec[O, E] {
+    def apply[S <: State[E]](s: S): O = {
+      Parsec.this apply s
+      p(s)
+    }
+  }
+
+
+  def >>= [O](binder: T => Parsec[O, E]): Parsec[O, E] = new Parsec[O, E] {
+    def apply[S <: State[E]](s: S): O = binder(Parsec.this apply s) apply s
+  }
+
+  def ? [S <: State[E]](s: S): Either[Exception, T] = either(s)
 }
 
 object Parsec {

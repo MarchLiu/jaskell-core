@@ -15,7 +15,7 @@ class Decimal extends Parsec[String, Char]{
   override def apply[S <: State[Char]](s: S): String = {
     val sb: mutable.StringBuilder = new mutable.StringBuilder()
     sign.opt(s).foreach(x => sb += x)
-    sb ++ udicemal(s)
+    sb ++= udicemal(s)
     sb.mkString.asInstanceOf
   }
 }

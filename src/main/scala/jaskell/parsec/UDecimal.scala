@@ -14,12 +14,12 @@ class UDecimal extends Parsec[String, Char]{
   val dot: Ch = Ch('.')
   override def apply[S <: State[Char]](s: S): String = {
     val sb: mutable.StringBuilder = new mutable.StringBuilder();
-    sb ++ uint(s)
+    sb ++= uint(s)
     dot.either(s) match {
       case Left(_) => sb.mkString.asInstanceOf
       case Right(_) =>
         sb += '.'
-        sb ++ uint(s)
+        sb ++= uint(s)
         sb.mkString.asInstanceOf
     }
   }

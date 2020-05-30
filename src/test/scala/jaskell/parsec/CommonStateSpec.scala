@@ -41,7 +41,7 @@ class CommonStateSpec extends AnyFlatSpec with Matchers{
     state.next()
     state.next()
 
-    state.rollback(a)
+    state rollback a
 
     val d = state.next()
 
@@ -73,7 +73,7 @@ class CommonStateSpec extends AnyFlatSpec with Matchers{
 
     c should be ('h')
 
-    state.rollback(tran);
+    state rollback tran
 
     val d = state.next();
 

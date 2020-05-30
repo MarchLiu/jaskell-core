@@ -15,8 +15,8 @@ class TextSpec extends AnyFlatSpec with Matchers {
     import Txt._
     val state = State("Hello World");
     for {
-      head <- "Hello" either state
-      _ <- skipSpaces either state
+      head <- "Hello" ? state
+      _ <- skipSpaces ? state
       tail <- text("world", caseSensitive = false) either state
     } yield {s"$head $tail"} match {
       case content: String => content should be ("Hello World")

@@ -18,7 +18,7 @@ class EqSpec extends AnyFlatSpec with Matchers{
 
     val eof = new Eof[Char]
 
-    (Eq('h') apply state) should be ('h')
+    (Eq('h') ? state) should be (Right('h'))
     (Eq('e') apply state) should be ('e')
     (Eq('l') apply state) should be ('l')
     (Eq('l') apply state) should be ('l')
