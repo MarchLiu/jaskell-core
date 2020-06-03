@@ -14,15 +14,13 @@ import jaskell.parsec.{Ch, Parsec, SkipWhitespaces, State}
 class S(val prev: Expression) extends Parsec[Expression, Char] {
 
   import jaskell.parsec.Txt.ch
-  val op: Ch = ch('-')
   val skip: SkipWhitespaces = skipWhiteSpaces
+  val op: Parsec[Unit, Char] = skip >> ch('-') >> skip
 
   lazy val next = new Parser
 
   override def apply[St <: State[Char]](s: St): Expression =  {
-    skip(s)
     op(s)
-    skip(s)
     new Sub(prev, next(s))
   }
 }
