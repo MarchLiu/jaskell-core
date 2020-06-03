@@ -17,7 +17,7 @@ class Many1[T, E](val parsec: Parsec[T, E]) extends Parsec[List[T], E] {
 
   override def apply[S <: State[E]](s: S): List[T] =  {
     var re = new mutable.ListBuffer[T]
-    re += psc(s)
+    re += parsec(s)
     try {
       while (true) {
         re += psc(s)

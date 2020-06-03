@@ -28,3 +28,6 @@ Jaskell Core 重新提炼 Jaskell 中的 Parsec 和 SQL 组件库，利用 Scala
  - fixed int parser bug
  - fixed skipWhitespaces function error
  - add ? operator
+ 
+### 0.4.1
+ - add expression parser

@@ -11,16 +11,16 @@ import scala.collection.mutable
  */
 class UDecimal extends Parsec[String, Char]{
   val uint = new jaskell.parsec.UInt()
-  val dot: Ch = Ch('.')
+  val dot: Try[Char, Char] = Try(Ch('.'))
   override def apply[S <: State[Char]](s: S): String = {
     val sb: mutable.StringBuilder = new mutable.StringBuilder();
     sb ++= uint(s)
     dot.either(s) match {
-      case Left(_) => sb.mkString.asInstanceOf
+      case Left(_) => sb.mkString
       case Right(_) =>
         sb += '.'
         sb ++= uint(s)
-        sb.mkString.asInstanceOf
+        sb.mkString
     }
   }
 }

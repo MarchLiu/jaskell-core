@@ -10,7 +10,7 @@ package jaskell.parsec
 object Atom {
   def one[E]: One[E] = new One[E]
 
-  def eof[E, S <: State[E]]: Eof[E] = new Eof
+  def eof[E]: Eof[E] = new Eof
 
   def pack[T, E](value: T): Return[T, E] = new Return[T, E](value)
 
