@@ -9,6 +9,8 @@ package jaskell.expression
  */
 class Quote(val exp: Expression) extends Expression {
   override def eval: Double = exp.eval
+
+  override def makeAst: Expression = new Quote(exp.makeAst)
 }
 
 

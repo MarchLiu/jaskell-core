@@ -2,7 +2,7 @@ package jaskell.expression.parsers
 
 import jaskell.expression.{Add, Expression}
 import jaskell.parsec.Txt.skipWhiteSpaces
-import jaskell.parsec.{Ch, Parsec, SkipWhitespaces, State}
+import jaskell.parsec.{Parsec, SkipWhitespaces, State}
 
 /**
  * TODO
@@ -14,8 +14,8 @@ import jaskell.parsec.{Ch, Parsec, SkipWhitespaces, State}
 class A(val prev: Expression) extends Parsec[Expression, Char] {
 
   import jaskell.parsec.Txt.ch
-  val skip: SkipWhitespaces = skipWhiteSpaces
-  val op: Parsec[Unit, Char] = skip >> ch('+') >> skip
+  val skips: SkipWhitespaces = skipWhiteSpaces
+  val op: Parsec[Unit, Char] = skips >> ch('+') >> skips
 
   lazy val next = new Parser
 

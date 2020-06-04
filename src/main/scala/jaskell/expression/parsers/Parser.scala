@@ -17,9 +17,10 @@ class Parser extends Parsec[Expression, Char] {
   import jaskell.parsec.Atom.eof
 
   val rq: Try[Char, Char] = attempt(ch(')'))
-  val skip: SkipWhitespaces = skipWhiteSpaces
+  val skips: SkipWhitespaces = skipWhiteSpaces
   val end: Ahead[Unit, Char] = ahead(new Parsec[Unit, Char] {
     val e: Eof[Char] = eof
+
     override def apply[S <: State[Char]](s: S): Unit = {
       rq ? s match {
         case Left(_) =>
@@ -30,17 +31,16 @@ class Parser extends Parsec[Expression, Char] {
   })
 
   override def apply[St <: State[Char]](s: St): Expression = {
-    val np: Parsec[Expression, Char] = attempt(attempt(new Num) <|> new Q)
+    val np = attempt(attempt(new Num) <|> new Q)
 
     val left = np(s)
-    skip(s)
+    skips(s)
     end ? s match {
       case Right(_) =>
         left
       case Left(_) =>
         val next = attempt(new A(left)) <|> attempt(new S(left)) <|> attempt(new P(left)) <|> new D(left)
-        val right = next(s)
-        right
+        next(s)
     }
   }
 }
