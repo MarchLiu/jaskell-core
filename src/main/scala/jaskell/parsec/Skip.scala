@@ -7,23 +7,18 @@ import java.io.EOFException
  *
  * @author mars
  * @version 1.0.0
- * @since 2020/05/09 17:09
  */
 class Skip[E](val psc: Parsec[_, E]) extends Parsec[Unit, E] {
-  @throws[EOFException]
-  @throws[ParsecException]
-  override def apply[S <: State[E]](s: S): Unit = {
-    var tran: Option[s.Tran] = Option.empty
-    try {
-      while (true) {
-        tran = Some(s.begin())
-        psc(s)
-        s.commit(tran.get)
+  val p = new Try(psc)
+
+  override def ask(s: State[E]): Either[Exception, Unit] = {
+
+    while (true){
+      if(p ? s isLeft) {
+        return Right()
       }
-    } catch {
-      case e@(_: EOFException| _: ParsecException) =>
-        s.rollback(tran.get)
     }
+    Right()
   }
 }
 

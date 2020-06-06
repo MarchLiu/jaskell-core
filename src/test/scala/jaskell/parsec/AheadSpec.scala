@@ -19,9 +19,10 @@ class AheadSpec extends AnyFlatSpec with Matchers {
     val content: String = "this is a string data."
     val state = State.apply(content)
     val parser =  Parsec[String, Char] { s =>
-      val re = text("this")(s)
-      ahead(text(" is"))(s)
-      re
+      for {
+        re <- text("this") ? (s)
+        _ <- ahead (text(" is")) ? (s)
+      } yield re
     }
     parser(state) should be("this")
     state.status should be(4)
@@ -31,9 +32,11 @@ class AheadSpec extends AnyFlatSpec with Matchers {
     val content: String = "this is a string data."
     val state = State.apply(content)
     val parser = Parsec[String, Char] { s =>
-      text("this")(s)
-      space.apply(s)
-      ahead(text("is"))(s)
+      for {
+        _ <- text("this") ? s
+        _ <- space ? s
+        re <- ahead (text("is")) ? s
+      } yield re
     }
     val re = parser(state)
     re should be("is")
@@ -44,9 +47,11 @@ class AheadSpec extends AnyFlatSpec with Matchers {
     val content: String = "this is a string data."
     val state = State apply content
     val parser = Parsec[String, Char] { s =>
-      text("this")(s)
-      space apply s
-      ahead(text(" is"))(s)
+      for {
+        _ <- text("this") ? s
+        _ <- space ? s
+        re <- ahead(text(" is")) ? s
+      } yield re
     }
 
     a[ParsecException] should be thrownBy {

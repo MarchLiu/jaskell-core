@@ -20,11 +20,9 @@ class CommonStateSpec extends AnyFlatSpec with Matchers{
       val index = state.status
       val c = state.next();
       val chr = data.charAt(index);
-      c should be (chr)
+      c should be (Right(chr))
     }
-    a[EOFException] should be thrownBy {
-      state.next()
-    }
+    state.next().isLeft should be (true)
   }
 
   "Begin" should "Test begin tran and rollback then next" in {
@@ -33,7 +31,7 @@ class CommonStateSpec extends AnyFlatSpec with Matchers{
     val c = state.next()
 
 
-    c should be ('h')
+    c should be (Right('h'))
 
     val a = state.begin()
 
@@ -45,7 +43,7 @@ class CommonStateSpec extends AnyFlatSpec with Matchers{
 
     val d = state.next()
 
-    d should be ('e')
+    d should be (Right('e'))
   }
 
   "Commit" should "Test begin a transaction and commit" in {
@@ -54,14 +52,14 @@ class CommonStateSpec extends AnyFlatSpec with Matchers{
     val c = state.next()
 
 
-    c should be ('h')
+    c should be (Right('h'))
     state.next()
 
     state.commit(tran);
 
     val d = state.next();
 
-    d should be ('l')
+    d should be (Right('l'))
   }
 
   "Rollback" should "Test rollback" in {
@@ -71,13 +69,13 @@ class CommonStateSpec extends AnyFlatSpec with Matchers{
     val c = state.next();
 
 
-    c should be ('h')
+    c should be (Right('h'))
 
     state rollback tran
 
     val d = state.next();
 
-    d should be ('h')
+    d should be (Right('h'))
   }
 
   "Next" should "Test state next method" in {
@@ -86,22 +84,22 @@ class CommonStateSpec extends AnyFlatSpec with Matchers{
 
     val c = state.next()
 
-    c should be ('h')
+    c should be (Right('h'))
 
     val d = state.next()
 
-    d should be ('e')
+    d should be (Right('e'))
 
     val e = state.next()
 
-    e should be ('l')
+    e should be (Right('l'))
 
     val f = state.next()
 
-    f should be ('l')
+    f should be (Right('l'))
     val g = state.next()
 
-    g should be ('o')
+    g should be (Right('o'))
   }
 
 

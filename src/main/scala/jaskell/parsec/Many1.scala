@@ -3,6 +3,7 @@ package jaskell.parsec
 import java.io.EOFException
 
 import scala.collection.mutable
+import scala.util.control.Breaks._
 
 /**
  * Many try to parse the parse more times, and collect all results into a Seq.
@@ -10,23 +11,28 @@ import scala.collection.mutable
  *
  * @author Mars Liu
  * @version 1.0.0
- * @since 2020/05/09 15:22
  */
-class Many1[T, E](val parsec: Parsec[T, E]) extends Parsec[List[T], E] {
+class Many1[T, E](val parsec: Parsec[T, E]) extends Parsec[Seq[T], E] {
   val psc = new Try[T, E](parsec)
 
-  override def apply[S <: State[E]](s: S): List[T] =  {
-    var re = new mutable.ListBuffer[T]
-    re += parsec(s)
-    try {
-      while (true) {
-        re += psc(s)
-      }
-    } catch {
-      case _@(_: ParsecException | _: EOFException) =>
-        return re.toList
+  override def ask(s: State[E]): Either[Exception, Seq[T]] = {
+    val re = new mutable.ListBuffer[T]
+    parsec ask s match {
+      case Right(value) => re += value
+      case left: Left[Exception, Seq[T]] => return left
     }
-    re.toList
+
+    breakable {
+      while (true) {
+        psc ask s match {
+          case Right(value) =>
+            re += value
+          case Left(_) =>
+            break
+        }
+      }
+    }
+    Right(re.toSeq)
   }
 }
 

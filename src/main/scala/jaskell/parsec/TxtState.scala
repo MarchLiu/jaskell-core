@@ -8,7 +8,6 @@ import scala.collection.{SortedMap, mutable}
  *
  * @author Mars Liu
  * @version 1.0.0
- * @since 2020/05/15 17:34
  */
 class TxtState(val txt: String, val newLine:Char = '\n') extends CommonState[Char] {
   override val content: Seq[Char] = txt.toCharArray.toSeq

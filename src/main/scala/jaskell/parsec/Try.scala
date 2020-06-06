@@ -10,19 +10,18 @@ package jaskell.parsec
  *
  * @author Mars Liu
  * @version 1.0.0
- * @since 2020/05/09 14:22
  */
 class Try[T, E](val parsec: Parsec[T, E]) extends Parsec[T, E] {
-  override def apply[S <: State[E]](s: S): T = {
+
+  override def ask(s: State[E]): Either[Exception, T] = {
     val tran = s.begin()
-    try {
-      val re = parsec(s)
-      s commit tran
-      re
-    } catch {
-      case error: Exception =>
+    parsec ? s match {
+      case right: Right[_, _] =>
+        s commit tran
+        right
+      case left: Left[_, _] =>
         s rollback tran
-        throw error
+        left
     }
   }
 }

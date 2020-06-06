@@ -10,26 +10,27 @@ import scala.collection.mutable
  *
  * @author Mars Liu
  * @version 1.0.0
- * @since 2020/05/09 16:39
  */
-class ManyTill[T, L, E](val parser: Parsec[T, E], val end: Parsec[L, E]) extends Parsec[List[T], E] {
+class ManyTill[T, L, E](val parser: Parsec[T, E], val end: Parsec[L, E]) extends Parsec[Seq[T], E] {
   val psc = new Try[T, E](parser)
   val till = new Try[L, E](end)
 
-  @throws[EOFException]
-  @throws[ParsecException]
-  override def apply[S <: State[E]](s: S): List[T] = {
+
+
+  override def ask(s: State[E]): Either[Exception, Seq[T]] = {
     val re = new mutable.ListBuffer[T]
-    while (true) try {
-      till(s)
-      return re.toList
-    } catch {
-      case error: EOFException =>
-        throw error
-      case _: ParsecException =>
-        re += parser(s)
+    while (true)  {
+      till ask s match {
+        case Right(_) => return Right(re.toSeq)
+        case Left(error: EOFException) => return Left(error)
+        case Left(_: ParsecException) =>
+          parser ask s match {
+            case Right(value) => re += value
+            case left: Left[Exception, Seq[T]] => return left
+          }
+      }
     }
-    re.toList
+    Right(re.toSeq)
   }
 }
 

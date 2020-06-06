@@ -7,17 +7,19 @@ import java.io.EOFException
  *
  * @author Mars Liu
  * @version 1.0.0
- * @since 2020/05/09 14:00
  */
 class NoneOf[E](val items: Set[E]) extends Parsec[E, E] {
-  @throws[EOFException]
-  @throws[ParsecException]
-  override def apply[S <: State[E]](s: S): E = {
-    val re = s.next()
-    if (items.contains(re)) {
-      throw new ParsecException(s.status, s"expect a item none of $items but got $re")
+
+  override def ask(s: State[E]): Either[Exception, E] = {
+    s.next() match {
+      case Right(re) =>
+        if (items.contains(re)) {
+          Left(new ParsecException(s.status, s"expect a item none of $items but got $re"))
+        } else {
+          Right(re)
+        }
+      case left: Left[_, _] => left
     }
-    re
   }
 }
 

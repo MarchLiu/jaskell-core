@@ -9,23 +9,20 @@ import scala.collection.mutable
  * Many could success 0 to any times.
  *
  * @author mars
- * @version 1.0.0
- * @since 2020/05/09 14:55
  */
 class Many[T, E](val parsec: Parsec[T, E]) extends Parsec[Seq[T], E] {
   val psc = new Try[T, E](parsec)
 
-  override def apply[S <: State[E]](s: S): Seq[T] =  {
+  override def ask(s: State[E]): Either[Exception, Seq[T]] = {
     var re = new mutable.ListBuffer[T]
-    try {
-      while (true) {
-        re += psc(s)
+    while (true) {
+      psc ask s match {
+        case Right(result) => re += result
+        case Left(_) =>
+          return Right(re.toSeq)
       }
-    } catch {
-      case e@(_: EOFException| _: ParsecException) =>
-        re.toSeq
     }
-    re.toSeq
+    Left(new ParsecException(s.status, "many parsec should arrived this for never"))
   }
 }
 

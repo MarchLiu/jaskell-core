@@ -7,29 +7,29 @@ import java.io.EOFException
  *
  * @author mars
  * @version 1.0.0
- * @since 2020/05/09 14:06
  */
 class Choice[T, E](val parsecs: Seq[Parsec[T, E]]) extends Parsec[T, E] {
 
-  override def apply[S <: State[E]](s: S): T = {
-    var err: Throwable = null
+  override def ask(s: State[E]): Either[Exception, T] = {
+    var err: Exception = null
     val status = s.status
     for (psc <- this.parsecs) {
-      try return psc(s)
-      catch {
-        case e@(_: EOFException | _: ParsecException) =>
-          err = e
-          if (s.status != status) throw e
+      psc ? s match {
+        case right: Right[Exception, T] =>
+          return right
+        case Left(error) =>
+          err = error
+          if (status != s.status) {
+            return Left(error)
+          }
       }
     }
     if (err == null) {
-      throw new ParsecException(status, "Choice Error : All parsec parsers failed.")
-    }
-    else {
-      throw new ParsecException(status, s"Choice Error $err, stop at $status")
+      Left(new ParsecException(status, "Choice Error : All parsec parsers failed."))
+    } else {
+      Left(new ParsecException(status, s"Choice Error $err, stop at $status"))
     }
   }
-
 }
 
 object Choice {

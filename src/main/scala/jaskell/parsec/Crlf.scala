@@ -7,15 +7,14 @@ import java.io.EOFException
  *
  * @author mars
  * @version 1.0.0
- * @since 2020/05/09 14:16
  */
 class Crlf(val r:Ch = Ch('\r'), val n:Ch = Ch('\n')) extends Parsec[String, Char] {
-  @throws[EOFException]
-  @throws[ParsecException]
-  override def apply[S <: State[Char]](s: S): String = {
-    r(s)
-    n(s)
-    "\r\n"
+
+  override def ask(s: State[Char]): Either[Exception, String] = {
+    for{
+      _ <- r ? s
+      _ <- n ? s
+    } yield {"\r\n"}
   }
 }
 

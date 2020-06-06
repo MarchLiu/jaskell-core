@@ -7,20 +7,19 @@ import scala.collection.mutable
  *
  * @author mars
  * @version 1.0.0
- * @since 2020/05/09 14:21
  */
-class UDecimal extends Parsec[String, Char]{
+class UDecimal extends Parsec[String, Char] {
   val uint = new jaskell.parsec.UInt()
   val dot: Try[Char, Char] = Try(Ch('.'))
-  override def apply[S <: State[Char]](s: S): String = {
-    val sb: mutable.StringBuilder = new mutable.StringBuilder();
-    sb ++= uint(s)
-    dot.ask(s) match {
-      case Left(_) => sb.mkString
-      case Right(_) =>
-        sb += '.'
-        sb ++= uint(s)
-        sb.mkString
+
+  override def ask(st: State[Char]): Either[Exception, String] = {
+    uint ask st flatMap { value =>
+      (for {
+        _ <- dot ? st
+        tail <- uint ? st
+      } yield {
+        value + "." + tail
+      }) orElse Right(value)
     }
   }
 }

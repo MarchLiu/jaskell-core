@@ -5,15 +5,15 @@ package jaskell.parsec
  *
  * @author mars
  * @version 1.0.0
- * @since 2020/05/09 17:18
  */
 class NoWhitespace extends Parsec [Char, Char]{
-  override def apply[S <: State[Char]](s: S): Char = {
-    val c = s.next()
-    if(c.isWhitespace){
-      throw new ParsecException(s.status, s"expect a char not whitespace but get $c")
-    } else {
-      c
+  override def ask(s: State[Char]): Either[Exception, Char] = {
+    s.next() flatMap { c =>
+      if(c.isWhitespace){
+        Left(new ParsecException(s.status, s"expect a char not whitespace but get $c"))
+      } else {
+        Right(c)
+      }
     }
   }
 }

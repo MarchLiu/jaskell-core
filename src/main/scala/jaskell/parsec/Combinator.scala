@@ -5,7 +5,6 @@ package jaskell.parsec
  *
  * @author mars
  * @version 1.0.0
- * @since 2020/05/09 17:35
  */
 object Combinator {
   def attempt[T, E](parser: Parsec[T, E]): Try[T, E] = {

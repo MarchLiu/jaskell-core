@@ -7,18 +7,15 @@ import java.io.EOFException
  *
  * @author mars
  * @version 1.0.0
- * @since 2020/05/09 17:26
  */
 class Space extends Parsec[Char, Char] {
-  @throws[EOFException]
-  @throws[ParsecException]
-  override def apply[S <: State[Char]](s: S): Char = {
-    val re = s.next()
-    if (re.isSpaceChar) {
-      re
-    }
-    else {
-      throw new ParsecException(s.status, s"Expect $re is space.")
+  override def ask(s: State[Char]): Either[Exception, Char] = {
+    s.next() flatMap { re =>
+      if(re.isSpaceChar) {
+        Right(re)
+      } else {
+        Left(new ParsecException(s.status, s"Expect $re is space."))
+      }
     }
   }
 }

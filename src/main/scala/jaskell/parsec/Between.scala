@@ -9,21 +9,21 @@ import jaskell.parsec
  *
  * @author mars
  * @version 1.0.0
- * @since 2020/05/09 13:43
  */
 class Between[T, E](val open: Parsec[_, E], val close: Parsec[_, E], val parsec: Parsec[T, E])
   extends Parsec[T, E] {
-  @throws[EOFException]
-  @throws[ParsecException]
-  override def apply[S <: State[E]](s: S): T = {
-    open(s)
-    val re = parsec(s)
-    close(s)
-    re
+
+  override def ask(s: State[E]): Either[Exception, T] = {
+    for {
+      _ <- open ? s
+      re <- parsec ? s
+      _ <- close ? s
+    } yield re
   }
 }
 
 object Between {
+
   class Btw[T, E](val open: Parsec[_, E], val close: Parsec[_, E]) {
     def in(parsec: Parsec[T, E]) = new Between[T, E](this.open, this.close, parsec)
   }

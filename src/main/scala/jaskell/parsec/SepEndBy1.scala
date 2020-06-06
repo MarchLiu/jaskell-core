@@ -11,32 +11,34 @@ import scala.util.control.Breaks._
  *
  * @author mars
  * @version 1.0.0
- * @since 2020/05/25 20:54
  */
 class SepEndBy1[T, E](val parser: Parsec[T, E], val sep: Parsec[_, E]) extends Parsec[Seq[T], E] {
   val separator = new Try(sep)
   val p = new Try(parser)
+
   val parsec: Parsec[Seq[T], E] = new Parsec[Seq[T], E] {
-    override def apply[S <: State[E]](s: S): Seq[T] = {
+    override def ask(s: State[E]): Either[Exception, Seq[T]] = {
       val re = new mutable.ListBuffer[T]
-      re += parser(s)
-      breakable {
-        while (true) {
+      parser ? s map { head =>
+        re += head
+        while(true) {
           val tran = s.begin()
-          try {
-            sep(s)
-            re += parser(s)
-            s.commit(tran)
-          } catch {
-            case _: Exception =>
+          (for {
+            _ <- sep ? s
+            r <- parser ? s
+          } yield r) match {
+            case Right(value) =>
+              re += value
+              s.commit(tran)
+            case Left(_) =>
               s.rollback(tran)
-              break()
+              return Right(re.toSeq)
           }
         }
       }
-      re.toSeq
+      Right(re.toSeq)
     }
   }
 
-  override def apply[S <: State[E]](s: S): Seq[T] = parsec(s)
+  override def ask(s: State[E]): Either[Exception, Seq[T]] = parsec ? s
 }

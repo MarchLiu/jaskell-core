@@ -19,8 +19,10 @@ class P(val prev: Expression) extends Parsec[Expression, Char] {
   val op: Parsec[Unit, Char] = skips >> ch('*') >> skips
   val next = new Parser
 
-  override def apply[S <: State[Char]](s: S): Expression = {
-    op(s)
-    new Product(prev, next(s))
+  override def ask(s: State[Char]): Either[Exception, Expression] = {
+    for {
+      _ <- op ? s
+      exp <- next ? s
+    } yield {new Product(prev, exp)}
   }
 }

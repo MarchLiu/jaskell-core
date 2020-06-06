@@ -5,7 +5,6 @@ package jaskell.parsec
  *
  * @author mars
  * @version 1.0.0
- * @since 2020/05/09 17:36
  */
 object Txt {
   def ch(value: Char): Ch = Ch(value)

@@ -19,8 +19,10 @@ class S(val prev: Expression) extends Parsec[Expression, Char] {
 
   lazy val next = new Parser
 
-  override def apply[St <: State[Char]](s: St): Expression =  {
-    op(s)
-    new Sub(prev, next(s))
+  override def ask(s: State[Char]): Either[Exception, Expression] = {
+    for {
+      _ <- op ? s
+      exp <- next ? s
+    } yield {new Sub(prev, exp)}
   }
 }

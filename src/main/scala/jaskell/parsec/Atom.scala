@@ -5,7 +5,6 @@ package jaskell.parsec
  *
  * @author mars
  * @version 1.0.0
- * @since 2020/05/09 17:35
  */
 object Atom {
   def one[E]: One[E] = new One[E]

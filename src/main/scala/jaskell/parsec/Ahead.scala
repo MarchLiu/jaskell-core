@@ -7,16 +7,14 @@ import java.io.EOFException
  *
  * @author mars
  * @version 1.0.0
- * @since 2020/05/09 13:33
  */
 class Ahead[T, E](var parser: Parsec[T, E]) extends Parsec[T, E] {
 
-  @throws[EOFException]
-  @throws[ParsecException]
-  override def apply[S <: State[E]](s: S): T = {
+  override def ask(s: State[E]): Either[Exception, T] = {
     val tran = s.begin()
-    try parser(s)
-    finally s.rollback(tran)
+    val result = parser ? s
+    s.rollback(tran)
+    result
   }
 }
 

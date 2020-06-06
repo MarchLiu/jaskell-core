@@ -20,7 +20,7 @@ class TrySpec extends AnyFlatSpec with Matchers {
 
     val re = tryIt apply state
 
-    re should be ("Hello")
+    re should be("Hello")
     idx should not be (state.status)
   }
 
@@ -33,19 +33,20 @@ class TrySpec extends AnyFlatSpec with Matchers {
     a[ParsecException] should be thrownBy {
       tryIt apply state
     }
-    idx should be (state.status)
+    idx should be(state.status)
 
     val tryIti = new Try[String, String](Parsec[String, String] { s =>
-      val content = s.next()
-      if(content.toLowerCase == "hello") {
-        content
-      } else {
-        throw new ParsecException(s.status,
-          s"expect a word match [Hello] and case insensitive but get [${content}]")
+      s.next() flatMap { content =>
+        if (content.toLowerCase == "hello") {
+          Right(content)
+        } else {
+          Left(new ParsecException(s.status,
+            s"expect a word match [Hello] and case insensitive but get [${content}]"))
+        }
       }
     })
 
     val re = tryIti apply state
-    re should be ("Hello")
+    re should be("Hello")
   }
 }

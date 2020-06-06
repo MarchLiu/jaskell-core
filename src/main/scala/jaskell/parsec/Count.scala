@@ -9,21 +9,25 @@ import scala.collection.mutable.ListBuffer
  *
  * @author Mars Liu
  * @version 1.0.0
- * @since 2020/05/25 23:02
  */
-class Count[T, E](val p: Parsec[T, E], val n:scala.Int) extends Parsec [Seq[T], E]{
-  override def apply[S <: State[E]](s: S): Seq[T] = {
-    if(n <= 0){
-      return Seq.empty
+class Count[T, E](val p: Parsec[T, E], val n: scala.Int) extends Parsec[Seq[T], E] {
+
+  override def ask(s: State[E]): Either[Exception, Seq[T]] = {
+    if (n <= 0) {
+      return Right(Seq.empty)
     }
     val re = mutable.ListBuffer[T]()
-    for(_ <- 0 to n){
-      re += p(s)
+    for (_ <- 0 to n) {
+      p ? s match {
+        case Right(value) => re += value
+        case Left(error) =>
+          return Left(error)
+      }
     }
-    re.toSeq
+    Right(re.toSeq)
   }
 }
 
-object Count{
+object Count {
   def apply[T, E](p: Parsec[T, E], n: scala.Int): Count[T, E] = new Count(p, n)
 }

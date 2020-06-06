@@ -7,7 +7,6 @@ import java.io.EOFException
  *
  * @author Mars Liu
  * @version 1.0.0
- * @since 2020/05/08 14:47
  */
 trait CommonState[T] extends State[T] {
   override type Status = scala.Int
@@ -18,13 +17,13 @@ trait CommonState[T] extends State[T] {
   var tran: scala.Int = -1
 
   @throws[EOFException]
-  def next(): T = {
+  def next(): Either[Exception, T] = {
     if (content.size <= current) {
-      throw new EOFException();
+      Left(new EOFException())
     } else {
       val re = content(current)
       current += 1
-      re
+      Right(re)
     }
   }
 

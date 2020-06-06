@@ -54,7 +54,7 @@ class IntSpec extends AnyFlatSpec with Matchers {
 
   "Negative Fail" should "Failed" in {
     val state = State("-x2344")
-    val parser = Int
+    val parser = new Int
     a[ParsecException] should be thrownBy {
       parser apply state
     }

@@ -5,17 +5,15 @@ package jaskell.parsec
  *
  * @author mars
  * @version 1.0.0
- * @since 2020/05/25 20:44
  */
 class EndBy1[T, E](val parser: Parsec[T, E], val sep: Parsec[_, E]) extends Parsec[Seq[T], E] {
-  val parsec = new Many1(new Parsec[T, E] {
-    override def apply[S <: State[E]](s: S): T = {
-      val re = parser(s)
-      sep(s)
-      re
-    }
+  val parsec: Parsec[Seq[T], E] = new Many1((s: State[E]) => {
+    for {
+      re <- parser ? s
+      _ <- sep ? s
+    } yield {re}
   })
-  override def apply[S <: State[E]](s: S): Seq[T] = parsec(s)
+  override def ask(s: State[E]): Either[Exception, Seq[T]] = parsec ? s
 }
 
 object EndBy1 {

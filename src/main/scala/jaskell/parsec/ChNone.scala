@@ -5,24 +5,24 @@ package jaskell.parsec
  *
  * @author mars
  * @version 1.0.0
- * @since 2020/05/09 13:59
  */
 class ChNone(val content: String, val caseSensitive: Boolean) extends Parsec[Char, Char] {
-  val contentSet:Set[Char] = if(caseSensitive) content.toSet else content.toLowerCase.toSet
+  val contentSet: Set[Char] = if (caseSensitive) content.toSet else content.toLowerCase.toSet
 
-  override def apply[S <: State[Char]](s: S): Char = {
-    val c = s.next()
-    if(caseSensitive){
-      if(!(contentSet contains c)){
-        return c
+  override def ask(s: State[Char]): Either[Exception, Char] = {
+    s.next() flatMap { c =>
+      if (caseSensitive) {
+        if (!(contentSet contains c)) {
+          return Right(c)
+        }
+      } else {
+        if (!(contentSet contains c.toLower)) {
+          return Right(c)
+        }
       }
-    }else{
-      if(!(contentSet contains c.toLower)){
-        return c
-      }
+      Left(new ParsecException(s.status,
+        s"expect any char none of $content (case sensitive $caseSensitive) but get $c"))
     }
-    throw new ParsecException(s.status,
-      s"expect any char none of $content (case sensitive $caseSensitive) but get $c")
   }
 }
 

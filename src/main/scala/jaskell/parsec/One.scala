@@ -7,11 +7,12 @@ import java.io.EOFException
  *
  * @author mars
  * @version 1.0.0
- * @since 2020/05/08 22:28
  */
 class One [E] extends Parsec[E, E]{
-  @throws[EOFException]
-  override def apply[S <: State[E]](s: S): E = s.next()
+
+  override def ask(s: State[E]): Either[Exception, E] = {
+    s.next()
+  }
 }
 
 object One {

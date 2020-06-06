@@ -21,26 +21,31 @@ class Parser extends Parsec[Expression, Char] {
   val end: Ahead[Unit, Char] = ahead(new Parsec[Unit, Char] {
     val e: Eof[Char] = eof
 
-    override def apply[S <: State[Char]](s: S): Unit = {
+    override def ask(s: State[Char]): Either[Exception, Unit] = {
       rq ? s match {
         case Left(_) =>
-          e(s)
+          e ? s
         case Right(_) =>
+          Right()
       }
     }
   })
 
-  override def apply[St <: State[Char]](s: St): Expression = {
+  override def ask(s: State[Char]): Either[Exception, Expression] = {
     val np = attempt(attempt(new Num) <|> new Q)
 
-    val left = np(s)
-    skips(s)
-    end ? s match {
-      case Right(_) =>
-        left
-      case Left(_) =>
-        val next = attempt(new A(left)) <|> attempt(new S(left)) <|> attempt(new P(left)) <|> new D(left)
-        next(s)
+    np ? s flatMap { left =>
+      (for {
+        _ <- skips ? s
+        e <- end ? s
+      } yield {
+        e
+      }) match {
+        case Right(_) => Right(left)
+        case Left(_) =>
+          val next = attempt(new A(left)) <|> attempt(new S(left)) <|> attempt(new P(left)) <|> new D(left)
+          next ? s
+      }
     }
   }
 }

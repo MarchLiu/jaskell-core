@@ -5,7 +5,6 @@ package jaskell.parsec
  *
  * @author mars
  * @version 1.0.0
- * @since 2020/05/08 17:06
  */
 trait State[+E] {
   type Status
@@ -20,7 +19,7 @@ trait State[+E] {
 
   def rollback(tran: Tran): Unit
 
-  def next(): E
+  def next(): Either[Exception, E]
 }
 
 object State {

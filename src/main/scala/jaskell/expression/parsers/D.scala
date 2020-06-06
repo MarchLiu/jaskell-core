@@ -8,7 +8,6 @@ import jaskell.parsec.{Parsec, SkipWhitespaces, State}
  *
  * @author mars
  * @version 1.0.0
- * @since 2020/06/02 21:44
  */
 class D(val prev: Expression) extends Parsec[Expression, Char] {
 
@@ -18,8 +17,10 @@ class D(val prev: Expression) extends Parsec[Expression, Char] {
   val op: Parsec[Unit, Char] = skips >> ch('/') >> skips
   val next = new Parser
 
-  override def apply[S <: State[Char]](s: S): Expression = {
-    op(s)
-    new Divide(prev, next(s))
+  override def ask(s: State[Char]): Either[Exception, Expression] = {
+    for {
+      _ <- op ? s
+      exp <- next ? s
+    } yield {new Divide(prev, exp)}
   }
 }
