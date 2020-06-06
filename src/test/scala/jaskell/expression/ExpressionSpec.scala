@@ -20,25 +20,25 @@ class ExpressionSpec extends AnyFlatSpec with Matchers {
   "Number" should "match a number" in {
     val content = "3.14"
     val p = new Num
-    val exp = p parse content
+    val exp = p ! content
     exp.eval should be(3.14)
   }
 
   "Basic" should "match a number" in {
     val content = "3.14"
-    val exp = p parse content
+    val exp = p ! content
     exp.eval should be(3.14)
   }
 
   "Add" should "match a add expression" in {
     val content = "3.14+2.53"
-    val exp = p parse content
+    val exp = p ! content
     exp.eval should be(5.67)
   }
 
   "Sub" should "match a sub expression" in {
     val content = "179- 8"
-    val exp = p parse content
+    val exp = p ! content
     exp.eval should be(171)
   }
 

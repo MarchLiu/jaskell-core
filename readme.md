@@ -40,3 +40,8 @@ Jaskell Core 重新提炼 Jaskell 中的 Parsec 和 SQL 组件库，利用 Scala
 ### 0.5
 
  - rewrite all parsec as functional
+
+### 0.5.1
+ 
+ - add ! operator
+ 

@@ -1,6 +1,5 @@
 package jaskell.parsec
-
-import java.io.EOFException
+import scala.language.postfixOps
 
 /**
  * Skip p applies the parser p zero or more times, skipping its result.

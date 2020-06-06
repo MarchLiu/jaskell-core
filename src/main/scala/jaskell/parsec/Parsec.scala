@@ -18,9 +18,18 @@ trait Parsec[T, E] {
     }
   }
 
-  def parse(content: Seq[E]): T = {
-    val st = State(content)
-    this apply st
+  def parse(s: State[E]): T = {
+    ask(s) match {
+      case Right(result) => result
+      case Left(error) => throw error
+    }
+  }
+
+  def !(s: State[E]): T = {
+    ask(s) match {
+      case Right(result) => result
+      case Left(error) => throw error
+    }
   }
 
   def ask(s: State[E]): Either[Exception, T]
@@ -53,6 +62,11 @@ trait Parsec[T, E] {
   }
 
   def ? (s: State[E]): Either[Exception, T] = ask(s)
+
+  def ? (content: Seq[E]): Either[Exception, T] = {
+    val st = State(content)
+    this ask st
+  }
 }
 
 object Parsec {
