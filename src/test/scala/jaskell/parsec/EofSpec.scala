@@ -11,8 +11,9 @@ import org.scalatest.matchers.should.Matchers
  * @since 2020/05/12 10:02
  */
 class EofSpec extends AnyFlatSpec with Matchers{
+  import Txt._
   "Eof" should "Test" in {
-    val state = State("hello")
+    val state:State[Char] = "hello"
 
     val eof = new Eof[Char]
 

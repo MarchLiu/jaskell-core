@@ -13,7 +13,7 @@ class Int extends Parsec[String, Char] {
 
   override def apply[S <: State[Char]](s: S): String = {
     var sb: StringBuilder = new StringBuilder()
-    if (sign.either(s).isRight) {
+    if (sign.ask(s).isRight) {
       sb += '-'
     }
 

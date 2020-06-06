@@ -30,4 +30,9 @@ Jaskell Core 重新提炼 Jaskell 中的 Parsec 和 SQL 组件库，利用 Scala
  - add ? operator
  
 ### 0.4.1
+
  - add expression parser
+
+### 0.4.2
+ 
+ - fixed a binary bug.

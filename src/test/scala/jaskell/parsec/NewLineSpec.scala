@@ -18,8 +18,8 @@ class NewLineSpec extends AnyFlatSpec with Matchers{
     val enter = new Newline()
 
     val c = for{
-      _ <- ch('\r') either state
-      re <- enter either state
+      _ <- ch('\r') ask state
+      re <- enter ask state
     } yield re
 
     c.isRight should be (true)

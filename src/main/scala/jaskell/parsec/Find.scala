@@ -12,7 +12,7 @@ class Find[T, E](val psc: Parsec[T, E]) extends Parsec[T, E] {
     var error: ParsecException = null
     var re: Option[T] = Option.empty
     while (re.isEmpty) {
-      psc.either(s) match {
+      psc.ask(s) match {
         case Right(value) =>
           re = Some(value)
         case Left(err: ParsecException) =>

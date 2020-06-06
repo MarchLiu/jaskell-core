@@ -20,8 +20,8 @@ class SepEndBy[T, E](val parser: Parsec[T, E], val sep: Parsec[_, E]) extends Pa
       breakable {
         while (true) {
           val result = for {
-            item <- p either s
-            _ <- separator either s
+            item <- p ask s
+            _ <- separator ask s
           } yield item
           result match {
             case Right(v) => re += v

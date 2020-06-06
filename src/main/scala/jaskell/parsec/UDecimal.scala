@@ -15,7 +15,7 @@ class UDecimal extends Parsec[String, Char]{
   override def apply[S <: State[Char]](s: S): String = {
     val sb: mutable.StringBuilder = new mutable.StringBuilder();
     sb ++= uint(s)
-    dot.either(s) match {
+    dot.ask(s) match {
       case Left(_) => sb.mkString
       case Right(_) =>
         sb += '.'

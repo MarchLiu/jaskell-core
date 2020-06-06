@@ -26,6 +26,8 @@ object Txt {
 
   def udecimal: UDecimal = new UDecimal
 
+  def scNumber: ScNumber = new ScNumber
+
   def digit: Digit = new Digit
 
   def integer: Int = new Int
@@ -51,5 +53,6 @@ object Txt {
 
   implicit def stringToText(content: String) : Parsec[String, Char] = Text(content)
   implicit def charToCh(ch: Char) : Parsec[Char, Char] = Ch(ch)
+  implicit def stringToState(content: String) : TxtState = TxtState(content)
 
 }

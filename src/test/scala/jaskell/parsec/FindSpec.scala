@@ -15,18 +15,17 @@ import jaskell.parsec.Combinator._
 class FindSpec extends AnyFlatSpec with Matchers {
   "Simple" should " find token in content" in {
     val data = "It is a junit test case for find parsec."
-    val state = State(data)
+
     val parser = Find(text("find"))
-    val re = parser(state)
+    val re = parser parse data
     re should be ("find")
   }
 
   "Failed" should "mismatch any content" in {
     val data = "It is a junit test case for find parsec."
-    val state = State(data)
     val parsec = find(text("Fail"))
     a[ParsecException] should be thrownBy {
-      parsec(state)
+      parsec parse data
     }
   }
 }

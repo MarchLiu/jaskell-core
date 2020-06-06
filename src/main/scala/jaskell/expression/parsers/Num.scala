@@ -1,7 +1,7 @@
 package jaskell.expression.parsers
 
 import jaskell.expression._
-import jaskell.parsec.{Decimal, Parsec, State}
+import jaskell.parsec.{Decimal, Parsec, ScNumber, State}
 
 /**
  * TODO
@@ -12,9 +12,9 @@ import jaskell.parsec.{Decimal, Parsec, State}
  */
 class Num extends Parsec[Expression, Char] {
 
-  import jaskell.parsec.Txt.decimal
+  import jaskell.parsec.Txt.scNumber
 
-  val parser: Decimal = decimal
+  val parser: ScNumber = scNumber
 
 
   override def apply[S <: State[Char]](s: S): Expression = {

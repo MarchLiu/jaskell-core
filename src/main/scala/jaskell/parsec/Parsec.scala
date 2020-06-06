@@ -14,7 +14,12 @@ trait Parsec[T, E] {
   @throws[ParsecException]
   def apply[S <: State[E]](s: S): T
 
-  def either[S <: State[E]](s: S): Either[Exception, T] = {
+  def parse(content: Seq[E]): T = {
+    val st = State(content)
+    this apply st
+  }
+
+  def ask[S <: State[E]](s: S): Either[Exception, T] = {
     try Right(apply(s))
     catch {
       case e: Exception =>
@@ -44,19 +49,18 @@ trait Parsec[T, E] {
     }
   }
 
-  def >> [O](p: Parsec[O, E]): Parsec[O, E] = new Parsec[O, E] {
+  def >>[O](p: Parsec[O, E]): Parsec[O, E] = new Parsec[O, E] {
     def apply[S <: State[E]](s: S): O = {
       Parsec.this apply s
       p(s)
     }
   }
 
-
-  def >>= [O](binder: T => Parsec[O, E]): Parsec[O, E] = new Parsec[O, E] {
+  def >>=[O](binder: T => Parsec[O, E]): Parsec[O, E] = new Parsec[O, E] {
     def apply[S <: State[E]](s: S): O = binder(Parsec.this apply s) apply s
   }
 
-  def ? [S <: State[E]](s: S): Either[Exception, T] = either(s)
+  def ?[S <: State[E]](s: S): Either[Exception, T] = ask(s)
 }
 
 object Parsec {
@@ -65,5 +69,6 @@ object Parsec {
       override def apply[St <: State[E]](s: St): T = parser(s)
     }
   }
+
 }
 
