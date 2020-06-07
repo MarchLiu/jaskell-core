@@ -9,7 +9,7 @@ import scala.collection.mutable
  * @version 1.0.0
  */
 class Decimal extends Parsec[String, Char] {
-  val sign: Parsec[String, Char] = (new Try(Ch('-')) >> Return[String, Char]("-")) <|> Return("")
+  val sign: Parsec[String, Char] = new Try(Text("-")) <|> Return("")
   val udicemal = new UDecimal()
 
   override def ask(st: State[Char]): Either[Exception, String] = {

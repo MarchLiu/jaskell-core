@@ -98,14 +98,14 @@ class ExpressionSpec extends AnyFlatSpec with Matchers {
 
   "Scientific" should "compute a complex ploy expression has scientific notation" in {
     val content = "5 * (3 + 7e2) - -22.5"
-    val re = p parse content
+    val re = p ! content
     val exp = re.makeAst
     exp.eval should be(3537.5)
   }
 
   "Scientific More" should "compute a complex ploy expression of more scientific notation numbers" in {
     val content = "5 * (3E-3 + 7) - -22.5e8"
-    val re = p parse content
+    val re = p ! content
     val exp = re.makeAst
     exp.eval should be(2.250000035015E9)
   }
@@ -116,6 +116,5 @@ class ExpressionSpec extends AnyFlatSpec with Matchers {
       case Left(error) => throw error
       case Right(exp) => exp.makeAst.eval should be (54.14)
     }
-
   }
 }
