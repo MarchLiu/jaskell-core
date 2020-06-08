@@ -8,7 +8,7 @@ import scala.language.postfixOps
  * @version 1.0.0
  */
 class Skip[E](val psc: Parsec[_, E]) extends Parsec[Unit, E] {
-  val p = new Try(psc)
+  val p: Try[_, E] = Try(psc)
 
   override def ask(s: State[E]): Either[Exception, Unit] = {
 

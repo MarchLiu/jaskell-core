@@ -13,16 +13,14 @@ import scala.collection.mutable
 class SepBy1[T, E](val parsec: Parsec[T, E], val by: Parsec[_, E]) extends Parsec[Seq[T], E] {
   val b = new Try(by)
   val p = new Try[T, E](parsec)
+  val psc: Parsec[T, E] = b >> p
 
   override def ask(s: State[E]): Either[Exception, Seq[T]] = {
     val re = new mutable.ListBuffer[T]
     parsec ? s map { head =>
       re += head
       while (true) {
-        (for {
-          _ <- b ? s
-          r <- p ? s
-        } yield r) match {
+        psc ? s match {
           case Right(value) => re += value
           case Left(_) => return Right(re.toSeq)
         }

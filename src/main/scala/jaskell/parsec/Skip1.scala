@@ -1,7 +1,5 @@
 package jaskell.parsec
 
-import java.io.EOFException
-
 /**
  * Skip1 p applies the parser p one or more times, skipping its result.
  *
@@ -10,10 +8,9 @@ import java.io.EOFException
  */
 class Skip1[E](val psc: Parsec[_, E]) extends Parsec[Unit, E] {
   val skip = new Skip(psc)
+  val parser: Parsec[Unit, E] = psc >> skip
 
-  override def ask(s: State[E]): Either[Exception, Unit] = {
-    psc ? s flatMap {_ => skip ? s}
-  }
+  override def ask(s: State[E]): Either[Exception, Unit] = parser ? s
 }
 
 object Skip1 {

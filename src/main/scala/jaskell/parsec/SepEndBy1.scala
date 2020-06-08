@@ -6,7 +6,7 @@ import scala.collection.mutable
 import scala.util.control.Breaks._
 
 /**
- * sepEndBy1 p sep parses one or more occurrences of p, separated and optionally ended by sep.
+ * SepEndBy1 p sep parses one or more occurrences of p, separated and optionally ended by sep.
  * Returns a list of values returned by p.
  *
  * @author mars
@@ -14,7 +14,8 @@ import scala.util.control.Breaks._
  */
 class SepEndBy1[T, E](val parser: Parsec[T, E], val sep: Parsec[_, E]) extends Parsec[Seq[T], E] {
   val separator = new Try(sep)
-  val p = new Try(parser)
+  val p: Try[T, E] = Try(parser)
+  val psc: Parsec[T, E] = sep >> parser
 
   val parsec: Parsec[Seq[T], E] = new Parsec[Seq[T], E] {
     override def ask(s: State[E]): Either[Exception, Seq[T]] = {
@@ -23,15 +24,12 @@ class SepEndBy1[T, E](val parser: Parsec[T, E], val sep: Parsec[_, E]) extends P
         re += head
         while(true) {
           val tran = s.begin()
-          (for {
-            _ <- sep ? s
-            r <- parser ? s
-          } yield r) match {
+          psc ? s match {
             case Right(value) =>
               re += value
-              s.commit(tran)
+              s commit tran
             case Left(_) =>
-              s.rollback(tran)
+              s rollback tran
               return Right(re.toSeq)
           }
         }

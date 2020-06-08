@@ -8,9 +8,7 @@ package jaskell.parsec
  */
 class Return[T, E](val element: T) extends Parsec[T, E] {
 
-  override def ask(s: State[E]): Either[Exception, T] = {
-    Right(element)
-  }
+  override def ask(s: State[E]): Either[Exception, T] = Right(element)
 }
 
 object Return {

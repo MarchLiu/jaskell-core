@@ -9,6 +9,7 @@ import java.io.EOFException
  * @version 1.0.0
  */
 class Space extends Parsec[Char, Char] {
+
   override def ask(s: State[Char]): Either[Exception, Char] = {
     s.next() flatMap { re =>
       if(re.isSpaceChar) {
