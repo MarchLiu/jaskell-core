@@ -8,7 +8,15 @@ package jaskell.expression
  * @since 2020/06/02 21:36
  */
 class Product(l: Expression, r: Expression) extends Binary(l, r) {
-  override def eval: Double = left.eval * right.eval
+
+  override def eval(env: Env): Either[Exception, Double] = {
+    for {
+      lv <- left eval env
+      rv <- right eval env
+    } yield {
+      lv * rv
+    }
+  }
 
   override def priority: Int = 2
 }

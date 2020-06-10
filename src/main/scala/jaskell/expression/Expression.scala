@@ -8,6 +8,6 @@ package jaskell.expression
  * @since 2020/06/02 21:26
  */
 trait Expression {
-  def eval: Double
+  def eval(env: Env): Either[Exception, Double]
   def makeAst: Expression = this
 }

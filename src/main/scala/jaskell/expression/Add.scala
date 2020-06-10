@@ -8,7 +8,14 @@ package jaskell.expression
  * @since 2020/06/02 21:35
  */
 class Add(l: Expression, r: Expression) extends Binary(l, r) {
-  override def eval: Double = left.eval + right.eval
+  override def eval(env: Env): Either[Exception, Double] = {
+    for {
+      lv <- left.eval(env)
+      rv <- right.eval(env)
+    } yield {
+      lv + rv
+    }
+  }
 
   override def priority: Int = 1
 }
