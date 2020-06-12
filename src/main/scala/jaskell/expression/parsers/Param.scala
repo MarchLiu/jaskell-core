@@ -15,16 +15,8 @@ class Param extends Parsec[Expression, Char] {
   import jaskell.parsec.Combinator._
   import jaskell.parsec.Txt._
 
-  val head: Parsec[Char, Char] = (s: State[Char]) => {
-    s.next() flatMap { v =>
-      if (v.isLetter) {
-        Right(v)
-      } else {
-        Left(new ParsecException(s.status, s"expect a letter but get $v"))
-      }
-    }
-  }
-  val tail: Parsec[String, Char] = many(attempt(head) <|> attempt(digit)) >>= mkString
+  val head: Parsec[Char, Char] = letter
+  val tail: Parsec[String, Char] = many(attempt(letter) <|> attempt(digit)) >>= mkString
   val parser: Parsec[String, Char] = s => for {
     h <- head ? s
     t <- tail ? s
