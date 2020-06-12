@@ -24,7 +24,7 @@ class Param extends Parsec[Expression, Char] {
       }
     }
   }
-  val tail: Parsec[String, Char] = many(attempt(head) <|> attempt(digit)) >>= { v => Return(v.mkString) }
+  val tail: Parsec[String, Char] = many(attempt(head) <|> attempt(digit)) >>= mkString
   val parser: Parsec[String, Char] = s => for {
     h <- head ? s
     t <- tail ? s

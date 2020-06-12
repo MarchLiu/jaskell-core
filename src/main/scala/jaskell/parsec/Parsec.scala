@@ -57,8 +57,8 @@ trait Parsec[T, E] {
     this ask s flatMap {_ => p ask s}
   }
 
-  def >>=[O](binder: T => Parsec[O, E]): Parsec[O, E] = (s: State[E]) => {
-    this ask s flatMap {value => binder(value) ask s}
+  def >>=[O](binder: Binder[O, T, E]): Parsec[O, E] = (s: State[E]) => {
+    this ask s flatMap {value => binder(value) ? s}
   }
 
   def ? (s: State[E]): Either[Exception, T] = ask(s)

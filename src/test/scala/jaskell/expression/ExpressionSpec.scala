@@ -77,14 +77,14 @@ class ExpressionSpec extends AnyFlatSpec with Matchers {
 
   "Ploy Quote" should "compute a ploy expression include quote" in {
     val content: State[Char] = "5 * (3 + 7)"
-    val re = p apply content
+    val re = p ! content
     val exp = re.makeAst
     exp.eval(emptyEnv) should be(Right(50))
   }
 
   "Ploy Complex" should "compute a complex ploy expression include quote" in {
     val content = "5 * (3 + 7) - 22.5"
-    val re = p parse content
+    val re = p ! content
     val exp = re.makeAst
     exp.eval(emptyEnv) should be(Right(27.5))
   }
@@ -92,7 +92,7 @@ class ExpressionSpec extends AnyFlatSpec with Matchers {
   "More Complex" should "compute a complex ploy expression has double sub" in {
     val content = "5 * (3 + 7) - -22.5"
     val p = new Parser
-    val re = p parse content
+    val re = p ! content
     val exp = re.makeAst
     exp.eval(emptyEnv) should be(Right(72.5))
   }
@@ -113,20 +113,14 @@ class ExpressionSpec extends AnyFlatSpec with Matchers {
 
   "Normal Compute" should "compute a normal expression" in {
     val content:State[Char] = "3.14 + 7 * 8 - (2 + 3)"
-    p ? content map {_.makeAst} match {
-      case Left(error) => throw error
-      case Right(exp) => exp.makeAst.eval(emptyEnv) should be (Right(54.14))
-    }
+    p ? content flatMap {_.makeAst eval emptyEnv} should be (Right(54.14))
   }
 
   "Parameters Compute" should "compute a parameters expression" in {
     val env = emptyEnv
     env.put("x", 13)
     val content:State[Char] = "3.14 + 7 * 8 - (2 + x)"
-    p ? content map {_.makeAst} match {
-      case Left(error) => throw error
-      case Right(exp) => exp.makeAst.eval(env) should be (Right(44.14))
-    }
+    p ? content flatMap {_.makeAst eval env} should be (Right(44.14))
   }
 
 }
