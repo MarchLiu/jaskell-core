@@ -12,9 +12,13 @@ import scala.collection.mutable
 class Select extends Statement with CouldFrom with Query with CouldUnion {
 
   val columns: mutable.ListBuffer[CouldBeColumn] = new mutable.ListBuffer[CouldBeColumn]
+  var isDistinct: Boolean = false
 
   override def script: String = {
     val sb: mutable.StringBuilder = new mutable.StringBuilder("SELECT ")
+    if(isDistinct){
+      sb ++= "DISTINCT "
+    }
     sb ++= columns.map(_.script).mkString(", ")
     sb.mkString
   }
@@ -25,6 +29,11 @@ class Select extends Statement with CouldFrom with Query with CouldUnion {
       re(idx).order(idx + 1)
     }
     re
+  }
+
+  def distinct: this.type  = {
+    isDistinct = true
+    this
   }
 
   def apply(names: CouldBeColumn *) : this.type = {
