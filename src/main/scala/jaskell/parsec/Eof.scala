@@ -15,6 +15,7 @@ class Eof[E] extends Parsec [Unit, E]{
         Left(new ParsecException(s.status, s"exception eof but $re"))
       case Left(_:EOFException) =>
         Right()
+      case left: Left[Exception, E] => left.asInstanceOf
     }
   }
 }
