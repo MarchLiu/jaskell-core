@@ -3,7 +3,7 @@
 Jaskell Core 重新提炼 Jaskell 中的 Parsec 和 SQL 组件库，利用 Scala 
 的编程能力，重建更高质量的代码。
 
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.marchliu/jaskell-core.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.marchliu%22%20AND%20a:%22jaskell-core%22)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.marchliu/jaskell-core_2.13.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.marchliu%22%20AND%20a:%22jaskell-core_2.13%22)
 
 # INSTALLATION
 
@@ -12,7 +12,7 @@ Jaskell Core 重新提炼 Jaskell 中的 Parsec 和 SQL 组件库，利用 Scala
 ```xml
 <dependency>
   <groupId>io.github.marchliu</groupId>
-  <artifactId>jaskell-core</artifactId>
+  <artifactId>jaskell-core_2.13</artifactId>
   <version>0.5.3</version>
 </dependency>
 ```
@@ -20,66 +20,66 @@ Jaskell Core 重新提炼 Jaskell 中的 Parsec 和 SQL 组件库，利用 Scala
 ## Gradle
 
 ```groovy
-implementation 'io.github.marchliu:jaskell-core:0.5.3'
+implementation 'io.github.marchliu:jaskell-core_2.13:0.5.3'
 ```
 
 ## Gradle Kotlin
 
 ```
-implementation("io.github.marchliu:jaskell-core:0.5.3")
+implementation("io.github.marchliu:jaskell-core_2.13:0.5.3")
 ```
 
 ## SBT
 
-```scala
-libraryDependencies += "io.github.marchliu" % "jaskell-core" % "0.5.3"
+```sbt
+libraryDependencies += "io.github.marchliu" % "jaskell-core_2.13" % "0.5.3"
 ```
 
 ## Apache Ivy
 
 ```xml
-<dependency org="io.github.marchliu" name="jaskell-core" rev="0.5.3" />
+<dependency org="io.github.marchliu" name="jaskell-core_2.13" rev="0.5.3" />
 ```
 
 ## Groovy Grap
 
 ```groovy
 @Grapes(
-  @Grab(group='io.github.marchliu', module='jaskell-core', version='0.5.3')
+  @Grab(group='io.github.marchliu', module='jaskell-core_2.13', version='0.5.3')
 )
 ```
 
 ## Leiningen
 
 ```clojure
-[io.github.marchliu/jaskell-core "0.5.3"]
+[io.github.marchliu/jaskell-core_2.13 "0.5.3"]
 ```
 
 ## Apache Bluildr
 
 ```
-'io.github.marchliu:jaskell-core:jar:0.5.3'
+'io.github.marchliu:jaskell-core_2.13:jar:0.5.3'
 ```
 
 ## Maven Central Badge
 
 ```
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.marchliu/jaskell-core.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.marchliu%22%20AND%20a:%22jaskell-core%22)```
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.marchliu/jaskell-core_2.13.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.marchliu%22%20AND%20a:%22jaskell-core_2.13%22)
 ```
 
 ## PURL
 
 ```
-pkg:maven/io.github.marchliu/jaskell-core@0.5.3
+pkg:maven/io.github.marchliu/jaskell-core_2.13@0.5.3
 ```
 
 ### Bazel
 
 ```
 maven_jar(
-    name = "jaskell-core",
-    artifact = "io.github.marchliu:jaskell-core:0.5.3",
-    sha1 = "6a405e182efbd5bf1923b5b83cbbc1890329e759",
+    name = "jaskell-core_2.13",
+    artifact = "io.github.marchliu:jaskell-core_2.13:0.5.3",
+    sha1 = "b58ed93199e445d043949561fdc1fea710d60442",
 )
 ```
 
