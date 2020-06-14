@@ -31,7 +31,7 @@ implementation("io.github.marchliu:jaskell-core_2.13:0.5.3")
 
 ## SBT
 
-```sbt
+```sbtshell
 libraryDependencies += "io.github.marchliu" % "jaskell-core_2.13" % "0.5.3"
 ```
 

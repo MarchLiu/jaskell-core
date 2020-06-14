@@ -13,7 +13,7 @@ abstract class Binary(var left: Expression, var right: Expression) extends Expre
   override def makeAst: Expression = {
     this.left = this.left.makeAst
     this.right = this.right.makeAst
-    right.makeAst match {
+    right match {
       case r: Binary =>
         if (this.priority >= r.priority) {
           val lx = r.left
