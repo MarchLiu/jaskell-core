@@ -10,7 +10,7 @@ class UInt extends Parsec[String, Char]{
   val psc = new Many1[Char, Char](new Digit())
 
   override def ask(s: State[Char]): Either[Exception, String] = {
-    psc ask s map {_.mkString}
+    psc ? s map {_.mkString}
   }
 }
 

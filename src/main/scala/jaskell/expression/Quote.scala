@@ -13,5 +13,3 @@ class Quote(val exp: Expression) extends Expression {
 
   override def makeAst: Expression = new Quote(exp.makeAst)
 }
-
-

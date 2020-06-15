@@ -1,7 +1,9 @@
 # Jaskell Core
 
-Jaskell Core 重新提炼 Jaskell 中的 Parsec 和 SQL 组件库，利用 Scala 
-的编程能力，重建更高质量的代码。
+Jaskell Core is a utils library made used scala. It includes a parsec combinators 
+library, a SQL helper library and a arithmetic expressions parser.
+
+[Jaskell java8](http://github.com/MarchLiu/jaskell-java8) is a transplant edition for java8 projects.
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.marchliu/jaskell-core_2.13.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.marchliu%22%20AND%20a:%22jaskell-core_2.13%22)
 
