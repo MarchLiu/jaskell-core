@@ -12,11 +12,11 @@ class NCh(val char: Char, val caseSensitive: Boolean) extends Parsec[Char, Char]
   override def ask(s: State[Char]): Either[Exception, Char] = {
     s.next() flatMap { c =>
       if (caseSensitive) {
-        if (chr == c) {
+        if (chr != c) {
           return Right(c)
         }
       } else {
-        if (chr == c.toLower) {
+        if (chr != c.toLower) {
           return Right(c)
         }
       }

@@ -136,3 +136,8 @@ maven_jar(
 
  - add distinct
  
+### 0.5.4
+
+ - bug in not char fixed
+ - add injection check spec 
+ 
