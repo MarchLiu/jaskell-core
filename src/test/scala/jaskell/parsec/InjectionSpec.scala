@@ -13,7 +13,7 @@ import org.scalatest.matchers.should.Matchers
  */
 class InjectionSpec extends AnyFlatSpec with Matchers {
 
-  import jaskell.parsec.Atom.one
+  import jaskell.parsec.Atom.{one, eof}
   import jaskell.parsec.Combinator._
   import jaskell.parsec.Txt._
 
@@ -37,7 +37,10 @@ class InjectionSpec extends AnyFlatSpec with Matchers {
   val content: Parsec[String, Char] = attempt(noString) <|> stringContent
 
   val parser: Parsec[String, Char] =
-    many(notEof >> content) >>= ((value: Seq[String]) => (_: State[Char]) => Right(value.mkString))
+    many(notEof >> content) >>= ((value: Seq[String]) => (s: State[Char]) => for {
+      _ <- eof ? s
+    } yield value.mkString)
+
 
   "Simple" should "match some regular content without string" in {
     val content: State[Char] = "a data without text content"
@@ -45,8 +48,8 @@ class InjectionSpec extends AnyFlatSpec with Matchers {
   }
 
   "SimpleString" should "match content in string literal" in {
-    val content: State[Char] = "'a data without text content'"
-    (parser ? content) should be(Right("a data without text content"))
+    val content: State[Char] = "'a data included text content'"
+    (parser ? content) should be(Right("a data included text content"))
   }
 
   "Escape" should "match content in string literal" in {
