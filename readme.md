@@ -141,3 +141,7 @@ maven_jar(
  - bug in not char fixed
  - add injection check spec 
  
+### 0.5.5
+
+ - add get message method for parsec exception
+ 

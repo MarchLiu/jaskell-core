@@ -9,4 +9,5 @@ import scala.math.Ordering.String
  * @version 1.0.0
  */
 class ParsecException(val status: Any, val message: String) extends Exception {
+  override def getMessage: String = message
 }
