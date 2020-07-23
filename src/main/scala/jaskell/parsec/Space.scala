@@ -15,7 +15,7 @@ class Space extends Parsec[Char, Char] {
       if(re.isSpaceChar) {
         Right(re)
       } else {
-        Left(new ParsecException(s.status, s"Expect $re is space."))
+        s.trap(s"Expect $re is space.")
       }
     }
   }

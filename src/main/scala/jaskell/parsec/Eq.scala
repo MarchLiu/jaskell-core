@@ -13,7 +13,7 @@ class Eq[E](val element: E) extends Parsec[E, E] {
       if(element == data) {
         return Right(element)
       }
-      Left(new ParsecException(status = s.status, s"expect $element at ${s.status} but $data"))
+      s.trap(s"expect $element at ${s.status} but $data")
     }
   }
 }

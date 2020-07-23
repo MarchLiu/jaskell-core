@@ -15,7 +15,7 @@ class Digit extends Parsec[Char, Char] {
       if (re.isDigit) {
         Right(re)
       } else {
-        Left(new ParsecException(s.status, s"Expect $re is digit."))
+        s.trap(s"Expect $re is digit.")
       }
     }
   }

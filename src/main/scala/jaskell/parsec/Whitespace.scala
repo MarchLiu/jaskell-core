@@ -14,7 +14,7 @@ class Whitespace extends Parsec [Char, Char]{
       if(c.isWhitespace){
         Right(c)
       } else {
-        Left(new ParsecException(s.status, s"expect a whitespace but get $c"))
+        s.trap(s"expect a whitespace but get $c")
       }
     }
   }

@@ -31,7 +31,7 @@ class Find[T, E](val psc: Parsec[T, E]) extends Parsec[T, E] {
         }
       }
     }
-    Left(new ParsecException(s.status, "find parsec should not run to this!"))
+    s.trap("find parsec should not run to this!")
   }
 }
 

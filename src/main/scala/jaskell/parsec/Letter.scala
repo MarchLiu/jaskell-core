@@ -12,7 +12,7 @@ class Letter extends Parsec [Char, Char]{
     if(v.isLetter){
       Right(v)
     } else {
-      Left(new ParsecException(s.status, s"expect a letter but get $v"))
+      s.trap(s"expect a letter but get $v")
     }
   }
 }

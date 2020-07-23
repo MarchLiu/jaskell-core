@@ -12,7 +12,7 @@ class Eof[E] extends Parsec [Unit, E]{
   override def ask(s: State[E]): Either[Exception, Unit] = {
     s.next() match {
       case Right(re) =>
-        Left(new ParsecException(s.status, s"exception eof but $re"))
+        s.trap(s"exception eof but $re")
       case Left(_:EOFException) =>
         Right()
       case left: Left[Exception, E] => left.asInstanceOf

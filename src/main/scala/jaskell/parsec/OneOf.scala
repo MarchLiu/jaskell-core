@@ -15,7 +15,7 @@ class OneOf[T](val items:Set[T]) extends Parsec[T, T] {
       if(items.contains(v)){
         Right(v)
       }else{
-        Left(new ParsecException(s.status, s"expect a value in ${items} but get $v"))
+        s.trap(s"expect a value in ${items} but get $v")
       }
     }}
   }

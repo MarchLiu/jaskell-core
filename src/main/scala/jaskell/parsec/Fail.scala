@@ -10,7 +10,7 @@ class Fail[E](val msg: String, val objects: Any*) extends Parsec[E, E] {
   val message: String = msg.format(objects)
 
   override def ask(s: State[E]): Either[Exception, E] = {
-    Left(new ParsecException(s.status, message))
+    s.trap(message)
   }
 }
 

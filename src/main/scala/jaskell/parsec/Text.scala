@@ -19,8 +19,7 @@ class Text(val text: String, val caseSensitive: Boolean) extends Parsec[String, 
         case Right(data) =>
           val dataChar = if (caseSensitive) data else data.toLower
           if (c != dataChar) {
-            return Left(new ParsecException(s.status,
-              s"Expect $c of $text [$idx] (case sensitive $caseSensitive) at ${s.status} but get $data"))
+            return s.trap(s"Expect $c of $text [$idx] (case sensitive $caseSensitive) at ${s.status} but get $data")
           }
           idx += 1
           sb += data

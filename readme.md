@@ -145,3 +145,8 @@ maven_jar(
 
  - add get message method for parsec exception
  
+### 0.5.6
+
+ - add predicate parser
+ - add trap method in state for crate left parsec expeption
+ 

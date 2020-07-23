@@ -20,6 +20,10 @@ trait State[+E] {
   def rollback(tran: Tran): Unit
 
   def next(): Either[Exception, E]
+
+  def trap[T](message: String): Left[Exception, T] = {
+    Left(new ParsecException(this.status, message))
+  }
 }
 
 object State {

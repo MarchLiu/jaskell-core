@@ -25,9 +25,9 @@ class Choice[T, E](val parsecs: Seq[Parsec[T, E]]) extends Parsec[T, E] {
       }
     }
     if (err == null) {
-      Left(new ParsecException(status, "Choice Error : All parsec parsers failed."))
+      s.trap("Choice Error : All parsec parsers failed.")
     } else {
-      Left(new ParsecException(status, s"Choice Error $err, stop at $status"))
+      s.trap(s"Choice Error $err, stop at $status")
     }
   }
 }

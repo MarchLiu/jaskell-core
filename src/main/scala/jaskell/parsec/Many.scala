@@ -22,7 +22,7 @@ class Many[T, E](val parsec: Parsec[T, E]) extends Parsec[Seq[T], E] {
           return Right(re.toSeq)
       }
     }
-    Left(new ParsecException(s.status, "many parsec should arrived this for never"))
+    s.trap("many parsec should arrived this for never")
   }
 }
 

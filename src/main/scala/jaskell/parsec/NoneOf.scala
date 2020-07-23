@@ -14,7 +14,7 @@ class NoneOf[E](val items: Set[E]) extends Parsec[E, E] {
     s.next() match {
       case Right(re) =>
         if (items.contains(re)) {
-          Left(new ParsecException(s.status, s"expect a item none of $items but got $re"))
+          s.trap(s"expect a item none of $items but got $re")
         } else {
           Right(re)
         }
