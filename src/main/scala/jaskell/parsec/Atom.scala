@@ -22,4 +22,6 @@ object Atom {
   def oneOf[E](data: Set[E]): OneOf[E] = new OneOf[E](data)
 
   def noneOf[E](data: Set[E]): NoneOf[E] = new NoneOf[E](data)
+
+  def is[E](predicate: Function[E, Boolean]): Is[E] = new Is(predicate)
 }

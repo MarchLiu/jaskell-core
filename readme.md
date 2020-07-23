@@ -150,3 +150,6 @@ maven_jar(
  - add predicate parser
  - add trap method in state for crate left parsec expeption
  
+ ### 0.5.7
+  
+  - add is method in atom namespace
