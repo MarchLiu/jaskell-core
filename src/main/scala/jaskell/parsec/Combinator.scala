@@ -7,52 +7,52 @@ package jaskell.parsec
  * @version 1.0.0
  */
 object Combinator {
-  def attempt[T, E](parser: Parsec[T, E]): Try[T, E] = {
-    new Try[T, E](parser)
+  def attempt[E, T](parser: Parsec[E, T]): Attempt[E, T] = {
+    new Attempt[E, T](parser)
   }
 
-  def ahead[T, E](parser: Parsec[T, E]): Ahead[T, E] = {
-    new Ahead[T, E](parser)
+  def ahead[E, T](parser: Parsec[E, T]): Ahead[E, T] = {
+    new Ahead[E, T](parser)
   }
 
-  def choice[T, E](parsers: Parsec[T, E]*): Choice[T, E] = {
-    new Choice[T, E](parsers)
+  def choice[E, T](parsers: Parsec[E, T]*): Choice[E, T] = {
+    new Choice[E, T](parsers)
   }
 
-  def many[T, E](parser: Parsec[T, E]): Many[T, E] = {
-    new Many[T, E](parser)
+  def many[E, T](parser: Parsec[E, T]): Many[E, T] = {
+    new Many[E, T](parser)
   }
 
-  def many1[T, E](parser: Parsec[T, E]): Many1[T, E] = {
-    new Many1[T, E](parser)
+  def many1[E, T](parser: Parsec[E, T]): Many1[E, T] = {
+    new Many1[E, T](parser)
   }
 
-  def manyTill[T, L, E](parser: Parsec[T, E], end: Parsec[L, E]): ManyTill[T, L, E] = {
-    new ManyTill[T, L, E](parser, end)
+  def manyTill[E, T, L](parser: Parsec[E, T], end: Parsec[E, L]): ManyTill[E, T, L] = {
+    new ManyTill[E, T, L](parser, end)
   }
 
-  def skip[E](parser: Parsec[_, E]): Skip[E] = {
+  def skip[E](parser: Parsec[E, _]): Skip[E] = {
     new Skip[E](parser)
   }
 
-  def skip1[E](parser: Parsec[_, E]): Skip1[E] = {
+  def skip1[E](parser: Parsec[E, _]): Skip1[E] = {
     new Skip1[E](parser)
   }
 
-  def sepBy[T, Sep, E](parser: Parsec[T, E], by: Parsec[Sep, E]): SepBy[T, E] = {
-    new SepBy[T, E](parser, by)
+  def sepBy[T, Sep, E](parser: Parsec[E, T], by: Parsec[E, Sep]): SepBy[E, T] = {
+    new SepBy[E, T](parser, by)
   }
 
-  def sepBy1[T, E](parser: Parsec[T, E], by: Parsec[_, E]): SepBy1[T, E] = {
-    new SepBy1[T, E](parser, by)
+  def sepBy1[E, T](parser: Parsec[E, T], by: Parsec[E, _]): SepBy1[E, T] = {
+    new SepBy1[E, T](parser, by)
   }
 
-  def find[T, E](parser: Parsec[T, E]): Find[T, E] = {
-    new Find[T, E](parser)
+  def find[E, T](parser: Parsec[E, T]): Find[E, T] = {
+    new Find[E, T](parser)
   }
 
-  def between[T, E](open: Parsec[_, E], close: Parsec[_, E], parser: Parsec[T, E]): Parsec[T, E] = {
-    new Between[T, E](open, close, parser)
+  def between[E, T](open: Parsec[E, _], close: Parsec[E, _], parser: Parsec[E, T]): Parsec[E, T] = {
+    new Between[E, T](open, close, parser)
   }
 
 }

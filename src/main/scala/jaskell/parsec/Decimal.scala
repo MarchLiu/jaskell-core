@@ -1,6 +1,6 @@
 package jaskell.parsec
 
-import scala.collection.mutable
+import scala.util.Try
 
 /**
  * Decimal parser parse a decimal number with signed or no.
@@ -8,17 +8,15 @@ import scala.collection.mutable
  * @author mars
  * @version 1.0.0
  */
-class Decimal extends Parsec[String, Char] {
-  val sign: Parsec[String, Char] = new Try(Text("-")) <|> Return("")
+class Decimal extends Parsec[Char, String] {
+  val sign: Parsec[Char, String] = new Attempt(Text("-")) <|> Return("")
   val udicemal = new UDecimal()
 
-  override def ask(st: State[Char]): Either[Exception, String] = {
+  override def ask(st: State[Char]): Try[String] = {
     for {
       s <- sign ? st
       num <- udicemal ? st
-    } yield {
-      s + num
-    }
+    } yield s + num
   }
 }
 

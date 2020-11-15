@@ -1,7 +1,5 @@
 package jaskell.parsec
 
-import scala.math.Ordering.String
-
 /**
  * Parser throw ParsecException if failed.
  *

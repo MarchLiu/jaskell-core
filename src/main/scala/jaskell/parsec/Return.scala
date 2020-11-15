@@ -1,16 +1,18 @@
 package jaskell.parsec
 
+import scala.util.{Success, Try}
+
 /**
  * Return just lift a value to Parsec Parser.
  *
  * @author mars
  * @version 1.0.0
  */
-class Return[T, E](val element: T) extends Parsec[T, E] {
+class Return[E, T](val element: T) extends Parsec[E, T] {
 
-  override def ask(s: State[E]): Either[Exception, T] = Right(element)
+  override def ask(s: State[E]): Try[T] = Success(element)
 }
 
 object Return {
-  def apply[T, E](element: T): Return[T, E] = new Return(element)
+  def apply[E, T](element: T): Return[E, T] = new Return(element)
 }

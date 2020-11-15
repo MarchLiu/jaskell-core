@@ -1,5 +1,7 @@
 package jaskell.expression
 
+import scala.util.Try
+
 /**
  * TODO
  *
@@ -9,7 +11,7 @@ package jaskell.expression
  */
 class Divide(l: Expression, r: Expression) extends Binary(l, r) {
 
-  override def eval(env: Env): Either[Exception, Double] =
+  override def eval(env: Env): Try[Double] =
     for {
       lv <- left.eval(env)
       rv <- right.eval(env)

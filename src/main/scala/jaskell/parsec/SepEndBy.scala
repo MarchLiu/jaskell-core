@@ -1,6 +1,7 @@
 package jaskell.parsec
 
 import scala.collection.mutable
+import scala.util.{Failure, Success, Try}
 import util.control.Breaks._
 
 /**
@@ -10,25 +11,29 @@ import util.control.Breaks._
  * @author mars
  * @version 1.0.0
  */
-class SepEndBy[T, E](val parser: Parsec[T, E], val sep: Parsec[_, E]) extends Parsec[Seq[T], E] {
-  val separator = new Try(sep)
-  val p = new Try(parser)
-  val parsec: Parsec[Seq[T], E] = (s: State[E]) => {
+class SepEndBy[E, T](val parser: Parsec[E, T], val sep: Parsec[E, _]) extends Parsec[E, Seq[T]] {
+  val separator = new Attempt(sep)
+  val p = new Attempt(parser)
+  val parsec: Parsec[E, Seq[T]] = (s: State[E]) => {
     val re = new mutable.ListBuffer[T]
     breakable {
       while (true) {
-        val result = for {
-          item <- p ask s
-          _ <- separator ask s
-        } yield item
-        result match {
-          case Right(v) => re += v
-          case Left(_) => break()
+        if ((separator ? s).isFailure) {
+          break
+        }
+        val tran = s.begin()
+        p ? s match {
+          case Success(value) =>
+            re += value
+            s commit tran
+          case Failure(_) =>
+            s rollback tran
+            break
         }
       }
     }
-    Right(re.toSeq)
+    Success(re.toSeq)
   }
 
-  override def ask(s: State[E]): Either[Exception, Seq[T]] = parsec ? s
+  override def ask(s: State[E]): Try[Seq[T]] = parsec ? s
 }

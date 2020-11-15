@@ -2,6 +2,8 @@ package jaskell.parsec
 
 import java.io.EOFException
 
+import scala.util.{Failure, Success, Try}
+
 /**
  * Common State has int status and transaction market. It can apply to Seq[T] or any serial collection.
  *
@@ -16,37 +18,36 @@ trait CommonState[T] extends State[T] {
   var current: scala.Int = 0
   var tran: scala.Int = -1
 
-  @throws[EOFException]
-  def next(): Either[Exception, T] = {
+  def next(): Try[T] = {
     if (content.size <= current) {
-      Left(new EOFException())
+      Failure(new EOFException())
     } else {
       val re = content(current)
       current += 1
-      Right(re)
+      Success(re)
     }
   }
 
-  def status: scala.Int = {
+  def status: Status = {
     current
   }
 
-  def begin(): scala.Int = {
+  def begin(): Tran = {
     if (this.tran == -1) this.tran = this.current
     current
   }
 
-  def begin(tran: scala.Int): scala.Int = {
+  def begin(tran: Tran): Tran = {
     if (this.tran > tran) this.tran = tran
     this.tran
   }
 
-  def rollback(tran: scala.Int): Unit = {
+  def rollback(tran: Tran): Unit = {
     if (this.tran == tran) this.tran = -1
     this.current = tran
   }
 
-  def commit(tran: scala.Int): Unit = {
+  def commit(tran: Tran): Unit = {
     if (this.tran == tran) this.tran = -1
   }
 }

@@ -1,5 +1,7 @@
 package jaskell.expression
 
+import scala.util.Try
+
 /**
  * TODO
  *
@@ -9,7 +11,7 @@ package jaskell.expression
  */
 class Quote(val exp: Expression) extends Expression {
 
-  override def eval(env: Env): Either[Exception, Double] = exp.eval(env)
+  override def eval(env: Env): Try[Double] = exp.eval(env)
 
   override def makeAst: Expression = new Quote(exp.makeAst)
 }

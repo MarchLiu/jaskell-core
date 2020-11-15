@@ -1,5 +1,7 @@
 package jaskell.parsec
 
+import scala.util.{Failure, Success, Try}
+
 /**
  * Opt x p tries to apply parser p. If p fails without consuming input,
  * it returns the value x, otherwise the value returned by p.
@@ -7,17 +9,17 @@ package jaskell.parsec
  * @author Mars Liu
  * @version 1.0.0
  */
-class Opt[T, E](val p: Parsec[T, E], val otherwise: T) extends Parsec[T, E] {
+class Opt[E, T](val p: Parsec[E, T], val otherwise: T) extends Parsec[E, T] {
 
-  override def ask(s: State[E]): Either[Exception, T] = {
+  override def ask(s: State[E]): Try[T] = {
     val before = s.status
     p ? s match {
-      case right: Right[_, _] =>
+      case right: Success[_] =>
         right
-      case left: Left[_, _] =>
+      case left: Failure[_] =>
         val after = s.status
         if (before == after) {
-          Right(otherwise)
+          Success(otherwise)
         } else {
           left
         }
@@ -26,5 +28,5 @@ class Opt[T, E](val p: Parsec[T, E], val otherwise: T) extends Parsec[T, E] {
 }
 
 object Opt {
-  def apply[T, E](p: Parsec[T, E], otherwise: T): Opt[T, E] = new Opt(p, otherwise)
+  def apply[E, T](p: Parsec[E, T], otherwise: T): Opt[E, T] = new Opt(p, otherwise)
 }

@@ -2,25 +2,27 @@ package jaskell.parsec
 
 import java.io.EOFException
 
+import scala.util.{Failure, Success, Try}
+
 /**
  * Choice just the operator <|> in Haskell parsec
  *
  * @author mars
  * @version 1.0.0
  */
-class Choice[T, E](val parsecs: Seq[Parsec[T, E]]) extends Parsec[T, E] {
+class Choice[E, T](val parsecs: Seq[Parsec[E, T]]) extends Parsec[E, T] {
 
-  override def ask(s: State[E]): Either[Exception, T] = {
-    var err: Exception = null
+  override def ask(s: State[E]): Try[T] = {
+    var err: Throwable = null
     val status = s.status
     for (psc <- this.parsecs) {
       psc ? s match {
-        case right: Right[Exception, T] =>
+        case right: Success[T] =>
           return right
-        case Left(error) =>
+        case Failure(error) =>
           err = error
           if (status != s.status) {
-            return Left(error)
+            return Failure(error)
           }
       }
     }
@@ -33,6 +35,6 @@ class Choice[T, E](val parsecs: Seq[Parsec[T, E]]) extends Parsec[T, E] {
 }
 
 object Choice {
-  def apply[T, E](parsecs: Parsec[T, E]*): Choice[T, E] = new Choice(parsecs)
+  def apply[E, T](parsecs: Parsec[E, T]*): Choice[E, T] = new Choice(parsecs)
 
 }

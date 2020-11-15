@@ -107,7 +107,7 @@ maven_jar(
  - add documents for parsec parser
  - bug fixed about statement write action 
  - add <|> adn <?> operator
- - add opt, endBy and sepEndBy
+ - add opE, TndBy and sepEndBy
  - fixed int parser bug
  - fixed skipWhitespaces function error
  - add ? operator
@@ -153,3 +153,8 @@ maven_jar(
  ### 0.5.7
   
   - add is method in atom namespace
+  
+### 0.6
+
+ - redesigned type parameters to make them more functional
+ - all tests and expressions rewritten. 

@@ -1,6 +1,6 @@
 package jaskell.parsec
 
-import java.io.EOFException
+import scala.util.Try
 
 /**
  * Ahead use a parser to parse state, return the result and rollback whatever
@@ -8,9 +8,9 @@ import java.io.EOFException
  * @author mars
  * @version 1.0.0
  */
-class Ahead[T, E](var parser: Parsec[T, E]) extends Parsec[T, E] {
+class Ahead[E, T](var parser: Parsec[E, T]) extends Parsec[E, T] {
 
-  override def ask(s: State[E]): Either[Exception, T] = {
+  override def ask(s: State[E]): Try[T] = {
     val tran = s.begin()
     val result = parser ? s
     s.rollback(tran)
@@ -19,5 +19,5 @@ class Ahead[T, E](var parser: Parsec[T, E]) extends Parsec[T, E] {
 }
 
 object Ahead {
-  def apply[T, E](parser: Parsec[T, E]): Ahead[T, E] = new Ahead[T, E](parser)
+  def apply[E, T](parser: Parsec[E, T]): Ahead[E, T] = new Ahead[E, T](parser)
 }

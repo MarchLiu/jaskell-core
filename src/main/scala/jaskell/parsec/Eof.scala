@@ -2,20 +2,22 @@ package jaskell.parsec
 
 import java.io.EOFException
 
+import scala.util.{Failure, Success, Try}
+
 /**
  * Eof check state if get to end, It return nothing. Eof just success or failed.
  *
  * @author mars
  * @version 1.0.0
  */
-class Eof[E] extends Parsec [Unit, E]{
-  override def ask(s: State[E]): Either[Exception, Unit] = {
+class Eof[E] extends Parsec [E, Unit]{
+  override def ask(s: State[E]): Try[Unit] = {
     s.next() match {
-      case Right(re) =>
+      case Success(re) =>
         s.trap(s"exception eof but $re")
-      case Left(_:EOFException) =>
-        Right()
-      case left: Left[Exception, E] => left.asInstanceOf
+      case Failure(_:EOFException) =>
+        Success()
+      case left: Failure[E] => left.asInstanceOf
     }
   }
 }

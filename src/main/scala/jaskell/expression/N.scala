@@ -1,5 +1,7 @@
 package jaskell.expression
 
+import scala.util.{Success, Try}
+
 /**
  * TODO
  *
@@ -9,7 +11,7 @@ package jaskell.expression
  */
 class N(val num: java.lang.Number) extends Expression {
 
-  override def eval(env: Env): Either[Exception, Double] = Right(num.doubleValue())
+  override def eval(env: Env): Try[Double] = Success(num.doubleValue())
 }
 
 

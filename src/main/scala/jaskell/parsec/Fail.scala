@@ -1,5 +1,7 @@
 package jaskell.parsec
 
+import scala.util.Try
+
 /**
  * Fail do nothing but failed.
  *
@@ -9,7 +11,7 @@ package jaskell.parsec
 class Fail[E](val msg: String, val objects: Any*) extends Parsec[E, E] {
   val message: String = msg.format(objects)
 
-  override def ask(s: State[E]): Either[Exception, E] = {
+  override def ask(s: State[E]): Try[E] = {
     s.trap(message)
   }
 }

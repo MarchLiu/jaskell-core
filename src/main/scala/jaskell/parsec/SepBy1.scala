@@ -1,8 +1,7 @@
 package jaskell.parsec
 
-import java.io.EOFException
-
 import scala.collection.mutable
+import scala.util.{Failure, Success, Try}
 
 /**
  * SepBy1 p sep parses one or more occurrences of p, separated by sep. Returns a list of values returned by p.
@@ -10,26 +9,26 @@ import scala.collection.mutable
  * @author mars
  * @version 1.0.0
  */
-class SepBy1[T, E](val parsec: Parsec[T, E], val by: Parsec[_, E]) extends Parsec[Seq[T], E] {
-  val b = new Try(by)
-  val p = new Try[T, E](parsec)
-  val psc: Parsec[T, E] = b >> p
+class SepBy1[E, T](val parsec: Parsec[E, T], val by: Parsec[E, _]) extends Parsec[E, Seq[T]] {
+  val b = new Attempt(by)
+  val p = new Attempt[E, T](parsec)
+  val psc: Parsec[E, T] = b >> p
 
-  override def ask(s: State[E]): Either[Exception, Seq[T]] = {
+  override def ask(s: State[E]): Try[Seq[T]] = {
     val re = new mutable.ListBuffer[T]
     parsec ? s map { head =>
       re += head
       while (true) {
         psc ? s match {
-          case Right(value) => re += value
-          case Left(_) => return Right(re.toSeq)
+          case Success(value) => re += value
+          case Failure(_) => return Success(re.toSeq)
         }
       }
-      return Right(re.toSeq)
+      return Success(re.toSeq)
     }
   }
 }
 
 object SepBy1 {
-  def apply[T, E](parsec: Parsec[T, E], by: Parsec[_, E]): SepBy1[T, E] = new SepBy1(parsec, by)
+  def apply[E, T](parsec: Parsec[E, T], by: Parsec[E, _]): SepBy1[E, T] = new SepBy1(parsec, by)
 }

@@ -1,7 +1,9 @@
 package jaskell.expression.parsers
 
 import jaskell.expression.Expression
-import jaskell.parsec.{Ahead, Ch, Eof, Parsec, SkipWhitespaces, State, Try}
+import jaskell.parsec.{Ahead, Attempt, Ch, Eof, Parsec, SkipWhitespaces, State}
+
+import scala.util.{Failure, Success, Try}
 
 /**
  * TODO
@@ -10,26 +12,26 @@ import jaskell.parsec.{Ahead, Ch, Eof, Parsec, SkipWhitespaces, State, Try}
  * @version 1.0.0
  * @since 2020/06/02 21:45
  */
-class Parser extends Parsec[Expression, Char] {
+class Parser extends Parsec[Char, Expression] {
 
   import jaskell.parsec.Txt.{skipWhiteSpaces, ch}
   import jaskell.parsec.Combinator.{attempt, ahead}
   import jaskell.parsec.Atom.eof
 
-  val rq: Try[Char, Char] = attempt(ch(')'))
+  val rq: Attempt[Char, Char] = attempt(ch(')'))
   val skips: SkipWhitespaces = skipWhiteSpaces
   val e: Eof[Char] = eof
 
-  val end: Ahead[Unit, Char] = ahead((s: State[Char]) => {
+  val end: Ahead[Char, Unit] = ahead((s: State[Char]) => {
     rq ? s match {
-      case Left(_) =>
+      case Failure(_) =>
         e ? s
-      case Right(_) =>
-        Right()
+      case Success(_) =>
+        Success()
     }
   })
 
-  override def ask(s: State[Char]): Either[Exception, Expression] = {
+  override def ask(s: State[Char]): Try[Expression] = {
     val np = attempt(attempt(new Num) <|> attempt(new Param) <|> new Q)
 
     np ? s flatMap { left =>
@@ -39,8 +41,8 @@ class Parser extends Parsec[Expression, Char] {
       } yield {
         e
       }) match {
-        case Right(_) => Right(left)
-        case Left(_) =>
+        case Success(_) => Success(left)
+        case Failure(_) =>
           val next = attempt(new A(left)) <|> attempt(new S(left)) <|> attempt(new P(left)) <|> new D(left)
           next ? s
       }

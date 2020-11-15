@@ -5,6 +5,8 @@ import java.io.EOFException
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
+import scala.util.Success
+
 /**
  * TODO
  *
@@ -18,12 +20,12 @@ class EqSpec extends AnyFlatSpec with Matchers{
 
     val eof = new Eof[Char]
 
-    (Eq('h') ? state) should be (Right('h'))
+    (Eq('h') ? state) should be (Success('h'))
     (Eq('e') apply state) should be ('e')
     (Eq('l') apply state) should be ('l')
     (Eq('l') apply state) should be ('l')
     a[ParsecException] should be thrownBy {
-      Try(Eq('l')) apply state
+      Attempt(Eq('l')) apply state
     }
     (Eq('o') apply state) should be ('o')
     eof apply state

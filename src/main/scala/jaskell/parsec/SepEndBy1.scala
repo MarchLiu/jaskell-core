@@ -1,8 +1,7 @@
 package jaskell.parsec
 
-import java.io.EOFException
-
 import scala.collection.mutable
+import scala.util.{Failure, Success, Try}
 import scala.util.control.Breaks._
 
 /**
@@ -12,31 +11,36 @@ import scala.util.control.Breaks._
  * @author mars
  * @version 1.0.0
  */
-class SepEndBy1[T, E](val parser: Parsec[T, E], val sep: Parsec[_, E]) extends Parsec[Seq[T], E] {
-  val separator = new Try(sep)
-  val p: Try[T, E] = Try(parser)
-  val psc: Parsec[T, E] = sep >> parser
+class SepEndBy1[E, T](val parser: Parsec[E, T], val sep: Parsec[E, _]) extends Parsec[E, Seq[T]] {
+  val separator = new Attempt(sep)
+  val p: Attempt[E, T] = Attempt(parser)
+  val psc: Parsec[E, T] = sep >> parser
 
-  val parsec: Parsec[Seq[T], E] = new Parsec[Seq[T], E] {
-    override def ask(s: State[E]): Either[Exception, Seq[T]] = {
-      val re = new mutable.ListBuffer[T]
-      parser ? s map { head =>
-        re += head
-        while(true) {
+  val parsec: Parsec[E, Seq[T]] = (s: State[E]) => {
+    val re = new mutable.ListBuffer[T]
+
+    parser ? s map { head =>
+      re += head
+      breakable {
+        while (true) {
+          if ((separator ? s).isFailure) {
+            break
+          }
+
           val tran = s.begin()
-          psc ? s match {
-            case Right(value) =>
+          p ? s match {
+            case Success(value) =>
               re += value
               s commit tran
-            case Left(_) =>
+            case Failure(_) =>
               s rollback tran
-              return Right(re.toSeq)
+              break
           }
         }
       }
-      Right(re.toSeq)
     }
+    Success(re.toSeq)
   }
 
-  override def ask(s: State[E]): Either[Exception, Seq[T]] = parsec ? s
+  override def ask(s: State[E]): Try[Seq[T]] = parsec ? s
 }

@@ -18,7 +18,7 @@ class AheadSpec extends AnyFlatSpec with Matchers {
   "Simple" should "Expect status stop after this" in {
     val content: String = "this is a string data."
     val state = State.apply(content)
-    val parser =  Parsec[String, Char] { s =>
+    val parser =  Parsec[Char, String] { s =>
       for {
         re <- text("this") ? (s)
         _ <- ahead (text(" is")) ? (s)
@@ -31,7 +31,7 @@ class AheadSpec extends AnyFlatSpec with Matchers {
   "Then" should "Check status get result and stop at is" in {
     val content: String = "this is a string data."
     val state = State.apply(content)
-    val parser = Parsec[String, Char] { s =>
+    val parser = Parsec[Char, String] { s =>
       for {
         _ <- text("this") ? s
         _ <- space ? s
@@ -46,7 +46,7 @@ class AheadSpec extends AnyFlatSpec with Matchers {
   "Fail" should "throw parsec exception from parser" in {
     val content: String = "this is a string data."
     val state = State apply content
-    val parser = Parsec[String, Char] { s =>
+    val parser = Parsec[Char, String] { s =>
       for {
         _ <- text("this") ? s
         _ <- space ? s

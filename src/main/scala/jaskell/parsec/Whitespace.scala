@@ -1,5 +1,7 @@
 package jaskell.parsec
 
+import scala.util.{Success, Try}
+
 /**
  * TODO
  *
@@ -9,10 +11,10 @@ package jaskell.parsec
  */
 class Whitespace extends Parsec [Char, Char]{
 
-  override def ask(s: State[Char]): Either[Exception, Char] = {
+  override def ask(s: State[Char]): Try[Char] = {
     s.next() flatMap { c =>
       if(c.isWhitespace){
-        Right(c)
+        Success(c)
       } else {
         s.trap(s"expect a whitespace but get $c")
       }

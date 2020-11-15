@@ -1,5 +1,7 @@
 package jaskell.parsec
 
+import scala.util.{Failure, Success, Try}
+
 /**
  * The parser try p behaves like parser p, except that it pretends that it hasn't consumed any input
  * when an error occurs.
@@ -11,21 +13,21 @@ package jaskell.parsec
  * @author Mars Liu
  * @version 1.0.0
  */
-class Try[T, E](val parsec: Parsec[T, E]) extends Parsec[T, E] {
+class Attempt[E, T](val parsec: Parsec[E, T]) extends Parsec[E, T] {
 
-  override def ask(s: State[E]): Either[Exception, T] = {
+  override def ask(s: State[E]): Try[T] = {
     val tran = s.begin()
     parsec ? s match {
-      case right: Right[_, _] =>
+      case right: Success[T] =>
         s commit tran
         right
-      case left: Left[_, _] =>
+      case left: Failure[T] =>
         s rollback tran
         left
     }
   }
 }
 
-object Try {
-  def apply[T, E](parsec: Parsec[T, E]): Try[T, E] = new Try(parsec)
+object Attempt {
+  def apply[E, T](parsec: Parsec[E, T]): Attempt[E, T] = new Attempt(parsec)
 }

@@ -1,6 +1,6 @@
 package jaskell.parsec
 
-import java.io.EOFException
+import scala.util.{Success, Try}
 
 /**
  * TODO
@@ -10,10 +10,10 @@ import java.io.EOFException
  */
 class Space extends Parsec[Char, Char] {
 
-  override def ask(s: State[Char]): Either[Exception, Char] = {
+  override def ask(s: State[Char]): Try[Char] = {
     s.next() flatMap { re =>
       if(re.isSpaceChar) {
-        Right(re)
+        Success(re)
       } else {
         s.trap(s"Expect $re is space.")
       }

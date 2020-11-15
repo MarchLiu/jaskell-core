@@ -1,6 +1,6 @@
 package jaskell.parsec
 
-import java.io.EOFException
+import scala.util.{Success, Try}
 
 /**
  * Digit parser return char if it is a digit
@@ -10,10 +10,10 @@ import java.io.EOFException
  */
 class Digit extends Parsec[Char, Char] {
 
-  override def ask(s: State[Char]): Either[Exception, Char] = {
+  override def ask(s: State[Char]): Try[Char] = {
     s.next() flatMap { re =>
       if (re.isDigit) {
-        Right(re)
+        Success(re)
       } else {
         s.trap(s"Expect $re is digit.")
       }

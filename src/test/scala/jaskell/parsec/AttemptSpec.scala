@@ -3,6 +3,8 @@ package jaskell.parsec
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
+import scala.util.Success
+
 /**
  * TODO
  *
@@ -10,13 +12,13 @@ import org.scalatest.matchers.should.Matchers
  * @version 1.0.0
  * @since 2020/05/12 22:33
  */
-class TrySpec extends AnyFlatSpec with Matchers {
+class AttemptSpec extends AnyFlatSpec with Matchers {
   "Simple" should "Run a simple test" in {
     val data = Seq("Hello", "World")
 
     val state = State[String](data)
     val idx = state.status
-    val tryIt = new Try[String, String](Eq("Hello"))
+    val tryIt = new Attempt[String, String](Eq("Hello"))
 
     val re = tryIt apply state
 
@@ -28,20 +30,19 @@ class TrySpec extends AnyFlatSpec with Matchers {
     val data = Seq("Hello", "World")
     val state = State[String](data)
     val idx = state.status
-    val tryIt = new Try[String, String](new Eq[String]("hello"))
+    val tryIt = new Attempt[String, String](new Eq[String]("hello"))
 
     a[ParsecException] should be thrownBy {
       tryIt apply state
     }
     idx should be(state.status)
 
-    val tryIti = new Try[String, String](Parsec[String, String] { s =>
+    val tryIti = new Attempt[String, String](Parsec[String, String] { s =>
       s.next() flatMap { content =>
         if (content.toLowerCase == "hello") {
-          Right(content)
+          Success(content)
         } else {
-          Left(new ParsecException(s.status,
-            s"expect a word match [Hello] and case insensitive but get [${content}]"))
+          state.trap(f"expect a word match [Hello] and case insensitive but get [${content}]")
         }
       }
     })

@@ -1,5 +1,7 @@
 package jaskell.parsec
 
+import scala.util.{Success, Try}
+
 /**
  * NoWhitespace success if the char is't any whitespace.
  *
@@ -7,12 +9,12 @@ package jaskell.parsec
  * @version 1.0.0
  */
 class NoWhitespace extends Parsec [Char, Char]{
-  override def ask(s: State[Char]): Either[Exception, Char] = {
+  override def ask(s: State[Char]): Try[Char] = {
     s.next() flatMap { c =>
       if(c.isWhitespace){
         s.trap(s"expect a char not whitespace but get $c")
       } else {
-        Right(c)
+        Success(c)
       }
     }
   }

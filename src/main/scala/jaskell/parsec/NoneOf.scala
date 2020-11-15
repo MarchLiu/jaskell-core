@@ -1,6 +1,6 @@
 package jaskell.parsec
 
-import java.io.EOFException
+import scala.util.{Failure, Success, Try}
 
 /**
  * NoneOf success if get a item none of any in prepared
@@ -10,15 +10,15 @@ import java.io.EOFException
  */
 class NoneOf[E](val items: Set[E]) extends Parsec[E, E] {
 
-  override def ask(s: State[E]): Either[Exception, E] = {
+  override def ask(s: State[E]): Try[E] = {
     s.next() match {
-      case Right(re) =>
+      case Success(re) =>
         if (items.contains(re)) {
           s.trap(s"expect a item none of $items but got $re")
         } else {
-          Right(re)
+          Success(re)
         }
-      case left: Left[_, _] => left
+      case left: Failure[_] => left
     }
   }
 }

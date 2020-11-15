@@ -1,5 +1,7 @@
 package jaskell.parsec
 
+import scala.util.{Success, Try}
+
 /**
  * If get a char match any of content, return it.
  *
@@ -9,15 +11,15 @@ package jaskell.parsec
 class ChIn(val content: String, val caseSensitive: Boolean) extends Parsec[Char, Char] {
   val contentSet: Set[Char] = if (caseSensitive) content.toSet else content.toLowerCase.toSet
 
-  override def ask(s: State[Char]): Either[Exception, Char] = {
+  override def ask(s: State[Char]): Try[Char] = {
     s.next() flatMap { c =>
       if (caseSensitive) {
         if (contentSet contains c) {
-          return Right(c)
+          return Success(c)
         }
       } else {
         if (contentSet contains c.toLower) {
-          return Right(c)
+          return Success(c)
         }
       }
       s.trap(s"expect any char in $content (case sensitive $caseSensitive) but get $c")

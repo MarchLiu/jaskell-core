@@ -11,7 +11,7 @@ object Atom {
 
   def eof[E]: Eof[E] = new Eof
 
-  def pack[T, E](value: T): Return[T, E] = new Return[T, E](value)
+  def pack[E, T](value: T): Return[E, T] = new Return[E, T](value)
 
   def fail[E](message: String, objects: Any*): Fail[E] = new Fail[E](message, objects)
 

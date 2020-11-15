@@ -1,15 +1,17 @@
 package jaskell.parsec
 
+import scala.util.{Success, Try}
+
 /**
  * TODO
  *
  * @author mars
  * @version 1.0.0
  */
-class SkipWhitespaces extends Parsec[Unit, Char] {
+class SkipWhitespaces extends Parsec[Char, Unit] {
   val parsec = new Skip[Char](new Whitespace())
 
-  override def ask(s: State[Char]): Either[Exception, Unit] = parsec ? s
+  override def ask(s: State[Char]): Try[Unit] = for {_ <- parsec ? s} yield ()
 }
 
 object SkipWhitespaces {

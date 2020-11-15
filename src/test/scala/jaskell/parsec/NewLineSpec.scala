@@ -22,7 +22,7 @@ class NewLineSpec extends AnyFlatSpec with Matchers{
       re <- enter ask state
     } yield re
 
-    c.isRight should be (true)
+    c.isSuccess should be (true)
     c foreach(re => re should be ('\n'))
   }
 

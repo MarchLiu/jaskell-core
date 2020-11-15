@@ -1,18 +1,20 @@
 package jaskell.parsec
 
+import scala.util.{Success, Try}
+
 /**
  * Skip1 p applies the parser p one or more times, skipping its result.
  *
  * @author mars
  * @version 1.0.0
  */
-class Skip1[E](val psc: Parsec[_, E]) extends Parsec[Unit, E] {
+class Skip1[E](val psc: Parsec[E, _]) extends Parsec[E, Unit] {
   val skip = new Skip(psc)
-  val parser: Parsec[Unit, E] = psc >> skip
+  val parser: Parsec[E, _] = psc >> skip
 
-  override def ask(s: State[E]): Either[Exception, Unit] = parser ? s
+  override def ask(s: State[E]): Try[Unit] = (parser ? s).flatMap(_ => Success())
 }
 
 object Skip1 {
-  def apply[E](psc: Parsec[_, E]): Skip1[E] = new Skip1[E](psc)
+  def apply[E](psc: Parsec[E, _]): Skip1[E] = new Skip1[E](psc)
 }

@@ -4,6 +4,8 @@ import jaskell.expression.{Expression, Product}
 import jaskell.parsec.Txt.skipWhiteSpaces
 import jaskell.parsec.{Parsec, SkipWhitespaces, State}
 
+import scala.util.Try
+
 /**
  * TODO
  *
@@ -11,15 +13,15 @@ import jaskell.parsec.{Parsec, SkipWhitespaces, State}
  * @version 1.0.0
  * @since 2020/06/02 21:44
  */
-class P(val prev: Expression) extends Parsec[Expression, Char] {
+class P(val prev: Expression) extends Parsec[Char, Expression] {
 
   import jaskell.parsec.Txt.ch
 
   val skips: SkipWhitespaces = skipWhiteSpaces
-  val op: Parsec[Unit, Char] = skips >> ch('*') >> skips
+  val op: Parsec[Char, Unit] = skips >> ch('*') >> skips
   val next = new Parser
 
-  override def ask(s: State[Char]): Either[Exception, Expression] = {
+  override def ask(s: State[Char]): Try[Expression] = {
     for {
       _ <- op ? s
       exp <- next ? s

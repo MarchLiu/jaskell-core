@@ -1,6 +1,6 @@
 package jaskell.parsec
 
-import java.io.EOFException
+import scala.util.{Success, Try}
 
 /**
  * OneOf success if item equals one of prepared.
@@ -10,10 +10,10 @@ import java.io.EOFException
  */
 class OneOf[T](val items:Set[T]) extends Parsec[T, T] {
 
-  override def ask(s: State[T]): Either[Exception, T] = {
+  override def ask(s: State[T]): Try[T] = {
     s.next() flatMap {v => {
       if(items.contains(v)){
-        Right(v)
+        Success(v)
       }else{
         s.trap(s"expect a value in ${items} but get $v")
       }

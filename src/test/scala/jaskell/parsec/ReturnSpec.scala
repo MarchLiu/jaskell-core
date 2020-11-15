@@ -13,7 +13,7 @@ import org.scalatest.matchers.should.Matchers
 class ReturnSpec extends AnyFlatSpec with Matchers{
   "Simple" should "Just pack a value" in {
     val state = State("Hello World")
-    val returns: Return[BigDecimal, Char] = Return(BigDecimal("3.1415926"))
+    val returns: Return[Char, BigDecimal] = Return(BigDecimal("3.1415926"))
     val status = state.status
     val re = returns(state)
     re should be (BigDecimal("3.1415926"))

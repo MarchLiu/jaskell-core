@@ -2,6 +2,7 @@ package jaskell.parsec
 
 import java.io.EOFException
 
+import scala.util.{Failure, Success, Try}
 import scala.util.control.Breaks._
 /**
  * Find try and next util success or eof.
@@ -9,24 +10,24 @@ import scala.util.control.Breaks._
  * @author mars
  * @version 1.0.0
  */
-class Find[T, E](val psc: Parsec[T, E]) extends Parsec[T, E] {
+class Find[E, T](val psc: Parsec[E, T]) extends Parsec[E, T] {
 
-  override def ask(s: State[E]): Either[Exception, T] = {
+  override def ask(s: State[E]): Try[T] = {
     var error: Exception = null
     breakable {
       while (true){
         psc ? s match {
-          case right: Right[_, _] =>
+          case right: Success[_] =>
             return right
-          case Left(err: ParsecException) =>
+          case Failure(err: ParsecException) =>
             if(error == null) {
               error = err
             }
-          case Left(err: Exception) =>
+          case Failure(err) =>
             if (error == null) {
-              return Left(err)
+              return Failure(err)
             } else {
-              return Left(error)
+              return Failure(error)
             }
         }
       }
@@ -36,5 +37,5 @@ class Find[T, E](val psc: Parsec[T, E]) extends Parsec[T, E] {
 }
 
 object Find {
-  def apply[T, E](psc: Parsec[T, E]): Find[T, E] = new Find(psc)
+  def apply[E, T](psc: Parsec[E, T]): Find[E, T] = new Find(psc)
 }

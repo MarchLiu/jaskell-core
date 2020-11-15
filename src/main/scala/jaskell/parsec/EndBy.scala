@@ -1,13 +1,15 @@
 package jaskell.parsec
 
+import scala.util.Try
+
 /**
  * EndBy p sep parses zero or more occurrences of p, separated and ended by sep. Returns a seq of values returned by p.
  *
  * @author Mars Liu
  * @version 1.0.0
  */
-class EndBy[T, E](val parser: Parsec[T, E], val sep: Parsec[_, E]) extends Parsec[Seq[T], E] {
-  val parsec:Parsec[Seq[T], E] = new Many((s: State[E]) => {
+class EndBy[E, T](val parser: Parsec[E, T], val sep: Parsec[E, _]) extends Parsec[E, Seq[T]] {
+  val parsec:Parsec[E, Seq[T]] = new Many((s: State[E]) => {
     for {
       re <- parser ? s
       _ <- sep ? s
@@ -16,9 +18,9 @@ class EndBy[T, E](val parser: Parsec[T, E], val sep: Parsec[_, E]) extends Parse
     }
   })
 
-  override def ask(s: State[E]): Either[Exception, Seq[T]] = parsec ? s
+  override def ask(s: State[E]): Try[Seq[T]] = parsec ? s
 }
 
 object EndBy {
-  def apply[T, E](parser: Parsec[T, E], sep: Parsec[_, E]): EndBy[T, E] = new EndBy(parser, sep)
+  def apply[E, T](parser: Parsec[E, T], sep: Parsec[E, _]): EndBy[E, T] = new EndBy(parser, sep)
 }

@@ -3,6 +3,7 @@ package jaskell.parsec
 import java.io.EOFException
 
 import scala.collection.mutable
+import scala.util.{Failure, Success, Try}
 
 /**
  * manyTill p end applies parser p zero or more times until parser end succeeds. Returns the list of
@@ -11,29 +12,30 @@ import scala.collection.mutable
  * @author Mars Liu
  * @version 1.0.0
  */
-class ManyTill[T, L, E](val parser: Parsec[T, E], val end: Parsec[L, E]) extends Parsec[Seq[T], E] {
-  val psc = new Try[T, E](parser)
-  val till = new Try[L, E](end)
+class ManyTill[E, T, L](val parser: Parsec[E, T], val end: Parsec[E, L]) extends Parsec[E, Seq[T]] {
+  val psc = new Attempt[E, T](parser)
+  val till = new Attempt[E, L](end)
 
 
 
-  override def ask(s: State[E]): Either[Exception, Seq[T]] = {
+  override def ask(s: State[E]): Try[Seq[T]] = {
     val re = new mutable.ListBuffer[T]
     while (true)  {
       till ask s match {
-        case Right(_) => return Right(re.toSeq)
-        case Left(error: EOFException) => return Left(error)
-        case Left(_: ParsecException) =>
+        case Success(_) => return Success(re.toSeq)
+        case Failure(error: EOFException) => return Failure(error)
+        case Failure(_: ParsecException) =>
           parser ask s match {
-            case Right(value) => re += value
-            case left: Left[Exception, Seq[T]] => return left
+            case Success(value) => re += value
+            case Failure(e) => Failure(e)
           }
+        case Failure(e) => Failure(e)
       }
     }
-    Right(re.toSeq)
+    Success(re.toSeq)
   }
 }
 
 object ManyTill {
-  def apply[T, L,  E](parser: Parsec[T, E], end: Parsec[L, E]): ManyTill[T, L, E] = new ManyTill(parser, end)
+  def apply[E, T, L](parser: Parsec[E, T], end: Parsec[E, L]): ManyTill[E, T, L] = new ManyTill(parser, end)
 }

@@ -1,5 +1,7 @@
 package jaskell.parsec
 
+import scala.util.{Success, Try}
+
 /**
  * TODO
  *
@@ -8,9 +10,9 @@ package jaskell.parsec
  * @since 2020/06/12 18:53
  */
 class Letter extends Parsec [Char, Char]{
-  override def ask(s: State[Char]): Either[Exception, Char] = s.next() flatMap  { v =>
+  override def ask(s: State[Char]): Try[Char] = s.next() flatMap  { v =>
     if(v.isLetter){
-      Right(v)
+      Success(v)
     } else {
       s.trap(s"expect a letter but get $v")
     }

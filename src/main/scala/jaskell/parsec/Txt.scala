@@ -52,9 +52,9 @@ object Txt {
   def text(value: String): Text = Text(value)
   def text(value: String, caseSensitive: Boolean): Text = Text(value, caseSensitive)
 
-  def mkString: Binder[String, Seq[Char], Char] = new MkString
+  def mkString: Binder[Char, Seq[Char], String] = new MkString
 
-  implicit def stringToText(content: String) : Parsec[String, Char] = Text(content)
+  implicit def stringToText(content: String) : Parsec[Char, String] = Text(content)
   implicit def charToCh(ch: Char) : Parsec[Char, Char] = Ch(ch)
   implicit def stringToState(content: String) : TxtState = TxtState(content)
 

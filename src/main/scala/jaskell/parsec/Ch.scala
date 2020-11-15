@@ -1,5 +1,7 @@
 package jaskell.parsec
 
+import scala.util.{Success, Try}
+
 /**
  * If get one char equals the Ch prepared, return it.
  *
@@ -9,15 +11,15 @@ package jaskell.parsec
 class Ch(val char: Char, val caseSensitive: Boolean) extends Parsec[Char, Char] {
   val chr: Char = if (caseSensitive) char else char.toLower
 
-  override def ask(s: State[Char]): Either[Exception, Char] = {
+  override def ask(s: State[Char]): Try[Char] = {
     s.next() flatMap { c =>
       if (caseSensitive) {
         if (chr == c) {
-          return Right(c)
+          return Success(c)
         }
       } else {
         if (chr == c.toLower) {
-          return Right(c)
+          return Success(c)
         }
       }
       s.trap(s"expect char $char (case sensitive $caseSensitive) but get $c")

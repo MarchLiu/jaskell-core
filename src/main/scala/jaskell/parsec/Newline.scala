@@ -1,5 +1,7 @@
 package jaskell.parsec
 
+import scala.util.{Success, Try}
+
 /**
  * Newline match \n char
  *
@@ -8,10 +10,10 @@ package jaskell.parsec
  */
 class Newline extends Parsec[Char, Char]{
 
-  override def ask(s: State[Char]): Either[Exception, Char] = {
+  override def ask(s: State[Char]): Try[Char] = {
     s.next() flatMap { c =>
       if(c == '\n') {
-        Right(c)
+        Success(c)
       } else {
         s.trap(s"Expect a newline char but get $c")
       }

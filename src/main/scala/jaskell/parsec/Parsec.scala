@@ -2,39 +2,41 @@ package jaskell.parsec
 
 import java.io.EOFException
 
+import scala.util.{Try, Success, Failure}
+
 /**
  * trait of Parsec parsers.
  *
  * @author mars
  * @version 1.0.0
  */
-trait Parsec[T, E] {
+trait Parsec[E, T] {
   @throws[EOFException]
   @throws[ParsecException]
   def apply(s: State[E]): T = {
     ask(s) match {
-      case Right(result) => result
-      case Left(error) => throw error
+      case Success(result) => result
+      case Failure(error) => throw error
     }
   }
 
   def parse(s: State[E]): T = {
     ask(s) match {
-      case Right(result) => result
-      case Left(error) => throw error
+      case Success(result) => result
+      case Failure(error) => throw error
     }
   }
 
   def !(s: State[E]): T = {
     ask(s) match {
-      case Right(result) => result
-      case Left(error) => throw error
+      case Success(result) => result
+      case Failure(error) => throw error
     }
   }
 
-  def ask(s: State[E]): Either[Exception, T]
+  def ask(s: State[E]): Try[T]
 
-  def ask(s: Seq[E]): Either[Exception, T] = {
+  def ask(s: Seq[E]): Try[T] = {
     ask(State(s))
   }
 
@@ -47,30 +49,28 @@ trait Parsec[T, E] {
     }
   }
 
-  def `<|>`(parsec: Parsec[T, E]): Parsec[T, E] = new Choice(Seq(this, parsec))
+  def `<|>`(parsec: Parsec[E, T]): Parsec[E, T] = new Choice(Seq(this, parsec))
 
-  def `<?>`(message: String): Parsec[T, E] = (s: State[E]) => {
-    this ask s orElse(Left(new ParsecException(s.status, message)))
+  def `<?>`(message: String): Parsec[E, T] = (s: State[E]) => {
+    this ask s orElse s.trap(message)
   }
 
-  def >>[O](p: Parsec[O, E]): Parsec[O, E] = (s: State[E]) => {
+  def >> [O](p: Parsec[E, O]): Parsec[E, O] = (s: State[E]) => {
     this ask s flatMap {_ => p ask s}
   }
 
-  def >>=[O](binder: Binder[O, T, E]): Parsec[O, E] = (s: State[E]) => {
+  def >>=[O](binder: Binder[E, T, O]): Parsec[E, O] = (s: State[E]) => {
     this ask s flatMap {value => binder(value) ? s}
   }
 
-  def ? (s: State[E]): Either[Exception, T] = ask(s)
+  def ? (s: State[E]): Try[T] = ask(s)
 
-  def ? (content: Seq[E]): Either[Exception, T] = {
-    val st = State(content)
-    this ask st
-  }
+  def ? (s: Seq[E]): Try[T] = ask(s)
+
 }
 
 object Parsec {
-  def apply[T, E](parser: State[E] => Either[Exception, T]): Parsec[T, E] = parser(_)
+  def apply[E, T](parser: State[E] => Try[T]): Parsec[E, T] = parser(_)
 
 }
 

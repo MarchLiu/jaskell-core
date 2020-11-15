@@ -1,5 +1,7 @@
 package jaskell.parsec
 
+import scala.util.{Success, Try}
+
 /**
  * TODO
  *
@@ -8,10 +10,10 @@ package jaskell.parsec
  * @since 2020/07/23 14:18
  */
 class Is[T](val predicate: Function[T, Boolean]) extends Parsec[T, T] {
-  override def ask(s: State[T]): Either[Exception, T] = {
+  override def ask(s: State[T]): Try[T] = {
     s.next().flatMap(item => {
       if(predicate(item)) {
-        Right(item)
+        Success(item)
       } else {
         s.trap(s"expect anything pass predicate check but get $item")
       }

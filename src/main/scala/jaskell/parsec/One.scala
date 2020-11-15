@@ -1,6 +1,6 @@
 package jaskell.parsec
 
-import java.io.EOFException
+import scala.util.Try
 
 /**
  * One just take state.next, It maybe throw eof exception.
@@ -10,7 +10,7 @@ import java.io.EOFException
  */
 class One [E] extends Parsec[E, E]{
 
-  override def ask(s: State[E]): Either[Exception, E] = s.next()
+  override def ask(s: State[E]): Try[E] = s.next()
 }
 
 object One {

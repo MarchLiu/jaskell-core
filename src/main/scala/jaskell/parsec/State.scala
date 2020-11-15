@@ -1,5 +1,7 @@
 package jaskell.parsec
 
+import scala.util.{Try, Failure}
+
 /**
  * TODO
  *
@@ -19,10 +21,10 @@ trait State[+E] {
 
   def rollback(tran: Tran): Unit
 
-  def next(): Either[Exception, E]
+  def next(): Try[E]
 
-  def trap[T](message: String): Left[Exception, T] = {
-    Left(new ParsecException(this.status, message))
+  def trap[T](message: String): Failure[T] = {
+    new Failure[T](new ParsecException(this.status, message))
   }
 }
 

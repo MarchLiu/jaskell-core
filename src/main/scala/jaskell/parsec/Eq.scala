@@ -1,5 +1,7 @@
 package jaskell.parsec
 
+import scala.util.{Success, Try}
+
 /**
  * Eq return from state if get a item equals its.
  *
@@ -8,10 +10,10 @@ package jaskell.parsec
  */
 class Eq[E](val element: E) extends Parsec[E, E] {
 
-  override def ask(s: State[E]): Either[Exception, E] = {
+  override def ask(s: State[E]): Try[E] = {
     s.next() flatMap  { data =>
       if(element == data) {
-        return Right(element)
+        return Success(element)
       }
       s.trap(s"expect $element at ${s.status} but $data")
     }

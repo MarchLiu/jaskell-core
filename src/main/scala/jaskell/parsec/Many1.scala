@@ -1,8 +1,7 @@
 package jaskell.parsec
 
-import java.io.EOFException
-
 import scala.collection.mutable
+import scala.util.{Failure, Success, Try}
 import scala.util.control.Breaks._
 
 /**
@@ -12,30 +11,30 @@ import scala.util.control.Breaks._
  * @author Mars Liu
  * @version 1.0.0
  */
-class Many1[T, E](val parsec: Parsec[T, E]) extends Parsec[Seq[T], E] {
-  val psc = new Try[T, E](parsec)
+class Many1[E, T](val parsec: Parsec[E, T]) extends Parsec[E, Seq[T]] {
+  val psc = new Attempt[E, T](parsec)
 
-  override def ask(s: State[E]): Either[Exception, Seq[T]] = {
+  override def ask(s: State[E]): Try[Seq[T]] = {
     val re = new mutable.ListBuffer[T]
     parsec ask s match {
-      case Right(value) => re += value
-      case left: Left[Exception, Seq[T]] => return left
+      case Success(value) => re += value
+      case Failure(e) => return Failure(e)
     }
 
     breakable {
       while (true) {
         psc ask s match {
-          case Right(value) =>
+          case Success(value) =>
             re += value
-          case Left(_) =>
+          case Failure(_) =>
             break
         }
       }
     }
-    Right(re.toSeq)
+    Success(re.toSeq)
   }
 }
 
 object Many1 {
-  def apply[T, E](parsec: Parsec[T, E]): Many1[T, E] = new Many1[T, E](parsec)
+  def apply[E, T](parsec: Parsec[E, T]): Many1[E, T] = new Many1[E, T](parsec)
 }

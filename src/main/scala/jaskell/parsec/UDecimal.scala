@@ -1,6 +1,6 @@
 package jaskell.parsec
 
-import scala.collection.mutable
+import scala.util.{Failure, Success, Try}
 
 /**
  * UDecimal parser parse a decimal number without signed
@@ -8,18 +8,17 @@ import scala.collection.mutable
  * @author mars
  * @version 1.0.0
  */
-class UDecimal extends Parsec[String, Char] {
+class UDecimal extends Parsec[Char, String] {
   val uint = new jaskell.parsec.UInt()
-  val dot: Try[Char, Char] = Try(Ch('.'))
+  val dot: Attempt[Char, Char] = Attempt(Ch('.'))
+  val tail: Parsec[Char, String] = dot >> uint
 
-  override def ask(st: State[Char]): Either[Exception, String] = {
-    uint ask st flatMap { value =>
-      (for {
-        _ <- dot ? st
-        tail <- uint ? st
-      } yield {
-        value + "." + tail
-      }) orElse Right(value)
+  override def ask(st: State[Char]): Try[String] = {
+    uint ask st map { value =>
+      tail ? st match {
+        case Failure(_) => value
+        case Success(t) => s"$value.$t"
+      }
     }
   }
 }

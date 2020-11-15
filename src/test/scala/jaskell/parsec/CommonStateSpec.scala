@@ -5,6 +5,8 @@ import java.io.EOFException
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
+import scala.util.Success
+
 /**
  * TODO
  *
@@ -20,9 +22,9 @@ class CommonStateSpec extends AnyFlatSpec with Matchers{
       val index = state.status
       val c = state.next();
       val chr = data.charAt(index);
-      c should be (Right(chr))
+      c should be (Success(chr))
     }
-    state.next().isLeft should be (true)
+    state.next().isFailure should be (true)
   }
 
   "Begin" should "Test begin tran and rollback then next" in {
@@ -31,7 +33,7 @@ class CommonStateSpec extends AnyFlatSpec with Matchers{
     val c = state.next()
 
 
-    c should be (Right('h'))
+    c should be (Success('h'))
 
     val a = state.begin()
 
@@ -43,7 +45,7 @@ class CommonStateSpec extends AnyFlatSpec with Matchers{
 
     val d = state.next()
 
-    d should be (Right('e'))
+    d should be (Success('e'))
   }
 
   "Commit" should "Test begin a transaction and commit" in {
@@ -52,14 +54,14 @@ class CommonStateSpec extends AnyFlatSpec with Matchers{
     val c = state.next()
 
 
-    c should be (Right('h'))
+    c should be (Success('h'))
     state.next()
 
     state.commit(tran);
 
     val d = state.next();
 
-    d should be (Right('l'))
+    d should be (Success('l'))
   }
 
   "Rollback" should "Test rollback" in {
@@ -69,13 +71,13 @@ class CommonStateSpec extends AnyFlatSpec with Matchers{
     val c = state.next();
 
 
-    c should be (Right('h'))
+    c should be (Success('h'))
 
     state rollback tran
 
     val d = state.next();
 
-    d should be (Right('h'))
+    d should be (Success('h'))
   }
 
   "Next" should "Test state next method" in {
@@ -84,22 +86,22 @@ class CommonStateSpec extends AnyFlatSpec with Matchers{
 
     val c = state.next()
 
-    c should be (Right('h'))
+    c should be (Success('h'))
 
     val d = state.next()
 
-    d should be (Right('e'))
+    d should be (Success('e'))
 
     val e = state.next()
 
-    e should be (Right('l'))
+    e should be (Success('l'))
 
     val f = state.next()
 
-    f should be (Right('l'))
+    f should be (Success('l'))
     val g = state.next()
 
-    g should be (Right('o'))
+    g should be (Success('o'))
   }
 
 
