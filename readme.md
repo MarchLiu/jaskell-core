@@ -15,52 +15,52 @@ library, a SQL helper library and a arithmetic expressions parser.
 <dependency>
   <groupId>io.github.marchliu</groupId>
   <artifactId>jaskell-core_2.13</artifactId>
-  <version>0.6.1</version>
+  <version>0.6.2</version>
 </dependency>
 ```
 
 ## Gradle
 
 ```groovy
-implementation 'io.github.marchliu:jaskell-core_2.13:0.6.1'
+implementation 'io.github.marchliu:jaskell-core_2.13:0.6.2'
 ```
 
 ## Gradle Kotlin
 
 ```
-implementation("io.github.marchliu:jaskell-core_2.13:0.6.1")
+implementation("io.github.marchliu:jaskell-core_2.13:0.6.2")
 ```
 
 ## SBT
 
 ```sbtshell
-libraryDependencies += "io.github.marchliu" % "jaskell-core_2.13" % "0.6.1"
+libraryDependencies += "io.github.marchliu" % "jaskell-core_2.13" % "0.6.2"
 ```
 
 ## Apache Ivy
 
 ```xml
-<dependency org="io.github.marchliu" name="jaskell-core_2.13" rev="0.6.1" />
+<dependency org="io.github.marchliu" name="jaskell-core_2.13" rev="0.6.2" />
 ```
 
 ## Groovy Grap
 
 ```groovy
 @Grapes(
-  @Grab(group='io.github.marchliu', module='jaskell-core_2.13', version='0.6.1')
+  @Grab(group='io.github.marchliu', module='jaskell-core_2.13', version='0.6.2')
 )
 ```
 
 ## Leiningen
 
 ```clojure
-[io.github.marchliu/jaskell-core_2.13 "0.6.1"]
+[io.github.marchliu/jaskell-core_2.13 "0.6.2"]
 ```
 
 ## Apache Bluildr
 
 ```
-'io.github.marchliu:jaskell-core_2.13:jar:0.6.1'
+'io.github.marchliu:jaskell-core_2.13:jar:0.6.2'
 ```
 
 ## Maven Central Badge
@@ -72,7 +72,7 @@ libraryDependencies += "io.github.marchliu" % "jaskell-core_2.13" % "0.6.1"
 ## PURL
 
 ```
-pkg:maven/io.github.marchliu/jaskell-core_2.13@0.6.1
+pkg:maven/io.github.marchliu/jaskell-core_2.13@0.6.2
 ```
 
 ### Bazel
@@ -80,7 +80,7 @@ pkg:maven/io.github.marchliu/jaskell-core_2.13@0.6.1
 ```
 maven_jar(
     name = "jaskell-core_2.13",
-    artifact = "io.github.marchliu:jaskell-core_2.13:0.6.1",
+    artifact = "io.github.marchliu:jaskell-core_2.13:0.6.2",
     sha1 = "b58ed93199e445d043949561fdc1fea710d60442",
 )
 ```
