@@ -1,5 +1,6 @@
 package jaskell.expression.parsers
 
+import jaskell.Monad.toMonad
 import jaskell.expression.{Divide, Expression}
 import jaskell.parsec.{Parsec, SkipWhitespaces, State}
 

@@ -11,7 +11,10 @@ import scala.util.{Failure, Success, Try}
 class UDecimal extends Parsec[Char, String] {
   val uint = new jaskell.parsec.UInt()
   val dot: Attempt[Char, Char] = Attempt(Ch('.'))
-  val tail: Parsec[Char, String] = dot >> uint
+  val tail: Parsec[Char, String] = s => for {
+    _ <- dot ask s
+    re <- uint ask s
+  } yield re
 
   override def ask(st: State[Char]): Try[String] = {
     uint ask st map { value =>

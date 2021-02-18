@@ -1,8 +1,10 @@
 package jaskell.parsec
 
-import java.io.EOFException
+import jaskell.Monad
+import jaskell.Monad.MonadOps
 
-import scala.util.{Try, Success, Failure}
+import java.io.EOFException
+import scala.util.{Failure, Success, Try}
 
 /**
  * trait of Parsec parsers.
@@ -54,23 +56,40 @@ trait Parsec[E, T] {
   def `<?>`(message: String): Parsec[E, T] = (s: State[E]) => {
     this ask s orElse s.trap(message)
   }
+//
+//  def >>[O](p: Parsec[E, O]): Parsec[E, O] = (s: State[E]) => {
+//    this ask s flatMap { _ => p ask s }
+//  }
+//
+//  def >>=[O](binder: Binder[E, T, O]): Parsec[E, O] = (s: State[E]) => {
+//    this ask s flatMap { value => binder(value) ? s }
+//  }
 
-  def >> [O](p: Parsec[E, O]): Parsec[E, O] = (s: State[E]) => {
-    this ask s flatMap {_ => p ask s}
-  }
+  def ?(s: State[E]): Try[T] = ask(s)
 
-  def >>=[O](binder: Binder[E, T, O]): Parsec[E, O] = (s: State[E]) => {
-    this ask s flatMap {value => binder(value) ? s}
-  }
-
-  def ? (s: State[E]): Try[T] = ask(s)
-
-  def ? (s: Seq[E]): Try[T] = ask(s)
+  def ?(s: Seq[E]): Try[T] = ask(s)
 
 }
 
 object Parsec {
   def apply[E, T](parser: State[E] => Try[T]): Parsec[E, T] = parser(_)
 
+  implicit def toFlatMapper[E, T, O](binder: Binder[E, T, O]): (T)=>Parsec[E, O] = binder.apply
+
+  implicit def toParsec[E, T, P <: Parsec[E, T]](parsec: P): Parsec[E, T] = parsec.asInstanceOf[Parsec[E, T]]
+
+  implicit val charParsecMonad: Monad[({type P[A] = Parsec[Char, A]})#P] = mkMonad
+
+  def mkMonad[T]: Monad[({type P[A] = Parsec[T, A]})#P] =
+    new Monad[({type P[A] = Parsec[T, A]})#P] {
+      override def pure[A](element: A): Parsec[T, A] = Return(element)
+
+      override def fmap[A, B](m: Parsec[T, A], f: A => B): Parsec[T, B] = m.ask(_).map(f)
+
+      override def flatMap[A, B](m: Parsec[T, A], f: A => Parsec[T, B]): Parsec[T, B] = state => for {
+        a <- m.ask(state)
+        b <- f(a).ask(state)
+      } yield b
+    }
 }
 

@@ -1,9 +1,11 @@
 package jaskell.expression.parsers
 
 import jaskell.expression.{Expression, Parameter}
-import jaskell.parsec.{Parsec, ParsecException, Return, State}
+import jaskell.parsec.{MkString, Parsec, ParsecException, Return, State}
 
 import scala.util.Try
+import jaskell.Monad.toMonad
+import jaskell.parsec.Parsec.toFlatMapper
 
 /**
  * TODO
@@ -18,13 +20,16 @@ class Param extends Parsec[Char, Expression] {
   import jaskell.parsec.Txt._
 
   val head: Parsec[Char, Char] = letter
-  val tail: Parsec[Char, String] = many(attempt(letter) <|> attempt(digit)) >>= mkString
+  val tail: Parsec[Char, Seq[Char]] = many(attempt(letter) <|> attempt(digit))
+  val t: Parsec[Char, String] = tail >>= mkString
   val parser: Parsec[Char, String] = s => for {
     h <- head ? s
-    t <- tail ? s
-  } yield s"$h$t"
+    tv <- t ? s
+  } yield s"$h$tv"
 
   override def ask(s: State[Char]): Try[Expression] = {
-    parser ? s map {new Parameter(_)}
+    parser ? s map {
+      new Parameter(_)
+    }
   }
 }

@@ -3,7 +3,7 @@ package jaskell.parsec
 import scala.util.{Failure, Success, Try}
 
 /**
- * NoneOf success if get a item none of any in prepared
+ * NoneOf success if get a item is none in prepared
  *
  * @author Mars Liu
  * @version 1.0.0

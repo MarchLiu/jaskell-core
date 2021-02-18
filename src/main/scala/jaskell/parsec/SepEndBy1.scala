@@ -3,6 +3,7 @@ package jaskell.parsec
 import scala.collection.mutable
 import scala.util.{Failure, Success, Try}
 import scala.util.control.Breaks._
+import jaskell.Monad.toMonad
 
 /**
  * SepEndBy1 p sep parses one or more occurrences of p, separated and optionally ended by sep.
@@ -13,8 +14,11 @@ import scala.util.control.Breaks._
  */
 class SepEndBy1[E, T](val parser: Parsec[E, T], val sep: Parsec[E, _]) extends Parsec[E, Seq[T]] {
   val separator = new Attempt(sep)
-  val p: Attempt[E, T] = Attempt(parser)
-  val psc: Parsec[E, T] = sep >> parser
+  val p: Parsec[E, T] = Attempt(parser)
+  val psc: Parsec[E, T] = s => for {
+    _ <- sep ask s
+    re <- p ask s
+  } yield re
 
   val parsec: Parsec[E, Seq[T]] = (s: State[E]) => {
     val re = new mutable.ListBuffer[T]

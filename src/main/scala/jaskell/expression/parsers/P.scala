@@ -1,5 +1,6 @@
 package jaskell.expression.parsers
 
+import jaskell.Monad.toMonad
 import jaskell.expression.{Expression, Product}
 import jaskell.parsec.Txt.skipWhiteSpaces
 import jaskell.parsec.{Parsec, SkipWhitespaces, State}
