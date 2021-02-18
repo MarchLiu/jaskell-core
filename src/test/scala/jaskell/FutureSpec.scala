@@ -15,7 +15,7 @@ import scala.concurrent.Future
  */
 class FutureSpec extends AsyncFlatSpec with Matchers {
   import jaskell.Monad.toMonad
-  implicit val fMonad: Monad[Future] = futureMonad
+  import jaskell.Monad.futureMonad
 
   val future: Future[Double] = Future("success") *> Future(3.14) <:> { value => value * 2*2} <* Future("Right")
 

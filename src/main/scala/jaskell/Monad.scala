@@ -32,8 +32,6 @@ object Monad {
   def apply[M[_]](implicit instance: Monad[M]): Monad[M] = instance
   def apply[M[_]](implicit creator: () => Monad[M]): Monad[M] = creator.apply()
 
-  //  def apply[M[_]](implicit ec: ExecutionContext): ExecutionContext = ec
-
   abstract class MonadOps[A, M[_]](implicit I: Monad[M]) {
     def self: M[A]
 
@@ -97,7 +95,7 @@ object Monad {
     override def flatMap[A, B](m: Try[A], f: A => Try[B]): Try[B] = m.flatMap(f)
   }
 
-  def futureMonad(implicit ec: ExecutionContext): Monad[Future] = new Monad[Future] {
+  implicit def futureMonad(implicit ec: ExecutionContext): Monad[Future] = new Monad[Future] {
     override def pure[A](element: A): Future[A] = Future.successful(element)
 
     override def fmap[A, B](m: Future[A], f: A => B): Future[B] = m.map(f)
