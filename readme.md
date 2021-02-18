@@ -164,3 +164,7 @@ maven_jar(
  - add future monad
  - use typeclasses
  - support implicit converter for monad instance
+
+### 0.6.2
+ 
+ - make future monad auto create monad instance implicitly
