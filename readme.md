@@ -15,52 +15,52 @@ library, a SQL helper library and a arithmetic expressions parser.
 <dependency>
   <groupId>io.github.marchliu</groupId>
   <artifactId>jaskell-core_2.13</artifactId>
-  <version>0.6.2</version>
+  <version>0.6.3</version>
 </dependency>
 ```
 
 ## Gradle
 
 ```groovy
-implementation 'io.github.marchliu:jaskell-core_2.13:0.6.2'
+implementation 'io.github.marchliu:jaskell-core_2.13:0.6.3'
 ```
 
 ## Gradle Kotlin
 
 ```
-implementation("io.github.marchliu:jaskell-core_2.13:0.6.2")
+implementation("io.github.marchliu:jaskell-core_2.13:0.6.3")
 ```
 
 ## SBT
 
 ```sbtshell
-libraryDependencies += "io.github.marchliu" % "jaskell-core_2.13" % "0.6.2"
+libraryDependencies += "io.github.marchliu" % "jaskell-core_2.13" % "0.6.3"
 ```
 
 ## Apache Ivy
 
 ```xml
-<dependency org="io.github.marchliu" name="jaskell-core_2.13" rev="0.6.2" />
+<dependency org="io.github.marchliu" name="jaskell-core_2.13" rev="0.6.3" />
 ```
 
 ## Groovy Grap
 
 ```groovy
 @Grapes(
-  @Grab(group='io.github.marchliu', module='jaskell-core_2.13', version='0.6.2')
+  @Grab(group='io.github.marchliu', module='jaskell-core_2.13', version='0.6.3')
 )
 ```
 
 ## Leiningen
 
 ```clojure
-[io.github.marchliu/jaskell-core_2.13 "0.6.2"]
+[io.github.marchliu/jaskell-core_2.13 "0.6.3"]
 ```
 
 ## Apache Bluildr
 
 ```
-'io.github.marchliu:jaskell-core_2.13:jar:0.6.2'
+'io.github.marchliu:jaskell-core_2.13:jar:0.6.3'
 ```
 
 ## Maven Central Badge
@@ -72,7 +72,7 @@ libraryDependencies += "io.github.marchliu" % "jaskell-core_2.13" % "0.6.2"
 ## PURL
 
 ```
-pkg:maven/io.github.marchliu/jaskell-core_2.13@0.6.2
+pkg:maven/io.github.marchliu/jaskell-core_2.13@0.6.3
 ```
 
 ### Bazel
@@ -80,7 +80,7 @@ pkg:maven/io.github.marchliu/jaskell-core_2.13@0.6.2
 ```
 maven_jar(
     name = "jaskell-core_2.13",
-    artifact = "io.github.marchliu:jaskell-core_2.13:0.6.2",
+    artifact = "io.github.marchliu:jaskell-core_2.13:0.6.3",
     sha1 = "b58ed93199e445d043949561fdc1fea710d60442",
 )
 ```
@@ -168,3 +168,7 @@ maven_jar(
 ### 0.6.2
  
  - make future monad auto create monad instance implicitly
+
+### 0.6.3
+
+ - code clean

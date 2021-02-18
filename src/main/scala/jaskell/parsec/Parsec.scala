@@ -76,8 +76,6 @@ object Parsec {
 
   implicit def toFlatMapper[E, T, O](binder: Binder[E, T, O]): (T)=>Parsec[E, O] = binder.apply
 
-  implicit def toParsec[E, T, P <: Parsec[E, T]](parsec: P): Parsec[E, T] = parsec.asInstanceOf[Parsec[E, T]]
-
   implicit def mkMonad[T]: Monad[({type P[A] = Parsec[T, A]})#P] =
     new Monad[({type P[A] = Parsec[T, A]})#P] {
       override def pure[A](element: A): Parsec[T, A] = Return(element)

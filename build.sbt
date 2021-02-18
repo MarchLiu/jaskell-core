@@ -1,6 +1,6 @@
 name := "jaskell-core"
 
-version := "0.6.2"
+version := "0.6.3"
 
 scalaVersion := "2.13.2"
 

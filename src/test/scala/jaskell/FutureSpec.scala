@@ -1,6 +1,5 @@
 package jaskell
 
-import jaskell.Monad.futureMonad
 import org.scalatest.flatspec.AsyncFlatSpec
 import org.scalatest.matchers.should.Matchers
 
@@ -15,7 +14,6 @@ import scala.concurrent.Future
  */
 class FutureSpec extends AsyncFlatSpec with Matchers {
   import jaskell.Monad.toMonad
-  import jaskell.Monad.futureMonad
 
   val future: Future[Double] = Future("success") *> Future(3.14) <:> { value => value * 2*2} <* Future("Right")
 

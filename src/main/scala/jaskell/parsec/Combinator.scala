@@ -19,11 +19,11 @@ object Combinator {
     new Choice[E, T](parsers)
   }
 
-  def many[E, T](parser: Parsec[E, T]): Many[E, T] = {
+  def many[E, T](parser: Parsec[E, T]): Parsec[E, Seq[T]] = {
     new Many[E, T](parser)
   }
 
-  def many1[E, T](parser: Parsec[E, T]): Many1[E, T] = {
+  def many1[E, T](parser: Parsec[E, T]): Parsec[E, Seq[T]] = {
     new Many1[E, T](parser)
   }
 
@@ -31,19 +31,19 @@ object Combinator {
     new ManyTill[E, T, L](parser, end)
   }
 
-  def skip[E](parser: Parsec[E, _]): Skip[E] = {
+  def skip[E](parser: Parsec[E, _]): Parsec[E, Unit] = {
     new Skip[E](parser)
   }
 
-  def skip1[E](parser: Parsec[E, _]): Skip1[E] = {
+  def skip1[E](parser: Parsec[E, _]): Parsec[E, Unit] = {
     new Skip1[E](parser)
   }
 
-  def sepBy[T, Sep, E](parser: Parsec[E, T], by: Parsec[E, Sep]): SepBy[E, T] = {
+  def sepBy[T, Sep, E](parser: Parsec[E, T], by: Parsec[E, Sep]): Parsec[E, Seq[T]] = {
     new SepBy[E, T](parser, by)
   }
 
-  def sepBy1[E, T](parser: Parsec[E, T], by: Parsec[E, _]): SepBy1[E, T] = {
+  def sepBy1[E, T](parser: Parsec[E, T], by: Parsec[E, _]): Parsec[E, Seq[T]] = {
     new SepBy1[E, T](parser, by)
   }
 

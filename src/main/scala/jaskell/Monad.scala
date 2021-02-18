@@ -95,7 +95,7 @@ object Monad {
     override def flatMap[A, B](m: Try[A], f: A => Try[B]): Try[B] = m.flatMap(f)
   }
 
-  implicit def futureMonad(implicit ec: ExecutionContext): Monad[Future] = new Monad[Future] {
+  implicit def toMonad(implicit ec: ExecutionContext): Monad[Future] = new Monad[Future] {
     override def pure[A](element: A): Future[A] = Future.successful(element)
 
     override def fmap[A, B](m: Future[A], f: A => B): Future[B] = m.map(f)
