@@ -30,6 +30,7 @@ trait Monad[M[_]] {
 
 object Monad {
   def apply[M[_]](implicit instance: Monad[M]): Monad[M] = instance
+  def apply[M[_]](implicit creator: () => Monad[M]): Monad[M] = creator.apply()
 
   //  def apply[M[_]](implicit ec: ExecutionContext): ExecutionContext = ec
 

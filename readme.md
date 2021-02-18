@@ -163,3 +163,7 @@ maven_jar(
 
  - add future monad
  - use typeclasses
+
+### 0.6.2
+
+ - support implicit converter for monad instance

@@ -78,9 +78,7 @@ object Parsec {
 
   implicit def toParsec[E, T, P <: Parsec[E, T]](parsec: P): Parsec[E, T] = parsec.asInstanceOf[Parsec[E, T]]
 
-  implicit val charParsecMonad: Monad[({type P[A] = Parsec[Char, A]})#P] = mkMonad
-
-  def mkMonad[T]: Monad[({type P[A] = Parsec[T, A]})#P] =
+  implicit def mkMonad[T]: Monad[({type P[A] = Parsec[T, A]})#P] =
     new Monad[({type P[A] = Parsec[T, A]})#P] {
       override def pure[A](element: A): Parsec[T, A] = Return(element)
 
@@ -91,5 +89,6 @@ object Parsec {
         b <- f(a).ask(state)
       } yield b
     }
+
 }
 

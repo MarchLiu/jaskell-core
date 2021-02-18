@@ -17,6 +17,7 @@ class A(val prev: Expression) extends Parsec[Char, Expression] {
 
   import jaskell.parsec.Txt.ch
   import Monad._
+  import jaskell.parsec.Parsec.mkMonad
 
   val skips: SkipWhitespaces = skipWhiteSpaces
   val op: Parsec[Char, Unit] = skips >> ch('+') >> skips
