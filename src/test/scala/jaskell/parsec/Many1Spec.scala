@@ -17,22 +17,26 @@ class Many1Spec extends AnyFlatSpec with Matchers{
     val state = State("hello")
     val parser = many1(ch('h'))
     val re = parser(state)
-    re.head should be ('h')
-    re.size should be (1)
+    assert(re.isSuccess)
+    re.foreach(ele => {
+      ele.head should be('h')
+      ele.size should be(1)
+    })
   }
 
   "All" should "success all content" in {
     val state = State("hello")
     val parser = many1(text("hello"))
     val re = parser(state)
-    re.head should be ("hello")
+    assert(re.isSuccess)
+    re.foreach(_.head should be ("hello"))
   }
 
   "Failed" should "Throw error " in {
     val state = State("Hello")
     val parser = many1(ch('h'))
     a[ParsecException] should be thrownBy {
-      parser(state)
+      parser ! state
     }
   }
 }

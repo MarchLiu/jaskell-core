@@ -10,7 +10,7 @@ import scala.util.{Success, Try}
  */
 class OneOf[T](val items:Set[T]) extends Parsec[T, T] {
 
-  override def ask(s: State[T]): Try[T] = {
+  override def apply(s: State[T]): Try[T] = {
     s.next() flatMap {v => {
       if(items.contains(v)){
         Success(v)

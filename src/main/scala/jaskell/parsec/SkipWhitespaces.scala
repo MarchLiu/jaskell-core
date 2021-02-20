@@ -11,7 +11,7 @@ import scala.util.{Success, Try}
 class SkipWhitespaces extends Parsec[Char, Unit] {
   val parsec = new Skip[Char](new Whitespace())
 
-  override def ask(s: State[Char]): Try[Unit] = for {_ <- parsec ? s} yield ()
+  override def apply(s: State[Char]): Try[Unit] = for {_ <- parsec ? s} yield ()
 }
 
 object SkipWhitespaces {

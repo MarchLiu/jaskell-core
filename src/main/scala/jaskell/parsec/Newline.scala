@@ -10,7 +10,7 @@ import scala.util.{Success, Try}
  */
 class Newline extends Parsec[Char, Char]{
 
-  override def ask(s: State[Char]): Try[Char] = {
+  override def apply(s: State[Char]): Try[Char] = {
     s.next() flatMap { c =>
       if(c == '\n') {
         Success(c)

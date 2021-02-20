@@ -35,5 +35,5 @@ class SepEndBy[E, T](val parser: Parsec[E, T], val sep: Parsec[E, _]) extends Pa
     Success(re.toSeq)
   }
 
-  override def ask(s: State[E]): Try[Seq[T]] = parsec ? s
+  override def apply(s: State[E]): Try[Seq[T]] = parsec ? s
 }

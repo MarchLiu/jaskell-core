@@ -11,7 +11,7 @@ import scala.util.Try
 class SkipSpaces extends Parsec[Char, Unit] {
   val parsec = new Skip[Char](new Space())
 
-  override def ask(s: State[Char]): Try[Unit] = parsec ? s
+  override def apply(s: State[Char]): Try[Unit] = parsec ? s
 }
 
 object SkipSpaces {

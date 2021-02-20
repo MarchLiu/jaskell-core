@@ -15,7 +15,7 @@ class EndBy1[E, T](val parser: Parsec[E, T], val sep: Parsec[E, _]) extends Pars
       _ <- sep ? s
     } yield {re}
   })
-  override def ask(s: State[E]): Try[Seq[T]] = parsec ? s
+  override def apply(s: State[E]): Try[Seq[T]] = parsec ? s
 }
 
 object EndBy1 {

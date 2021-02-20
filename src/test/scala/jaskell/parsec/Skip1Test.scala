@@ -32,7 +32,7 @@ class Skip1Test extends AnyFlatSpec with Matchers{
     val state = State("right left right left right")
     val parser = skip1(text("left "))
     a[ParsecException] should be thrownBy {
-      parser apply state
+      parser ! state
     }
   }
 }

@@ -15,7 +15,7 @@ class SpaceSpec extends AnyFlatSpec with Matchers {
   "Simple" should "Run a simple test" in {
     val state = State(" ")
     val s = space
-    val a = s(state)
+    val a = s ! state
     a should be (' ')
   }
 
@@ -23,7 +23,7 @@ class SpaceSpec extends AnyFlatSpec with Matchers {
     val state = State("\t");
     val s = space
     a[ParsecException] should be thrownBy {
-      s apply state
+      s ! state
     }
   }
 }

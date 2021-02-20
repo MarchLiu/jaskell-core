@@ -11,7 +11,7 @@ import scala.util.{Try, Success, Failure}
 class Skip[E](val psc: Parsec[E, _]) extends Parsec[E, Unit] {
   val p: Attempt[E, _] = Attempt(psc)
 
-  override def ask(s: State[E]): Try[Unit] = {
+  override def apply(s: State[E]): Try[Unit] = {
 
     while (true){
       if(p ? s isFailure) {

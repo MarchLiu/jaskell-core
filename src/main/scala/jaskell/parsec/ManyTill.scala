@@ -18,7 +18,7 @@ class ManyTill[E, T, L](val parser: Parsec[E, T], val end: Parsec[E, L]) extends
 
 
 
-  override def ask(s: State[E]): Try[Seq[T]] = {
+  override def apply(s: State[E]): Try[Seq[T]] = {
     val re = new mutable.ListBuffer[T]
     while (true)  {
       till ask s match {

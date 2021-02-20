@@ -16,7 +16,8 @@ class ManySpec extends AnyFlatSpec with Matchers {
   "Simple" should "Run match 2 times" in {
     val state = State("HelloHello")
     val parser = many(text("hello", caseSensitive = false))
-    val re = parser(state)
+    val re = parser.parse(state)
+
     re.size should be (2)
     re.head should be ("Hello")
     re(1) should be ("Hello")

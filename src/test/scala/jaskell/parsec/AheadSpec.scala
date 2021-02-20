@@ -24,7 +24,7 @@ class AheadSpec extends AnyFlatSpec with Matchers {
         _ <- ahead (text(" is")) ? (s)
       } yield re
     }
-    parser(state) should be("this")
+    parser ! state should be("this")
     state.status should be(4)
   }
 
@@ -38,7 +38,7 @@ class AheadSpec extends AnyFlatSpec with Matchers {
         re <- ahead (text("is")) ? s
       } yield re
     }
-    val re = parser(state)
+    val re = parser ! state
     re should be("is")
     state.status should be(5)
   }
@@ -55,7 +55,7 @@ class AheadSpec extends AnyFlatSpec with Matchers {
     }
 
     a[ParsecException] should be thrownBy {
-      parser(state)
+      parser ! state
     }
   }
 }

@@ -11,7 +11,7 @@ import scala.util.Try
 class UInt extends Parsec[Char, String]{
   val psc = new Many1[Char, Char](new Digit())
 
-  override def ask(s: State[Char]): Try[String] = {
+  override def apply(s: State[Char]): Try[String] = {
     psc ? s map {_.mkString}
   }
 }

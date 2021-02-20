@@ -16,7 +16,7 @@ class UDecimal extends Parsec[Char, String] {
     re <- uint ask s
   } yield re
 
-  override def ask(st: State[Char]): Try[String] = {
+  override def apply(st: State[Char]): Try[String] = {
     uint ask st map { value =>
       tail ? st match {
         case Failure(_) => value

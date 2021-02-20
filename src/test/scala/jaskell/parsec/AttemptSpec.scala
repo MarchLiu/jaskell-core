@@ -20,7 +20,7 @@ class AttemptSpec extends AnyFlatSpec with Matchers {
     val idx = state.status
     val tryIt = new Attempt[String, String](Eq("Hello"))
 
-    val re = tryIt apply state
+    val re = tryIt ! state
 
     re should be("Hello")
     idx should not be (state.status)
@@ -33,7 +33,7 @@ class AttemptSpec extends AnyFlatSpec with Matchers {
     val tryIt = new Attempt[String, String](new Eq[String]("hello"))
 
     a[ParsecException] should be thrownBy {
-      tryIt apply state
+      tryIt ! state
     }
     idx should be(state.status)
 
@@ -47,7 +47,7 @@ class AttemptSpec extends AnyFlatSpec with Matchers {
       }
     })
 
-    val re = tryIti apply state
+    val re = tryIti ! state
     re should be("Hello")
   }
 }

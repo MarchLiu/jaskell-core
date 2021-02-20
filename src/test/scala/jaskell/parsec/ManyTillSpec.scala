@@ -17,7 +17,7 @@ class ManyTillSpec extends AnyFlatSpec with Matchers{
 
     val m = manyTill(Eq('h'), Eq('l'))
 
-    val re = m(state)
+    val re = m parse state
     re.size should be (6)
     for(item <- re) {
       item should be ('h')

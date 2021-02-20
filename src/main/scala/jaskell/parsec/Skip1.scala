@@ -15,7 +15,7 @@ class Skip1[E](val psc: Parsec[E, _]) extends Parsec[E, Unit] {
     _ <- skip ask s
   } yield ()
 
-  override def ask(s: State[E]): Try[Unit] = (parser ? s).flatMap(_ => Success())
+  override def apply(s: State[E]): Try[Unit] = (parser ? s).flatMap(_ => Success())
 }
 
 object Skip1 {

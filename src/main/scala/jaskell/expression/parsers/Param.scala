@@ -27,7 +27,7 @@ class Param extends Parsec[Char, Expression] {
     tv <- t ? s
   } yield s"$h$tv"
 
-  override def ask(s: State[Char]): Try[Expression] = {
+  override def apply(s: State[Char]): Try[Expression] = {
     parser ? s map {
       new Parameter(_)
     }

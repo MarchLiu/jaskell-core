@@ -15,7 +15,7 @@ import scala.util.{Failure, Success, Try}
  */
 class Attempt[E, T](val parsec: Parsec[E, T]) extends Parsec[E, T] {
 
-  override def ask(s: State[E]): Try[T] = {
+  override def apply(s: State[E]): Try[T] = {
     val tran = s.begin()
     parsec ? s match {
       case right: Success[T] =>

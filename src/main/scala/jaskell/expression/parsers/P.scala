@@ -22,7 +22,7 @@ class P(val prev: Expression) extends Parsec[Char, Expression] {
   val op: Parsec[Char, Unit] = skips >> ch('*') >> skips
   val next = new Parser
 
-  override def ask(s: State[Char]): Try[Expression] = {
+  override def apply(s: State[Char]): Try[Expression] = {
     for {
       _ <- op ? s
       exp <- next ? s

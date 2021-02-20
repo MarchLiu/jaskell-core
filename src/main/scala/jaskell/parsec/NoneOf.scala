@@ -10,7 +10,7 @@ import scala.util.{Failure, Success, Try}
  */
 class NoneOf[E](val items: Set[E]) extends Parsec[E, E] {
 
-  override def ask(s: State[E]): Try[E] = {
+  override def apply(s: State[E]): Try[E] = {
     s.next() match {
       case Success(re) =>
         if (items.contains(re)) {

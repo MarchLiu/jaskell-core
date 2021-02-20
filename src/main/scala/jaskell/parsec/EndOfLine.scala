@@ -11,7 +11,7 @@ import scala.util.Try
 class EndOfLine extends Parsec[Char, String] {
   final private val parsec = Choice[Char, String](Attempt(Text("\n")), Text("\r\n"))
 
-  override def ask(s: State[Char]): Try[String] = parsec ? s
+  override def apply(s: State[Char]): Try[String] = parsec ? s
 }
 
 object EndOfLine {

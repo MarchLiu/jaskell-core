@@ -15,7 +15,7 @@ class NoneOfSpec extends AnyFlatSpec with Matchers {
   "Simple OK" should "Test success" in {
     val state = State("hello")
     val nof = NoneOf(Seq('k', 'o', 'f').toSet)
-    val c = nof(state)
+    val c = nof ! state
     c should be ('h')
   }
 
@@ -23,7 +23,7 @@ class NoneOfSpec extends AnyFlatSpec with Matchers {
     val state = State("sound")
     val nof = NoneOf(Seq('k', 'f', 's').toSet)
     a[ParsecException] should be thrownBy  {
-      nof(state)
+      nof ! state
     }
   }
 }

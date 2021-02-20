@@ -12,7 +12,7 @@ class Int extends Parsec[Char, String] {
   val sign = new Attempt(Ch('-'))
   val uint = new UInt()
 
-  override def ask(s: State[Char]): Try[String] = {
+  override def apply(s: State[Char]): Try[String] = {
     var sb: StringBuilder = new StringBuilder()
     if (sign.ask(s).isSuccess) {
       sb += '-'

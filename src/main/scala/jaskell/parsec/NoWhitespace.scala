@@ -9,7 +9,7 @@ import scala.util.{Success, Try}
  * @version 1.0.0
  */
 class NoWhitespace extends Parsec [Char, Char]{
-  override def ask(s: State[Char]): Try[Char] = {
+  override def apply(s: State[Char]): Try[Char] = {
     s.next() flatMap { c =>
       if(c.isWhitespace){
         s.trap(s"expect a char not whitespace but get $c")

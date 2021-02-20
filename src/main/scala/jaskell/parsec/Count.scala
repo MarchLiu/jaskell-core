@@ -12,7 +12,7 @@ import scala.util.{Failure, Success, Try}
  */
 class Count[E, T](val p: Parsec[E, T], val n: scala.Int) extends Parsec[E, Seq[T]] {
 
-  override def ask(s: State[E]): Try[Seq[T]] = {
+  override def apply(s: State[E]): Try[Seq[T]] = {
     if (n <= 0) {
       return Success(Seq.empty)
     }

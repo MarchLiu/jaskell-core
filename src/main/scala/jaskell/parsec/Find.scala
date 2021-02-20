@@ -12,7 +12,7 @@ import scala.util.control.Breaks._
  */
 class Find[E, T](val psc: Parsec[E, T]) extends Parsec[E, T] {
 
-  override def ask(s: State[E]): Try[T] = {
+  override def apply(s: State[E]): Try[T] = {
     var error: Exception = null
     breakable {
       while (true){

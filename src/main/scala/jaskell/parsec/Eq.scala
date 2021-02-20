@@ -10,7 +10,7 @@ import scala.util.{Success, Try}
  */
 class Eq[E](val element: E) extends Parsec[E, E] {
 
-  override def ask(s: State[E]): Try[E] = {
+  override def apply(s: State[E]): Try[E] = {
     s.next() flatMap  { data =>
       if(element == data) {
         return Success(element)

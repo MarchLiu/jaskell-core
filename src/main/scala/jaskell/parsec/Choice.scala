@@ -12,7 +12,7 @@ import scala.util.{Failure, Success, Try}
  */
 class Choice[E, T](val parsecs: Seq[Parsec[E, T]]) extends Parsec[E, T] {
 
-  override def ask(s: State[E]): Try[T] = {
+  override def apply(s: State[E]): Try[T] = {
     var err: Throwable = null
     val status = s.status
     for (psc <- this.parsecs) {

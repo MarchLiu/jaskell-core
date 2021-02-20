@@ -10,7 +10,7 @@ import scala.util.{Success, Try}
  */
 class Digit extends Parsec[Char, Char] {
 
-  override def ask(s: State[Char]): Try[Char] = {
+  override def apply(s: State[Char]): Try[Char] = {
     s.next() flatMap { re =>
       if (re.isDigit) {
         Success(re)

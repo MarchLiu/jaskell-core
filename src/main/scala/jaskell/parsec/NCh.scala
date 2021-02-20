@@ -11,7 +11,7 @@ import scala.util.{Success, Try}
 class NCh(val char: Char, val caseSensitive: Boolean) extends Parsec[Char, Char] {
   val chr: Char = if (caseSensitive) char else char.toLower
 
-  override def ask(s: State[Char]): Try[Char] = {
+  override def apply(s: State[Char]): Try[Char] = {
     s.next() flatMap { c =>
       if (caseSensitive) {
         if (chr != c) {

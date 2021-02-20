@@ -13,14 +13,8 @@ import scala.util.{Failure, Success, Try}
  * @version 1.0.0
  */
 trait Parsec[E, T] {
-  @throws[EOFException]
-  @throws[ParsecException]
-  def apply(s: State[E]): T = {
-    ask(s) match {
-      case Success(result) => result
-      case Failure(error) => throw error
-    }
-  }
+
+  def apply(s: State[E]): Try[T]
 
   def parse(s: State[E]): T = {
     ask(s) match {
@@ -36,19 +30,14 @@ trait Parsec[E, T] {
     }
   }
 
-  def ask(s: State[E]): Try[T]
+  def ask(s: State[E]): Try[T] = apply(s)
 
   def ask(s: Seq[E]): Try[T] = {
     ask(State(s))
   }
 
   def opt(s: State[E]): Option[T] = {
-    try {
-      Some(apply(s))
-    } catch {
-      case _: Exception =>
-        Option.empty[T]
-    }
+    apply(s).toOption
   }
 
   def `<|>`(parsec: Parsec[E, T]): Parsec[E, T] = new Choice(Seq(this, parsec))
@@ -56,14 +45,6 @@ trait Parsec[E, T] {
   def `<?>`(message: String): Parsec[E, T] = (s: State[E]) => {
     this ask s orElse s.trap(message)
   }
-//
-//  def >>[O](p: Parsec[E, O]): Parsec[E, O] = (s: State[E]) => {
-//    this ask s flatMap { _ => p ask s }
-//  }
-//
-//  def >>=[O](binder: Binder[E, T, O]): Parsec[E, O] = (s: State[E]) => {
-//    this ask s flatMap { value => binder(value) ? s }
-//  }
 
   def ?(s: State[E]): Try[T] = ask(s)
 

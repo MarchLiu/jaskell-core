@@ -18,7 +18,7 @@ class SepBy[E, T](val parsec: Parsec[E, T], val by: Parsec[E, _]) extends Parsec
     re <- p ask s
   } yield re
 
-  override def ask(s: State[E]): Try[Seq[T]] = {
+  override def apply(s: State[E]): Try[Seq[T]] = {
     val re = new mutable.ListBuffer[T]
     p ? s map { head =>
       re += head

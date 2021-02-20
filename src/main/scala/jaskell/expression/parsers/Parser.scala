@@ -31,7 +31,7 @@ class Parser extends Parsec[Char, Expression] {
     }
   })
 
-  override def ask(s: State[Char]): Try[Expression] = {
+  override def apply(s: State[Char]): Try[Expression] = {
     val np = attempt(attempt(new Num) <|> attempt(new Param) <|> new Q)
 
     np ? s flatMap { left =>

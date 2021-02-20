@@ -14,7 +14,7 @@ import scala.util.control.Breaks._
 class Many1[E, T](val parsec: Parsec[E, T]) extends Parsec[E, Seq[T]] {
   val psc = new Attempt[E, T](parsec)
 
-  override def ask(s: State[E]): Try[Seq[T]] = {
+  override def apply(s: State[E]): Try[Seq[T]] = {
     val re = new mutable.ListBuffer[T]
     parsec ask s match {
       case Success(value) => re += value

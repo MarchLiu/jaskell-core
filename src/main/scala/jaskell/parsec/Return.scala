@@ -10,7 +10,7 @@ import scala.util.{Success, Try}
  */
 class Return[E, T](val element: T) extends Parsec[E, T] {
 
-  override def ask(s: State[E]): Try[T] = Success(element)
+  override def apply(s: State[E]): Try[T] = Success(element)
 }
 
 object Return {

@@ -18,7 +18,7 @@ class Num extends Parsec[Char, Expression] {
 
   val parser: ScNumber = scNumber
 
-  override def ask(s: State[Char]): Try[Expression] = {
+  override def apply(s: State[Char]): Try[Expression] = {
     parser ? s map {n => new N(n.toDouble)}
   }
 }

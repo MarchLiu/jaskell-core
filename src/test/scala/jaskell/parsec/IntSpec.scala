@@ -15,9 +15,9 @@ class IntSpec extends AnyFlatSpec with Matchers {
   "Simple" should "Run a simple test" in {
     val state = State("23413214")
 
-    val parser = Int
+    val parser = Int.apply
 
-    val re = parser apply state
+    val re = parser ! state
 
     re should be ("23413214")
   }
@@ -25,9 +25,9 @@ class IntSpec extends AnyFlatSpec with Matchers {
   "Negative Simple" should "Run a simple test" in {
     val state = State("-23413214")
 
-    val parser = Int
+    val parser = Int.apply
 
-    val re = parser apply state
+    val re = parser ! state
 
     re should be ("-23413214")
   }
@@ -35,9 +35,9 @@ class IntSpec extends AnyFlatSpec with Matchers {
   "Stop" should "Match digits until a letter" in {
     val state = State("23413a214")
 
-    val parser = Int
+    val parser = Int.apply
 
-    val re = parser apply state
+    val re = parser ! state
 
     re should be ("23413")
   }
@@ -45,9 +45,9 @@ class IntSpec extends AnyFlatSpec with Matchers {
   "Negative Stop" should "Match negative digits until a letter" in {
     val state = State("-23413a214")
 
-    val parser = Int
+    val parser = Int.apply
 
-    val re = parser apply state
+    val re = parser ! state
 
     re should be ("-23413")
   }
@@ -56,7 +56,7 @@ class IntSpec extends AnyFlatSpec with Matchers {
     val state = State("-x2344")
     val parser = new Int
     a[ParsecException] should be thrownBy {
-      parser apply state
+      parser ! state
     }
   }
 }

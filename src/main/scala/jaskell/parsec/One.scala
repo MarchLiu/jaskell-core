@@ -10,7 +10,7 @@ import scala.util.Try
  */
 class One [E] extends Parsec[E, E]{
 
-  override def ask(s: State[E]): Try[E] = s.next()
+  override def apply(s: State[E]): Try[E] = s.next()
 }
 
 object One {

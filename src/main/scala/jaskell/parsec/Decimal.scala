@@ -12,7 +12,7 @@ class Decimal extends Parsec[Char, String] {
   val sign: Parsec[Char, String] = new Attempt(Text("-")) <|> Return("")
   val udicemal = new UDecimal()
 
-  override def ask(st: State[Char]): Try[String] = {
+  override def apply(st: State[Char]): Try[String] = {
     for {
       s <- sign ? st
       num <- udicemal ? st

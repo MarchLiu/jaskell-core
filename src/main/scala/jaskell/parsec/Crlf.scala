@@ -10,7 +10,7 @@ import scala.util.Try
  */
 class Crlf(val r: Ch = Ch('\r'), val n: Ch = Ch('\n')) extends Parsec[Char, String] {
 
-  override def ask(s: State[Char]): Try[String] = {
+  override def apply(s: State[Char]): Try[String] = {
     for {
       _ <- r ? s
       _ <- n ? s

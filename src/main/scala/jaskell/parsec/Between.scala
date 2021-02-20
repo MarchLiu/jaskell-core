@@ -13,7 +13,7 @@ import scala.util.Try
 class Between[E, T](val open: Parsec[E, _], val close: Parsec[E, _], val parsec: Parsec[E, T])
   extends Parsec[E, T] {
 
-  override def ask(s: State[E]): Try[T] = {
+  override def apply(s: State[E]): Try[T] = {
     for {
       _ <- open ? s
       re <- parsec ? s

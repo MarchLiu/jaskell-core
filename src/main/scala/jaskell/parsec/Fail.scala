@@ -11,7 +11,7 @@ import scala.util.Try
 class Fail[E](val msg: String, val objects: Any*) extends Parsec[E, E] {
   val message: String = msg.format(objects)
 
-  override def ask(s: State[E]): Try[E] = {
+  override def apply(s: State[E]): Try[E] = {
     s.trap(message)
   }
 }

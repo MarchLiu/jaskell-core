@@ -11,7 +11,7 @@ import scala.util.{Failure, Success, Try}
 class Text(val text: String, val caseSensitive: Boolean) extends Parsec[Char, String] {
   val content: String = if (caseSensitive) text else text.toLowerCase
 
-  override def ask(s: State[Char]): Try[String] = {
+  override def apply(s: State[Char]): Try[String] = {
     var idx = 0
     val sb: StringBuilder = new StringBuilder
     for(c <- this.text) {

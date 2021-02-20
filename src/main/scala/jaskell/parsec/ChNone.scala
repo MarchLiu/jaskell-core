@@ -11,7 +11,7 @@ import scala.util.{Success, Try}
 class ChNone(val content: String, val caseSensitive: Boolean) extends Parsec[Char, Char] {
   val contentSet: Set[Char] = if (caseSensitive) content.toSet else content.toLowerCase.toSet
 
-  override def ask(s: State[Char]): Try[Char] = {
+  override def apply(s: State[Char]): Try[Char] = {
     s.next() flatMap { c =>
       if (caseSensitive) {
         if (!(contentSet contains c)) {

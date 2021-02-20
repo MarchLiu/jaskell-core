@@ -53,21 +53,20 @@ class ExpressionSpec extends AnyFlatSpec with Matchers {
 
   "Divide" should "match a divide expression" in {
     val st: TxtState = State("128/8")
-    val exp = p(st)
-    exp.eval(emptyEnv) should be(Success(16))
+    val re = p(st)
+    re.flatMap(_.eval(emptyEnv)) should be(Success(16))
   }
 
   "Quote" should "match a quoted expression" in {
     val st: TxtState = State("(128/8)")
-    val exp = p(st)
-    exp.eval(emptyEnv) should be(Success(16))
+    val re = p(st)
+    re.flatMap(_.eval(emptyEnv)) should be(Success(16))
   }
 
   "Priorities" should "compute a ploy expressio right to left" in {
     val st = State("7 + 15 * 3")
     val re = p(st)
-    val exp = re.makeAst
-    exp.eval(emptyEnv) should be(Success(52))
+    re.map(_.makeAst).flatMap(_.eval(emptyEnv)) should be(Success(52))
   }
 
   "Priorities flow" should "compute a ploy expression left to right" in {

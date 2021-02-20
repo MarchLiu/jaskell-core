@@ -21,16 +21,16 @@ class EqSpec extends AnyFlatSpec with Matchers{
     val eof = new Eof[Char]
 
     (Eq('h') ? state) should be (Success('h'))
-    (Eq('e') apply state) should be ('e')
-    (Eq('l') apply state) should be ('l')
-    (Eq('l') apply state) should be ('l')
+    (Eq('e') ! state) should be ('e')
+    (Eq('l') ! state) should be ('l')
+    (Eq('l') ! state) should be ('l')
     a[ParsecException] should be thrownBy {
-      Attempt(Eq('l')) apply state
+      Attempt(Eq('l')) ! state
     }
-    (Eq('o') apply state) should be ('o')
+    (Eq('o') ! state) should be ('o')
     eof apply state
     a[EOFException] should be thrownBy {
-      Eq('o') apply state
+      Eq('o') ! state
     }
   }
 

@@ -11,7 +11,7 @@ import scala.util.{Failure, Success, Try}
  */
 class Opt[E, T](val p: Parsec[E, T], val otherwise: T) extends Parsec[E, T] {
 
-  override def ask(s: State[E]): Try[T] = {
+  override def apply(s: State[E]): Try[T] = {
     val before = s.status
     p ? s match {
       case right: Success[_] =>

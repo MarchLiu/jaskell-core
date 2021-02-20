@@ -15,7 +15,7 @@ class ReturnSpec extends AnyFlatSpec with Matchers{
     val state = State("Hello World")
     val returns: Return[Char, BigDecimal] = Return(BigDecimal("3.1415926"))
     val status = state.status
-    val re = returns(state)
+    val re = returns ! state
     re should be (BigDecimal("3.1415926"))
     state.status should be (status)
   }

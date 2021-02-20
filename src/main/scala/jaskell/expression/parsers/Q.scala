@@ -21,7 +21,7 @@ class Q extends Parsec[Char, Expression] {
   val skips: SkipWhitespaces = skipWhiteSpaces
   val parser: Parsec[Char, Expression] = between(ch('(') >> skips, skips >> ch(')'), p)
 
-  override def ask(s: State[Char]): Try[Expression] = {
+  override def apply(s: State[Char]): Try[Expression] = {
     parser ? s map {new Quote(_)}
   }
 }

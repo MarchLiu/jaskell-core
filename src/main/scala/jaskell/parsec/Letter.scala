@@ -10,7 +10,7 @@ import scala.util.{Success, Try}
  * @since 2020/06/12 18:53
  */
 class Letter extends Parsec [Char, Char]{
-  override def ask(s: State[Char]): Try[Char] = s.next() flatMap  { v =>
+  override def apply(s: State[Char]): Try[Char] = s.next() flatMap  { v =>
     if(v.isLetter){
       Success(v)
     } else {

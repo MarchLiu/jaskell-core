@@ -22,7 +22,7 @@ class S(val prev: Expression) extends Parsec[Char, Expression] {
 
   lazy val next = new Parser
 
-  override def ask(s: State[Char]): Try[Expression] = {
+  override def apply(s: State[Char]): Try[Expression] = {
     for {
       _ <- op ? s
       exp <- next ? s

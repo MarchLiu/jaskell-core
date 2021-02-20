@@ -27,7 +27,7 @@ class EofSpec extends AnyFlatSpec with Matchers{
     val eof = new Eof[Char]
 
     a[ParsecException] should be thrownBy {
-      eof(state)
+      eof ! state
     }
   }
 }

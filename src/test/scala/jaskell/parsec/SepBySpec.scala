@@ -16,7 +16,7 @@ class SepBySpec extends AnyFlatSpec with Matchers {
 
     val p = SepBy(Eq('h'), Eq('l'))
 
-    val re = p apply state
+    val re = p parse state
     re.size should be (6)
     re foreach { item =>
       item should be ('h')

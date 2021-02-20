@@ -9,7 +9,7 @@ import scala.util.{Success, Try}
  * @version 1.0.0
  */
 class Ne[E](val element: E) extends Parsec[E, E] {
-  override def ask(s: State[E]): Try[E] = {
+  override def apply(s: State[E]): Try[E] = {
     s.next() flatMap { data =>
       if (element != data) {
         Success(data)

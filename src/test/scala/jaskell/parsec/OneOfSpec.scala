@@ -16,7 +16,7 @@ class OneOfSpec extends AnyFlatSpec with Matchers{
 
     val oof = OneOf(Seq('b', 'e', 'h', 'f').toSet);
 
-    val c = oof(state);
+    val c = oof ! state
     c should be ('h')
   }
 
@@ -24,7 +24,7 @@ class OneOfSpec extends AnyFlatSpec with Matchers{
     val state = State("hello")
     val oof = OneOf(Seq('d', 'a', 't', 'e').toSet)
     a[ParsecException]  should be thrownBy {
-      oof(state)
+      oof ! state
     }
   }
 }

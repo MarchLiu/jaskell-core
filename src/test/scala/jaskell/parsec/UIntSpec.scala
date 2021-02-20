@@ -17,7 +17,7 @@ class UIntSpec extends AnyFlatSpec with Matchers {
 
     val parser = uInteger
 
-    val re = parser apply state
+    val re = parser ! state
 
     re should be ("23413214")
   }
@@ -27,7 +27,7 @@ class UIntSpec extends AnyFlatSpec with Matchers {
 
     val parser = uInteger
 
-    val re = parser apply state
+    val re = parser ! state
 
     re should be ("23413")
   }
@@ -36,7 +36,7 @@ class UIntSpec extends AnyFlatSpec with Matchers {
     val state = State("x2344")
     val parser = uInteger
     a[ParsecException] should be thrownBy {
-      parser apply state
+      parser ! state
     }
   }
 }

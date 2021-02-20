@@ -3,6 +3,8 @@ package jaskell.parsec
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
+import scala.util.Success
+
 
 /**
  * Between Tester.
@@ -26,9 +28,9 @@ class BetweenSpec extends AnyFlatSpec with Matchers {
       ch('e')
     );
 
-    val c: Char = bmw(state);
+    val c = bmw(state);
 
-    c should be('e')
+    c should be(Success('e'))
   }
 
   "Brackets" should "test brackets pairs" in {
@@ -40,7 +42,7 @@ class BetweenSpec extends AnyFlatSpec with Matchers {
       many(Ne(']'))
     )
 
-    val re = parser(state).mkString
-    re should be ("hello")
+    val re = parser(state).map(_.mkString)
+    re should be (Success("hello"))
   }
 } 

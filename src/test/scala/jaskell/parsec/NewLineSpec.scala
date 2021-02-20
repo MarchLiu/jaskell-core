@@ -31,6 +31,6 @@ class NewLineSpec extends AnyFlatSpec with Matchers{
 
     val parser = crlf
 
-    parser(state) should be ("\r\n")
+    parser ! state should be ("\r\n")
   }
 }

@@ -11,7 +11,7 @@ import scala.util.{Failure, Success, Try}
  * @version 1.0.0
  */
 class Eof[E] extends Parsec [E, Unit]{
-  override def ask(s: State[E]): Try[Unit] = {
+  override def apply(s: State[E]): Try[Unit] = {
     s.next() match {
       case Success(re) =>
         s.trap(s"exception eof but $re")
