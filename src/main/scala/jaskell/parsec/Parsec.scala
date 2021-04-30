@@ -12,7 +12,7 @@ import scala.util.{Failure, Success, Try}
  * @author mars
  * @version 1.0.0
  */
-trait Parsec[E, T] {
+trait Parsec[E, +T] {
 
   def apply(s: State[E]): Try[T]
 
@@ -40,9 +40,9 @@ trait Parsec[E, T] {
     apply(s).toOption
   }
 
-  def `<|>`(parsec: Parsec[E, T]): Parsec[E, T] = new Choice(Seq(this, parsec))
+  def `<|>`[U >: T](parsec: Parsec[E, U]): Parsec[E, U] = new Choice(Seq(this, parsec))
 
-  def `<?>`(message: String): Parsec[E, T] = (s: State[E]) => {
+  def `<?>`[U >: T](message: String): Parsec[E, U] = (s: State[E]) => {
     this ask s orElse s.trap(message)
   }
 
