@@ -10,10 +10,11 @@ import scala.util.{Failure, Success, Try}
  * @version 1.0.0
  */
 class Opt[E, T](val p: Parsec[E, T], val otherwise: T) extends Parsec[E, T] {
+  lazy val psc = Attempt(p)
 
   override def apply(s: State[E]): Try[T] = {
     val before = s.status
-    p ? s match {
+    psc ? s match {
       case right: Success[_] =>
         right
       case left: Failure[_] =>
