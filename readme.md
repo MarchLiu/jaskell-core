@@ -172,3 +172,8 @@ maven_jar(
 ### 0.6.3
 
  - code clean
+
+### 0.6.7
+
+ - add skip1 spaces
+ - add skip1 whitespaces
