@@ -182,3 +182,7 @@ maven_jar(
 
  - bugs fixed
  - add builtin combinators extension methods
+
+### 0.7.1
+
+ - sync api design as jaskell-dotty 

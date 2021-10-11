@@ -61,7 +61,7 @@ object Combinator {
 
     def ahead: Parsec[E, T] = Ahead(p)
 
-    def orElse(other: Parsec[E, T]): Parsec[E, T] = Attempt(p) <|> other
+    def or(other: Parsec[E, T]): Parsec[E, T] = Attempt(p) <|> other
 
     def many: Parsec[E, Seq[T]] = Many(p)
 
