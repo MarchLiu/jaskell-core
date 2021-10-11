@@ -25,7 +25,7 @@ class ManyTill[E, T, L](val parser: Parsec[E, T], val end: Parsec[E, L]) extends
         case Success(_) => return Success(re.toSeq)
         case Failure(error: EOFException) => return Failure(error)
         case Failure(_: ParsecException) =>
-          parser ask s match {
+          psc ask s match {
             case Success(value) => re += value
             case Failure(e) => Failure(e)
           }

@@ -1,8 +1,8 @@
 name := "jaskell-core"
 
-version := "0.6.7"
+version := "0.7.0"
 
-scalaVersion := "2.13.2"
+scalaVersion := "2.13.6"
 
 libraryDependencies += "org.scalactic" %% "scalactic" % "3.1.1"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.1.1" % "test"

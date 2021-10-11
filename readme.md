@@ -177,3 +177,8 @@ maven_jar(
 
  - add skip1 spaces
  - add skip1 whitespaces
+
+### 0.7.0
+
+ - bugs fixed
+ - add builtin combinators extension methods

@@ -55,4 +55,30 @@ object Combinator {
     new Between[E, T](open, close, parser)
   }
 
+
+  implicit class BuiltIn[E, T](p: Parsec[E, T]) {
+    def attempt: Parsec[E, T] = Attempt(p)
+
+    def ahead: Parsec[E, T] = Ahead(p)
+
+    def orElse(other: Parsec[E, T]): Parsec[E, T] = Attempt(p) <|> other
+
+    def many: Parsec[E, Seq[T]] = Many(p)
+
+    def many1: Parsec[E, Seq[T]] = Many1(p)
+
+    def manyTill(end: Parsec[E, _]): Parsec[E, Seq[T]] = ManyTill(p, end)
+
+    def skip: Parsec[E, Unit] = Skip(p)
+
+    def skip1: Parsec[E, Unit] = Skip1(p)
+
+    def sepBy(by: Parsec[E, _]): Parsec[E, Seq[T]] = SepBy(p, by)
+
+    def sepBy1(by: Parsec[E, _]): Parsec[E, Seq[T]] = SepBy1(p, by)
+
+    def find: Parsec[E, T] = Find(p)
+
+    def between(open: Parsec[E, _], close: Parsec[E, _]): Parsec[E, T] = Between(open, close, p)
+  }
 }
