@@ -186,3 +186,8 @@ maven_jar(
 ### 0.7.1
 
  - sync api design as jaskell-dotty 
+
+### 0.7.2
+
+ - add chars
+ - add while in

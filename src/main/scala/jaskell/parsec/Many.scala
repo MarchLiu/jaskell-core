@@ -13,7 +13,7 @@ class Many[E, T](val parsec: Parsec[E, T]) extends Parsec[E, Seq[T]] {
   val psc = new Attempt[E, T](parsec)
 
   override def apply(s: State[E]): Try[Seq[T]] = {
-    var re = new mutable.ListBuffer[T]
+    val re = new mutable.ListBuffer[T]
     while (true) {
       psc ask s match {
         case Success(result) => re += result

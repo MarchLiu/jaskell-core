@@ -37,7 +37,7 @@ trait Parsec[E, +T] {
     ask(State(s))
   }
 
-  def opt(s: State[E]): Option[T] = {
+  def option(s: State[E]): Option[T] = {
     apply(s).toOption
   }
 

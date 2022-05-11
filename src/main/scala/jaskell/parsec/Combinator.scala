@@ -1,5 +1,7 @@
 package jaskell.parsec
 
+import jaskell.Monad.toMonad
+
 /**
  * Parsec Combinators
  *
@@ -55,6 +57,7 @@ object Combinator {
     new Between[E, T](open, close, parser)
   }
 
+  def chars(str: String): Parsec[Char, String] = Chars(str)
 
   implicit class BuiltIn[E, T](p: Parsec[E, T]) {
     def attempt: Parsec[E, T] = Attempt(p)
@@ -80,5 +83,9 @@ object Combinator {
     def find: Parsec[E, T] = Find(p)
 
     def between(open: Parsec[E, _], close: Parsec[E, _]): Parsec[E, T] = Between(open, close, p)
+
+    def opt: Parsec[E, Option[T]] = (p >>= {v => Return(Some(v))}) <|> Return(None)
+
+
   }
 }
