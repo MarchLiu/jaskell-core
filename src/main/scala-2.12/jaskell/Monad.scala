@@ -1,7 +1,5 @@
 package jaskell
 
-import jaskell.parsec.{Parsec, Return}
-
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Success, Try}
 
@@ -42,7 +40,7 @@ object Monad {
 
     def flatMap[B](f: A => M[B]): M[B] = I.flatMap(self, f)
 
-    def liftA2[B, C](f: (A, B) => C): (M[B]) => M[C] = m => I.liftA2(f)(self, m)
+    def liftA2[B, C](f: (A, B) => C): M[B] => M[C] = m => I.liftA2(f)(self, m)
 
     def <*>[B](f: A => B): M[A] => M[B] = ma => I.fmap(ma, f)
 

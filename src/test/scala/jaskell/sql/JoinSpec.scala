@@ -1,11 +1,9 @@
 package jaskell.sql
 
-import java.sql.{Connection, DriverManager, PreparedStatement, SQLException}
-
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
-import scala.util.Using
+import java.sql.{Connection, DriverManager}
 
 /**
  * TODO
@@ -54,35 +52,31 @@ class JoinSpec extends AnyFlatSpec with Matchers {
     val q: Query = select("l.id, r.id, l.content, r.content")
       .from(n("test").as("l"))
       .join(n("test").as("r")).on(l("l.id") == (l("r.pid"))).where(l("l.id") != (l("r.id")))
-    try {
-      val statement = q.prepare(conn)
-      val rs = q.query(statement)
-      try while ( {
-        rs.next
-      }) {
-        rs.getString(3) should be(rs.getString(4))
-        rs.getInt(1) + 1 should be(rs.getInt(2))
-      } finally {
-        if (statement != null) statement.close()
-        if (rs != null) rs.close()
-      }
+    val statement = q.prepare(conn)
+    val rs = q.query(statement)
+    try while ( {
+      rs.next
+    }) {
+      rs.getString(3) should be(rs.getString(4))
+      rs.getInt(1) + 1 should be(rs.getInt(2))
+    } finally {
+      if (statement != null) statement.close()
+      if (rs != null) rs.close()
     }
   }
 
   "LeftJoin0" should "Test left join" in {
     val q: Query = select("l.id, r.id, l.content, r.content").from(n("test").as("l"))
       .leftJoin(n("test").as("r")).on(n("l.id") == n("r.pid")).where(n("r.id").isNull)
-    try {
-      val statement = q.prepare(conn)
-      val rs = q.query(statement)
-      try while ( {
-        rs.next
-      }) {
-        rs.getObject(2) should be(null)
-      } finally {
-        if (statement != null) statement.close()
-        if (rs != null) rs.close()
-      }
+    val statement = q.prepare(conn)
+    val rs = q.query(statement)
+    try while ( {
+      rs.next
+    }) {
+      rs.getObject(2) should be(null)
+    } finally {
+      if (statement != null) statement.close()
+      if (rs != null) rs.close()
     }
   }
 

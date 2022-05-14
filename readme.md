@@ -191,3 +191,7 @@ maven_jar(
 
  - add chars
  - add while in
+
+### 0.7.3
+
+ - compatibility 2.12 and 2.13 

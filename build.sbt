@@ -3,17 +3,15 @@ name := "jaskell-core"
 lazy val scala213 = "2.13.6"
 lazy val scala212 = "2.12.15"
 lazy val scala211 = "2.11.12"
-lazy val supportedScalaVersions = List(scala213, scala212, scala211)
+lazy val supportedScalaVersions = List(scala213, scala212)
 
-version := "0.7.2"
+version := "0.7.3"
 scalaVersion := scala213
 
-libraryDependencies += "org.scalactic" %% "scalactic" % "3.1.1"
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.1.1" % "test"
-libraryDependencies += "org.xerial" % "sqlite-jdbc" % "3.31.1" % "test"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.12" % "test"
+libraryDependencies += "org.xerial" % "sqlite-jdbc" % "3.36.0.3" % "test"
 
 crossScalaVersions := supportedScalaVersions
-publish / skip := true
 
 ThisBuild / organization := "io.github.marchliu"
 ThisBuild / organizationName := "Mars Liu"
@@ -27,10 +25,10 @@ ThisBuild / scmInfo := Some(
 )
 ThisBuild / developers := List(
   Developer(
-    id    = "Mars Liu",
-    name  = "Liu Xin",
+    id = "Mars Liu",
+    name = "Liu Xin",
     email = "mars.liu@outlook.com",
-    url   = url("https://marchliu.github.io/")
+    url = url("https://marchliu.github.io/")
   )
 )
 

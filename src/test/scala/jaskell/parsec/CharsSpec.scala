@@ -1,7 +1,5 @@
 package jaskell.parsec
 
-import jaskell.Monad.toMonad
-import jaskell.parsec.Txt.mkString
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 

@@ -1,9 +1,7 @@
 package jaskell.parsec
 
 import jaskell.Monad
-import jaskell.Monad.MonadOps
 
-import java.io.EOFException
 import scala.language.implicitConversions
 import scala.util.{Failure, Success, Try}
 
