@@ -15,7 +15,7 @@ import jaskell.Monad.toMonad
 class SepEndBy1[E, T](val parser: Parsec[E, T], val sep: Parsec[E, _]) extends Parsec[E, Seq[T]] {
   val separator = new Attempt(sep)
   val p: Parsec[E, T] = Attempt(parser)
-  val psc: Parsec[E, T] = s => for {
+  val psc: Parsec[E, T] = (s: State[E]) => for {
     _ <- sep ask s
     re <- p ask s
   } yield re

@@ -2,10 +2,11 @@ package jaskell.batteries.cstyle
 
 import jaskell.Monad.toMonad
 import jaskell.parsec.Combinator.many
-import jaskell.parsec.Parsec
+import jaskell.parsec.{Parsec, State}
 import jaskell.parsec.Txt.{ch, mkString, nch}
 
-import scala.util.{Failure, Success}
+import scala.language.implicitConversions
+import scala.util.{Failure, Success, Try}
 
 /**
  * TODO
@@ -15,7 +16,8 @@ import scala.util.{Failure, Success}
  * @since 2022/02/07 09:33
  */
 object Strings {
-  def escapedChar: Parsec[Char, Char] = ch('\\') *> { s =>
+
+  def escapedChar: Parsec[Char, Char] = ch('\\') *> { (s: State[Char]) =>
     s.next() flatMap {
       case 'n' =>
         Success('\n')
@@ -30,7 +32,7 @@ object Strings {
     }
   }
 
-  def char: Parsec[Char, Char] = s =>
+  def char: Parsec[Char, Char] = (s: State[Char]) =>
     s.next() flatMap {
       case '\n' =>
         s.trap(f"new line is invalid in a literal token, maybe use \\n?")

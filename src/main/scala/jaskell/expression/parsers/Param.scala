@@ -22,7 +22,7 @@ class Param extends Parsec[Char, Expression] {
   val head: Parsec[Char, Char] = letter
   val tail: Parsec[Char, Seq[Char]] = many(attempt(letter) <|> attempt(digit))
   val t: Parsec[Char, String] = tail >>= mkString
-  val parser: Parsec[Char, String] = s => for {
+  val parser: Parsec[Char, String] = (s: State[Char]) => for {
     h <- head ? s
     tv <- t ? s
   } yield s"$h$tv"

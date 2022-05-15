@@ -33,7 +33,6 @@ object Monad {
   abstract class MonadOps[A, M[_]](implicit I: Monad[M]) {
     def self: M[A]
 
-
     def map[B](f: A => B): M[B] = I.fmap(self, f)
 
     def <:>[B](f: A => B): M[B] = I.fmap(self, f)

@@ -10,7 +10,7 @@ import scala.util.{Success, Try}
  */
 class Skip1[E](val psc: Parsec[E, _]) extends Parsec[E, Unit] {
   val skip = new Skip(psc)
-  val parser: Parsec[E, _] = s => for {
+  val parser: Parsec[E, _] = (s: State[E]) => for {
     _ <- psc ask s
     _ <- skip ask s
   } yield ()

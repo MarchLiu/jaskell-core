@@ -3,10 +3,10 @@ name := "jaskell-core"
 lazy val scala213 = "2.13.6"
 lazy val scala212 = "2.12.15"
 lazy val scala211 = "2.11.12"
-lazy val supportedScalaVersions = List(scala213, scala212)
+lazy val supportedScalaVersions = List(scala213, scala212, scala211)
 
-version := "0.7.3"
-scalaVersion := scala213
+version := "0.7.4"
+scalaVersion := scala211
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.12" % "test"
 libraryDependencies += "org.xerial" % "sqlite-jdbc" % "3.36.0.3" % "test"
@@ -16,6 +16,23 @@ crossScalaVersions := supportedScalaVersions
 ThisBuild / organization := "io.github.marchliu"
 ThisBuild / organizationName := "Mars Liu"
 ThisBuild / organizationHomepage := Some(url("https://marchliu.github.io/"))
+
+
+def scalacOptionsVersion(scalaVersion: String): Seq[String] = {
+  Seq(
+    "-unchecked",
+    "-deprecation",
+    "-Xlint",
+    "-Xfatal-warnings",
+    "-Ywarn-dead-code",
+    "-encoding", "UTF-8"
+  ) ++(CrossVersion.partialVersion(scalaVersion) match {
+    case Some((2, scalaMajor)) if scalaMajor == 11 => Seq("-Xexperimental")
+    case _ => Nil
+  })
+}
+
+
 
 ThisBuild / scmInfo := Some(
   ScmInfo(
@@ -44,3 +61,7 @@ ThisBuild / publishTo := {
   else Some("releases" at nexus + "service/local/staging/deploy/maven2")
 }
 ThisBuild / publishMavenStyle := true
+
+val appSettings = Seq(
+  scalacOptions := scalacOptionsVersion(scalaVersion.value)
+)

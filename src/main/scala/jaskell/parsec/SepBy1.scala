@@ -12,7 +12,7 @@ import scala.util.{Failure, Success, Try}
 class SepBy1[E, T](val parsec: Parsec[E, T], val by: Parsec[E, _]) extends Parsec[E, Seq[T]] {
   val b = new Attempt(by)
   val p = new Attempt[E, T](parsec)
-  val psc: Parsec[E, T] = s => for {
+  val psc: Parsec[E, T] = (s: State[E]) => for {
     _ <- b ask s
     re <- p ask s
   } yield re

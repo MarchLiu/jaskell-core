@@ -19,7 +19,7 @@ object Strings {
 
   def startTriQuote: Parsec[Char, String] = ch('f').opt *> (text("\"\"\"") <|> text("'''"))
 
-  def escapedChar: Parsec[Char, Char] = ch('\\') *> { s =>
+  def escapedChar: Parsec[Char, Char] = ch('\\') *> { (s: State[Char]) =>
     s.next() flatMap {
       case '\'' =>
         Success('\'')
@@ -36,7 +36,7 @@ object Strings {
     }
   }
 
-  def char(stop: Char): Parsec[Char, Char] = { s =>
+  def char(stop: Char): Parsec[Char, Char] = { (s: State[Char]) =>
     s.next() flatMap { c =>
       if (c == stop) {
         s.trap(f"stop at $stop")
@@ -56,7 +56,7 @@ object Strings {
   }
 
 
-  def char(stop: String): Parsec[Char, Char] = { s =>
+  def char(stop: String): Parsec[Char, Char] = { (s: State[Char]) =>
     val tryIt = text(stop).attempt ? s
     if (tryIt.isSuccess) {
       s.trap(f"stop at $stop")
@@ -70,7 +70,7 @@ object Strings {
     }
   }
 
-  def rawChar(stop: Char): Parsec[Char, Char] = { s =>
+  def rawChar(stop: Char): Parsec[Char, Char] = { (s: State[Char]) =>
     s.next() flatMap { c =>
       if (c == stop) {
         s.trap(f"stop at $stop")
@@ -88,7 +88,7 @@ object Strings {
   }
 
 
-  def rawChar(stop: String): Parsec[Char, Char] = { s =>
+  def rawChar(stop: String): Parsec[Char, Char] = { (s: State[Char]) =>
     val tryIt = text(stop).attempt ? s
     if (tryIt.isSuccess) {
       s.trap(f"stop at $stop")
@@ -97,7 +97,7 @@ object Strings {
     }
   }
 
-  def singleLineString:Parsec[Char, String] = { s =>
+  def singleLineString:Parsec[Char, String] = { (s: State[Char]) =>
     for {
       stop <- startQuote ? s
       content <- many(escapedChar <|> char(stop)) ? s
@@ -107,7 +107,7 @@ object Strings {
     }
   }
 
-  def multiLineString:Parsec[Char, String] = { s =>
+  def multiLineString:Parsec[Char, String] = { (s: State[Char]) =>
     for {
       stop <- startTriQuote ? s
       content <- many(escapedChar <|> char(stop)) ? s
@@ -117,7 +117,7 @@ object Strings {
     }
   }
 
-  def singleLineRawString:Parsec[Char, String] = { s =>
+  def singleLineRawString:Parsec[Char, String] = { (s: State[Char]) =>
     for {
       stop <- (ch('r') *> startQuote) ? s
       content <- many(rawChar(stop)) ? s
@@ -127,7 +127,7 @@ object Strings {
     }
   }
 
-  def multiLineRawString:Parsec[Char, String] = { s =>
+  def multiLineRawString:Parsec[Char, String] = { (s: State[Char]) =>
     for {
       stop <- (ch('r') *> startTriQuote) ? s
       content <- many(rawChar(stop)) ? s

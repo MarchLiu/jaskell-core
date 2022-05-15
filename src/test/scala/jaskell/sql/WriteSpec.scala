@@ -1,9 +1,9 @@
 package jaskell.sql
 
-import java.sql.{Connection, DriverManager}
-
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+
+import java.sql.{Connection, DriverManager, PreparedStatement}
 
 /**
  * TODO
@@ -18,15 +18,15 @@ class WriteSpec extends AnyFlatSpec with Matchers {
 
   val url = "jdbc:sqlite::memory:"
   val table: Name with CouldBeFrom = t("test")
-  val conn = DriverManager.getConnection(url)
+  val conn: Connection = DriverManager.getConnection(url)
 
 
-  val create = conn.prepareStatement("create table test(id integer primary key autoincrement, content text)")
+  val create: PreparedStatement = conn.prepareStatement("create table test(id integer primary key autoincrement, content text)")
   create.execute()
   create.close()
 
-  val query = insert.into(table)(c("content")).values(p("data")).cache
-  val statement = query.prepare(conn)
+  val query: Statement = insert.into(table)(c("content")).values(p("data")).cache
+  val statement: PreparedStatement = query.prepare(conn)
   statement.execute()
 
   "Insert" should "Test insert " in {

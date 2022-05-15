@@ -195,3 +195,7 @@ maven_jar(
 ### 0.7.3
 
  - compatibility 2.12 and 2.13 
+
+### 0.74
+
+ - compatibility 2.11, 2.12 and 2.13 
