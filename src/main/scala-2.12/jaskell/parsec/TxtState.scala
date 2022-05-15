@@ -1,7 +1,7 @@
 package jaskell.parsec
 
-import scala.collection.JavaConverters.asScalaSetConverter
-
+import scala.collection.mutable
+import scala.collection.SortedMap
 
 /**
  * Txt State extends Common State trait. It special for text content analyst.
@@ -12,8 +12,8 @@ import scala.collection.JavaConverters.asScalaSetConverter
  */
 class TxtState(val txt: String, val newLine:Char = '\n') extends CommonState[Char] {
   override val content: Seq[Char] = txt.toCharArray.toSeq
-  val lines: java.util.SortedMap[scala.Int, scala.Int] = {
-    val result = new java.util.TreeMap[scala.Int, scala.Int]();
+  val lines: SortedMap[scala.Int, scala.Int] = {
+    val result = new mutable.TreeMap[scala.Int, scala.Int]();
     result.put(0, 0);
     for(index <- Range(0, txt.length)){
       val c = txt.charAt(index)
@@ -29,8 +29,8 @@ class TxtState(val txt: String, val newLine:Char = '\n') extends CommonState[Cha
   }
   def lineByIndex(index: scala.Int): scala.Int = {
     var i = 0
-    for(idx:scala.Int <- lines.keySet().asScala){
-      if(idx <= index && index <= lines.get(idx)) {
+    for(idx:scala.Int <- lines.keySet){
+      if(idx <= index && index <= lines(idx)) {
         return i
       }
       i += 1
