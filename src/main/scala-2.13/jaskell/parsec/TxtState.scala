@@ -1,7 +1,6 @@
 package jaskell.parsec
 
 import scala.collection.mutable
-import scala.collection.JavaConverters.asScalaSetConverter
 /**
  * Txt State extends Common State trait. It special for text content analyst.
  * Txt state could mark a status point in which line.
