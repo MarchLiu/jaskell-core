@@ -1,11 +1,10 @@
 package jaskell.expression.parsers
 
+import jaskell.Monad.Implicits._
 import jaskell.expression.{Expression, Parameter}
-import jaskell.parsec.{MkString, Parsec, ParsecException, Return, State}
+import jaskell.parsec.{Parsec, State}
 
 import scala.util.Try
-import jaskell.Monad.toMonad
-import jaskell.parsec.Parsec.toFlatMapper
 
 /**
  * TODO
@@ -17,6 +16,7 @@ import jaskell.parsec.Parsec.toFlatMapper
 class Param extends Parsec[Char, Expression] {
 
   import jaskell.parsec.Combinator._
+  import jaskell.parsec.Parsec.Implicits._
   import jaskell.parsec.Txt._
 
   val head: Parsec[Char, Char] = letter

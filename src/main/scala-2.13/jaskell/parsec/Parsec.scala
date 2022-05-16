@@ -54,19 +54,20 @@ trait Parsec[E, +T] {
 object Parsec {
   def apply[E, T](parser: State[E] => Try[T]): Parsec[E, T] = parser(_)
 
-  implicit def toFlatMapper[E, T, O](binder: Binder[E, T, O]): (T)=>Parsec[E, O] = binder.apply
+  object Implicits {
+    implicit def toFlatMapper[E, T, O](binder: Binder[E, T, O]): (T) => Parsec[E, O] = binder.apply
 
-  implicit def mkMonad[T]: Monad[({type P[A] = Parsec[T, A]})#P] =
-    new Monad[({type P[A] = Parsec[T, A]})#P] {
-      override def pure[A](element: A): Parsec[T, A] = Return(element)
+    implicit def mkMonad[T]: Monad[({type P[A] = Parsec[T, A]})#P] =
+      new Monad[({type P[A] = Parsec[T, A]})#P] {
+        override def pure[A](element: A): Parsec[T, A] = Return(element)
 
-      override def fmap[A, B](m: Parsec[T, A], f: A => B): Parsec[T, B] = m.ask(_).map(f)
+        override def fmap[A, B](m: Parsec[T, A], f: A => B): Parsec[T, B] = m.ask(_).map(f)
 
-      override def flatMap[A, B](m: Parsec[T, A], f: A => Parsec[T, B]): Parsec[T, B] = state => for {
-        a <- m.ask(state)
-        b <- f(a).ask(state)
-      } yield b
-    }
-
+        override def flatMap[A, B](m: Parsec[T, A], f: A => Parsec[T, B]): Parsec[T, B] = state => for {
+          a <- m.ask(state)
+          b <- f(a).ask(state)
+        } yield b
+      }
+  }
 }
 

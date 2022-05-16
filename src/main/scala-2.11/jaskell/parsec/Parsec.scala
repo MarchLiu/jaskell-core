@@ -70,7 +70,7 @@ trait Parsec[E, +T] {
       b <- p(s)
     } yield f(a, b))
 
-  def <*> [B](f: T => B): Parsec[E, B] = Parsec((s: State[E]) =>
+  def <*>[B](f: T => B): Parsec[E, B] = Parsec((s: State[E]) =>
     for {
       a <- self(s)
     } yield f(a))
@@ -78,7 +78,9 @@ trait Parsec[E, +T] {
   def *>[B](mb: Parsec[E, B]): Parsec[E, B] = (for {
     _ <- self
     re <- mb
-  } yield {re})
+  } yield {
+    re
+  })
 
   def <*[_](mb: Parsec[E, _]): Parsec[E, T] = for {
     re <- self
@@ -95,25 +97,27 @@ trait Parsec[E, +T] {
 }
 
 object Parsec {
-  def apply[E, T](parser: State[E] => Try[T]): Parsec[E, T] = new Parsec[E, T]{
+  def apply[E, T](parser: State[E] => Try[T]): Parsec[E, T] = new Parsec[E, T] {
     override def apply(s: State[E]): Try[T] = parser(s)
   }
 
-  implicit def toParsec[E, T](parser: State[E] => Try[T]): Parsec[E, T] = Parsec(parser)
+  object Implicits {
 
-  implicit def toFlatMapper[E, T, O](binder: Binder[E, T, O]): (T) => Parsec[E, O] = binder.apply
+    implicit def toParsec[E, T](parser: State[E] => Try[T]): Parsec[E, T] = Parsec(parser)
 
-  implicit def mkMonad: Monad[({type P[A] = Parsec[Char, A]})#P] =
-    new Monad[({type P[A] = Parsec[Char, A]})#P] {
-      override def pure[A](element: A): Parsec[Char, A] = Return(element)
+    implicit def toFlatMapper[E, T, O](binder: Binder[E, T, O]): (T) => Parsec[E, O] = binder.apply
 
-      override def fmap[A, B](m: Parsec[Char, A], f: A => B): Parsec[Char, B] = Parsec((s:State[Char]) => m(s).map(f))
+    implicit def mkMonad: Monad[({type P[A] = Parsec[Char, A]})#P] =
+      new Monad[({type P[A] = Parsec[Char, A]})#P] {
+        override def pure[A](element: A): Parsec[Char, A] = Return(element)
 
-      override def flatMap[A, B](m: Parsec[Char, A], f: A => Parsec[Char, B]): Parsec[Char, B] = Parsec(state => for {
-        a <- m(state)
-        b <- f(a)(state)
-      } yield b)
-    }
+        override def fmap[A, B](m: Parsec[Char, A], f: A => B): Parsec[Char, B] = Parsec((s: State[Char]) => m(s).map(f))
 
+        override def flatMap[A, B](m: Parsec[Char, A], f: A => Parsec[Char, B]): Parsec[Char, B] = Parsec(state => for {
+          a <- m(state)
+          b <- f(a)(state)
+        } yield b)
+      }
+  }
 }
 

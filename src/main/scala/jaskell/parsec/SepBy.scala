@@ -1,6 +1,6 @@
 package jaskell.parsec
 
-import jaskell.Monad.toMonad
+import jaskell.parsec.Parsec.Implicits._
 import scala.collection.mutable
 import scala.util.{Failure, Success, Try}
 

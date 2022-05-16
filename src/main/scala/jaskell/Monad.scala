@@ -28,7 +28,9 @@ trait Monad[M[_]] {
 
 object Monad {
   def apply[M[_]](implicit instance: Monad[M]): Monad[M] = instance
+
   def apply[M[_]](implicit creator: () => Monad[M]): Monad[M] = creator.apply()
+  import Implicits._
 
   abstract class MonadOps[A, M[_]](implicit I: Monad[M]) {
     def self: M[A]
@@ -62,41 +64,44 @@ object Monad {
 
   }
 
-  implicit def toMonad[A, M[_]](target: M[A])(implicit I: Monad[M]): MonadOps[A, M] =
-    new MonadOps[A, M]() {
-      override def self: M[A] = target
+
+  object Implicits {
+    implicit def toMonad[A, M[_]](target: M[A])(implicit I: Monad[M]): MonadOps[A, M] =
+      new MonadOps[A, M]() {
+        override def self: M[A] = target
+      }
+
+    implicit val listMonad: Monad[List] = new Monad[List] {
+      override def pure[A](element: A): List[A] = List(element)
+
+      override def fmap[A, B](m: List[A], f: A => B): List[B] = m.map(f)
+
+      override def flatMap[A, B](m: List[A], f: A => List[B]): List[B] = m.flatMap(f)
     }
 
-  implicit val listMonad: Monad[List] = new Monad[List] {
-    override def pure[A](element: A): List[A] = List(element)
 
-    override def fmap[A, B](m: List[A], f: A => B): List[B] = m.map(f)
+    implicit val seqMonad: Monad[Seq] = new Monad[Seq] {
+      override def pure[A](element: A): Seq[A] = Seq(element)
 
-    override def flatMap[A, B](m: List[A], f: A => List[B]): List[B] = m.flatMap(f)
-  }
+      override def fmap[A, B](m: Seq[A], f: A => B): Seq[B] = m.map(f)
 
+      override def flatMap[A, B](m: Seq[A], f: A => Seq[B]): Seq[B] = m.flatMap(f)
+    }
 
-  implicit val seqMonad: Monad[Seq] = new Monad[Seq] {
-    override def pure[A](element: A): Seq[A] = Seq(element)
+    implicit val tryMonad: Monad[Try] = new Monad[Try] {
+      override def pure[A](element: A): Try[A] = Success(element)
 
-    override def fmap[A, B](m: Seq[A], f: A => B): Seq[B] = m.map(f)
+      override def fmap[A, B](m: Try[A], f: A => B): Try[B] = m.map(f)
 
-    override def flatMap[A, B](m: Seq[A], f: A => Seq[B]): Seq[B] = m.flatMap(f)
-  }
+      override def flatMap[A, B](m: Try[A], f: A => Try[B]): Try[B] = m.flatMap(f)
+    }
 
-  implicit val tryMonad: Monad[Try] = new Monad[Try] {
-    override def pure[A](element: A): Try[A] = Success(element)
+    implicit def toMonad(implicit ec: ExecutionContext): Monad[Future] = new Monad[Future] {
+      override def pure[A](element: A): Future[A] = Future.successful(element)
 
-    override def fmap[A, B](m: Try[A], f: A => B): Try[B] = m.map(f)
+      override def fmap[A, B](m: Future[A], f: A => B): Future[B] = m.map(f)
 
-    override def flatMap[A, B](m: Try[A], f: A => Try[B]): Try[B] = m.flatMap(f)
-  }
-
-  implicit def toMonad(implicit ec: ExecutionContext): Monad[Future] = new Monad[Future] {
-    override def pure[A](element: A): Future[A] = Future.successful(element)
-
-    override def fmap[A, B](m: Future[A], f: A => B): Future[B] = m.map(f)
-
-    override def flatMap[A, B](m: Future[A], f: A => Future[B]): Future[B] = m.flatMap(f)
+      override def flatMap[A, B](m: Future[A], f: A => Future[B]): Future[B] = m.flatMap(f)
+    }
   }
 }

@@ -1,12 +1,13 @@
 package jaskell.batteries.cstyle
 
-import jaskell.Monad.toMonad
+import jaskell.Monad.Implicits._
 import jaskell.parsec.Combinator.many
+import jaskell.parsec.Parsec.Implicits._
+import jaskell.parsec.Txt.{ch, mkString}
 import jaskell.parsec.{Parsec, State}
-import jaskell.parsec.Txt.{ch, mkString, nch}
 
 import scala.language.implicitConversions
-import scala.util.{Failure, Success, Try}
+import scala.util.Success
 
 /**
  * TODO

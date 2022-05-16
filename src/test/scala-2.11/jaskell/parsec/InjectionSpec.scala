@@ -1,6 +1,6 @@
 package jaskell.parsec
 
-import jaskell.Monad.toMonad
+import jaskell.Monad.Implicits._
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
@@ -19,12 +19,13 @@ class InjectionSpec extends AnyFlatSpec with Matchers {
   import jaskell.parsec.Atom.{one, eof}
   import jaskell.parsec.Combinator._
   import jaskell.parsec.Txt._
-  import jaskell.parsec.Parsec._
+  import jaskell.parsec.Parsec.Implicits._
+  import jaskell.Monad.Implicits._
 
 
   implicit def toParsec[E, T, P <: Parsec[E, T]](parsec: P): Parsec[E, T] = parsec.asInstanceOf[Parsec[E, T]]
 
-  val escapeChar: Parsec[Char, Char] = attempt(ch('\\') >> ((s: State[Char]) => {
+  val escapeChar: Parsec[Char, Char] = attempt(ch('\\') >> Parsec((s: State[Char]) => {
     s.next() flatMap {
       case 't' => Success('\t')
       case '\'' => Success('\'')
@@ -42,9 +43,14 @@ class InjectionSpec extends AnyFlatSpec with Matchers {
   val noString: Parsec[Char, String] = many1(nch('\'')) >>= mkString
   val content: Parsec[Char, String] = attempt(noString) <|> contentString
 
-  val parser: Parsec[Char, String] = many(notEof >> content) >>= ((value: Seq[String]) => (s: State[Char]) => for {
-      _ <- eof ? s
-    } yield value.mkString)
+  val parser: Parsec[Char, String] =
+    many(notEof >> content) >>= new Binder[Char, Seq[String], String] {
+      override def apply(value: Seq[String]): Parsec[Char, String] = Parsec { (s: State[Char]) =>
+        for {
+          _ <- eof ? s
+        } yield value.mkString
+      }
+    }
 
 
   "Simple" should "match some regular content without string" in {

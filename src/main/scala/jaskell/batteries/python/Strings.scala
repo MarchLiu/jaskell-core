@@ -1,11 +1,11 @@
 package jaskell.batteries.python
 
-import jaskell.Monad.toMonad
-import jaskell.parsec.Combinator.{BuiltIn, attempt, many}
-import jaskell.parsec.{Parsec, State}
+import jaskell.Monad.Implicits._
+import jaskell.parsec.Combinator.{BuiltIn, many}
 import jaskell.parsec.Txt.{ch, chIn, text}
+import jaskell.parsec.{Parsec, State}
 
-import scala.util.{Failure, Success, Try}
+import scala.util.Success
 
 /**
  * TODO
@@ -15,6 +15,8 @@ import scala.util.{Failure, Success, Try}
  * @since 2022/02/16 12:18
  */
 object Strings {
+  import jaskell.parsec.Parsec.Implicits._
+
   def startQuote: Parsec[Char, Char] = ch('f').opt *> chIn("\"'")
 
   def startTriQuote: Parsec[Char, String] = ch('f').opt *> (text("\"\"\"") <|> text("'''"))

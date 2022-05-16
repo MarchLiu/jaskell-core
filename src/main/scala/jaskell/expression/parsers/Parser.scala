@@ -1,7 +1,7 @@
 package jaskell.expression.parsers
 
 import jaskell.expression.Expression
-import jaskell.parsec.{Ahead, Attempt, Ch, Eof, Parsec, SkipWhitespaces, State}
+import jaskell.parsec._
 
 import scala.util.{Failure, Success, Try}
 
@@ -14,9 +14,10 @@ import scala.util.{Failure, Success, Try}
  */
 class Parser extends Parsec[Char, Expression] {
 
-  import jaskell.parsec.Txt.{skipWhiteSpaces, ch}
-  import jaskell.parsec.Combinator.{attempt, ahead}
   import jaskell.parsec.Atom.eof
+  import jaskell.parsec.Combinator.{ahead, attempt}
+  import jaskell.parsec.Txt.{ch, skipWhiteSpaces}
+  import jaskell.parsec.Parsec.Implicits._
 
   val rq: Attempt[Char, Char] = attempt(ch(')'))
   val skips: SkipWhitespaces = skipWhiteSpaces

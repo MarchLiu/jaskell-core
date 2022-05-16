@@ -9,6 +9,7 @@ import scala.util.Try
  * @version 1.0.0
  */
 class EndBy[E, T](val parser: Parsec[E, T], val sep: Parsec[E, _]) extends Parsec[E, Seq[T]] {
+  import jaskell.parsec.Parsec.Implicits._
   val parsec:Parsec[E, Seq[T]] = new Many((s: State[E]) => {
     for {
       re <- parser ? s

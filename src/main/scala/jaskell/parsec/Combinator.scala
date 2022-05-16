@@ -1,6 +1,5 @@
 package jaskell.parsec
 
-import jaskell.Monad.toMonad
 
 /**
  * Parsec Combinators
@@ -9,6 +8,9 @@ import jaskell.Monad.toMonad
  * @version 1.0.0
  */
 object Combinator {
+  import jaskell.Monad.Implicits._
+  import jaskell.parsec.Parsec.Implicits._
+
   def attempt[E, T](parser: Parsec[E, T]): Attempt[E, T] = {
     new Attempt[E, T](parser)
   }

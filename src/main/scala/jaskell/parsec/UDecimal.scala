@@ -9,6 +9,8 @@ import scala.util.{Failure, Success, Try}
  * @version 1.0.0
  */
 class UDecimal extends Parsec[Char, String] {
+  import jaskell.parsec.Parsec.Implicits._
+
   val uint = new jaskell.parsec.UInt()
   val dot: Attempt[Char, Char] = Attempt(Ch('.'))
   val tail: Parsec[Char, String] = (s: State[Char]) => for {

@@ -3,7 +3,7 @@ package jaskell.parsec
 import scala.collection.mutable
 import scala.util.{Failure, Success, Try}
 import scala.util.control.Breaks._
-import jaskell.Monad.toMonad
+import jaskell.parsec.Parsec.Implicits._
 
 /**
  * SepEndBy1 p sep parses one or more occurrences of p, separated and optionally ended by sep.

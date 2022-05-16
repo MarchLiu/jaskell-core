@@ -1,6 +1,5 @@
 package jaskell.expression.parsers
 
-import jaskell.Monad.toMonad
 import jaskell.expression.{Divide, Expression}
 import jaskell.parsec.{Parsec, SkipWhitespaces, State}
 
@@ -13,7 +12,8 @@ import scala.util.Try
  * @version 1.0.0
  */
 class D(val prev: Expression) extends Parsec[Char, Expression] {
-
+  import jaskell.Monad.Implicits._
+  import jaskell.parsec.Parsec.Implicits._
   import jaskell.parsec.Txt.{ch, skipWhiteSpaces}
 
   val skips: SkipWhitespaces = skipWhiteSpaces
