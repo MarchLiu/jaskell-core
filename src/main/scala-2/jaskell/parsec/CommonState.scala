@@ -1,7 +1,6 @@
 package jaskell.parsec
 
 import java.io.EOFException
-
 import scala.util.{Failure, Success, Try}
 
 /**
@@ -51,6 +50,3 @@ trait CommonState[T] extends State[T] {
     if (this.tran == tran) this.tran = -1
   }
 }
-
-
-

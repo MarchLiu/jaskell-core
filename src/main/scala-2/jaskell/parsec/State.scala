@@ -1,6 +1,6 @@
 package jaskell.parsec
 
-import scala.util.{Try, Failure}
+import scala.util.{Failure, Try}
 
 /**
  * TODO

@@ -8,15 +8,19 @@ package jaskell.parsec
  */
 object Txt {
   def ch(value: Char): Ch = Ch(value)
+
   def ch(value: Char, caseSensitive: Boolean): Ch = Ch(value, caseSensitive)
 
   def nch(value: Char): NCh = NCh(value)
+
   def nch(value: Char, caseSensitive: Boolean): NCh = NCh(value, caseSensitive)
 
   def chIn(data: String): ChIn = ChIn(data)
+
   def chIn(data: String, caseSensitive: Boolean): ChIn = ChIn(data, caseSensitive)
 
   def chNone(data: String): ChNone = ChNone(data)
+
   def chNone(data: String, caseSensitive: Boolean): ChNone = ChNone(data, caseSensitive)
 
   def crlf: Crlf = new Crlf
@@ -50,13 +54,17 @@ object Txt {
   def skipWhiteSpaces: SkipWhitespaces = new SkipWhitespaces
 
   def text(value: String): Text = Text(value)
+
   def text(value: String, caseSensitive: Boolean): Text = Text(value, caseSensitive)
+
   def chars(chs: String, caseSensitive: Boolean = true): Chars = Chars(chs, caseSensitive)
 
   def mkString: Binder[Char, Seq[Char], String] = new MkString
 
-  implicit def stringToText(content: String) : Parsec[Char, String] = Text(content)
-  implicit def charToCh(ch: Char) : Parsec[Char, Char] = Ch(ch)
-  implicit def stringToState(content: String) : TxtState = TxtState(content)
+  implicit def stringToText(content: String): Parsec[Char, String] = Text(content)
+
+  implicit def charToCh(ch: Char): Parsec[Char, Char] = Ch(ch)
+
+  implicit def stringToState(content: String): TxtState = TxtState(content)
 
 }

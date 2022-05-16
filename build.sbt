@@ -4,9 +4,9 @@ lazy val scala213 = "2.13.6"
 lazy val scala212 = "2.12.15"
 lazy val scala211 = "2.11.12"
 lazy val scala312 = "3.1.2"
-lazy val supportedScalaVersions = List(scala213, scala212, scala211, scala312)
+lazy val supportedScalaVersions = List(scala213, scala212, scala211)
 
-version := "0.7.4"
+version := "0.7.5"
 scalaVersion := scala213
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.12" % "test"

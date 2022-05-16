@@ -1,4 +1,4 @@
-package jaskell
+package jasekll
 
 import org.scalatest.flatspec.AsyncFlatSpec
 import org.scalatest.matchers.should.Matchers

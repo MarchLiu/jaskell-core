@@ -19,7 +19,7 @@ class A(val prev: Expression) extends Parsec[Char, Expression] {
   import jaskell.parsec.Txt.ch
 
   val skips: SkipWhitespaces = skipWhiteSpaces
-  val op: Parsec[Char, Unit] = skips >> ch('+') >> skips
+  val op: Parsec[Char, Unit] = skips *> ch('+') *> skips
 
   lazy val next = new Parser
 
