@@ -59,7 +59,7 @@ object Combinator {
     new Between[E, T](open, close, parser)
   }
 
-  def chars(str: String): Parsec[Char, String] = Chars(str)
+  def chars(str: String): Parsec[Char, String] = CharsIn(str)
 
   implicit class BuiltIn[E, T](p: Parsec[E, T]) {
     def attempt: Parsec[E, T] = Attempt(p)

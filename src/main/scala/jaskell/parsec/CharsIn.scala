@@ -10,7 +10,7 @@ import scala.util.Try
  * @version 1.0.0
  * @since 2022/05/06 00:59
  */
-case class Chars(elements: String, caseSensitive: Boolean=true) extends Parsec[Char, String] {
+case class CharsIn(elements: String, caseSensitive: Boolean=true) extends Parsec[Char, String] {
   import jaskell.Monad.Implicits._
   import jaskell.parsec.Parsec.Implicits._
 

@@ -10,11 +10,11 @@ import org.scalatest.matchers.should.Matchers
  * @version 1.0.0
  * @since 2020/05/12 22:48
  */
-class CharsSpec extends AnyFlatSpec with Matchers {
+class CharsInSpec extends AnyFlatSpec with Matchers {
   "Simple" should "Run a simple test" in {
     val state = State("23413214")
 
-    val parser = Chars("1234567890")
+    val parser = CharsIn("1234567890")
 
     val re = parser ! state
 
@@ -24,7 +24,7 @@ class CharsSpec extends AnyFlatSpec with Matchers {
   "Part" should "Run a match part" in {
     val state = State("234234abdef2342334")
 
-    val parser = Chars("1234567890")
+    val parser = CharsIn("1234567890")
 
     val re = parser ! state
 

@@ -57,7 +57,7 @@ object Txt {
 
   def text(value: String, caseSensitive: Boolean): Text = Text(value, caseSensitive)
 
-  def chars(chs: String, caseSensitive: Boolean = true): Chars = Chars(chs, caseSensitive)
+  def chars(chs: String, caseSensitive: Boolean = true): CharsIn = CharsIn(chs, caseSensitive)
 
   def mkString: Binder[Char, Seq[Char], String] = new MkString
 

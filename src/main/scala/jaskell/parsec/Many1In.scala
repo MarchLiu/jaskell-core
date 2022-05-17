@@ -9,7 +9,7 @@ import scala.util.Try
  * @version 1.0.0
  * @since 2022/05/06 00:47
  */
-case class WhileIn[E](toggle: Set[E]) extends Parsec[E, Seq[E]]{
-  val parser: Parsec[E, Seq[E]] = Many(OneOf(toggle))
+case class Many1In[E](toggle: Set[E]) extends Parsec[E, Seq[E]]{
+  val parser: Parsec[E, Seq[E]] = Many1(OneOf(toggle))
   override def apply(s: State[E]): Try[Seq[E]] = parser(s)
 }

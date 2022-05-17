@@ -18,9 +18,9 @@ class JoinSpec extends AnyFlatSpec with Matchers {
 
   private val url: String = "jdbc:sqlite::memory:"
   private val table: String = "test"
-  private val ist: Statement = insert.into(n("test"))(c("pid"), c("content"))
+  private val ist: Statement = insert.into(n(table))(c("pid"), c("content"))
     .values(p[Int]("pid"), p[String]("content"))
-
+  Class.forName("org.sqlite.JDBC")
   val conn: Connection = DriverManager.getConnection(url)
 
   conn.prepareStatement(
