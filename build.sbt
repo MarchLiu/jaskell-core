@@ -1,6 +1,6 @@
 name := "jaskell-core"
 
-lazy val scala213 = "2.13.6"
+lazy val scala213 = "2.13.8"
 lazy val scala212 = "2.12.15"
 lazy val scala211 = "2.11.12"
 lazy val scala312 = "3.1.2"
@@ -9,8 +9,8 @@ lazy val supportedScalaVersions = List(scala213, scala212, scala211)
 version := "0.7.5"
 scalaVersion := scala213
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.12" % "test"
-libraryDependencies += "org.xerial" % "sqlite-jdbc" % "3.36.0.3" % "test"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.14" % "test"
+libraryDependencies += "org.xerial" % "sqlite-jdbc" % "3.40.0.0" % "test"
 
 crossScalaVersions := supportedScalaVersions
 
@@ -55,13 +55,13 @@ ThisBuild / licenses := List("MIT" -> new URL("https://github.com/MarchLiu/jaske
 ThisBuild / homepage := Some(url("https://github.com/MarchLiu/jaskell-core"))
 
 // Remove all additional repository other than Maven Central from POM
-ThisBuild / pomIncludeRepository := { _ => false }
+// ThisBuild / pomIncludeRepository := { _ => false }
 ThisBuild / publishTo := {
   val nexus = "https://oss.sonatype.org/"
   if (isSnapshot.value) Some("snapshots" at nexus + "content/repositories/snapshots")
   else Some("releases" at nexus + "service/local/staging/deploy/maven2")
 }
-ThisBuild / publishMavenStyle := true
+// ThisBuild / publishMavenStyle := true
 
 val appSettings = Seq(
   scalacOptions := scalacOptionsVersion(scalaVersion.value)
