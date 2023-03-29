@@ -1,4 +1,4 @@
-package jaskell.utils.croupier
+package jaskell.croupier
 
 import scala.util.Random
 
@@ -21,7 +21,7 @@ class Ranked[T](ranker: Ranker[T], val random: Random = new Random()) extends Po
     val steps: Seq[Double] = cards
       .map(ranker.rank)
       .foldLeft(Seq[Double](0)) { (result: Seq[Double], r: Double) =>
-        result.appended(r + result.last)
+        result :+ (r + result.last)
       }
     val top = steps.last
     val score = random.nextDouble() * top

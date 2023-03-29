@@ -1,4 +1,4 @@
-package jaskell.utils.croupier
+package jaskell.croupier
 
 import scala.util.Random
 
@@ -21,7 +21,7 @@ class Scaled[T](scale: Scale[T], val random: Random = new Random()) extends Poke
     val steps: Seq[Int] = cards
       .map(scale.weight)
       .foldLeft(Seq[Int](0)) { (result: Seq[Int], r: Int) =>
-        result.appended(result.last + r)
+        result :+ (result.last + r)
       }
     val top = steps.last
     val score = random.nextInt(top)

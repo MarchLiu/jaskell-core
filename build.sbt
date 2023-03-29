@@ -53,6 +53,7 @@ ThisBuild / developers := List(
 ThisBuild / description := "Jaskell Core components Library, written by scala"
 ThisBuild / licenses := List("MIT" -> new URL("https://github.com/MarchLiu/jaskell-core/blob/master/LICENSE"))
 ThisBuild / homepage := Some(url("https://github.com/MarchLiu/jaskell-core"))
+ThisBuild / versionScheme := Some("early-semver")
 
 // Remove all additional repository other than Maven Central from POM
 // ThisBuild / pomIncludeRepository := { _ => false }

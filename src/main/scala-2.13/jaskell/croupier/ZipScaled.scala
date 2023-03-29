@@ -1,4 +1,4 @@
-package jaskell.utils.croupier
+package jaskell.croupier
 
 import scala.collection.mutable
 import scala.util.Random

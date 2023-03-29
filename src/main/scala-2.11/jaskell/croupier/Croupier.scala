@@ -1,4 +1,4 @@
-package jaskell.utils.croupier
+package jaskell.croupier
 
 import scala.annotation.tailrec
 import scala.collection.mutable
@@ -51,7 +51,7 @@ class Croupier[T](val poker: Poker[T]) {
       }
       randDraw(seq) match {
         case (Some(element), rest: Seq[T]) =>
-          helper(data.appended(element), rest, size - 1)
+          helper(data :+ element, rest, size - 1)
         case (None, _) =>
           (data, seq)
       }

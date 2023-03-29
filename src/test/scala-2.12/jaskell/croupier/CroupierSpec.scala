@@ -1,6 +1,5 @@
-package jaskell.utils
+package jaskell.croupier
 
-import jaskell.utils.croupier.Croupier
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
@@ -65,7 +64,7 @@ class CroupierSpec extends AnyFlatSpec with Matchers {
   }
 
   "Deal" should "draw more while more near front and left rest" in {
-    val buffer = Seq.from(0 to 999)
+    val buffer:Seq[Int] = 0 until 1000
     val croupier = Croupier.damping[Int]
     val counter: mutable.Map[Int, Int] = new mutable.TreeMap[Int, Int]()
     for (_ <- 0 until 10) {
