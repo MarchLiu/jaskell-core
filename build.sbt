@@ -6,11 +6,11 @@ lazy val scala211 = "2.11.12"
 lazy val scala312 = "3.1.2"
 lazy val supportedScalaVersions = List(scala213, scala212, scala211)
 
-version := "0.7.5"
+version := "0.8.0"
 scalaVersion := scala213
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.14" % "test"
-libraryDependencies += "org.xerial" % "sqlite-jdbc" % "3.40.0.0" % "test"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.15" % "test"
+libraryDependencies += "org.xerial" % "sqlite-jdbc" % "3.40.1.0" % "test"
 
 crossScalaVersions := supportedScalaVersions
 
