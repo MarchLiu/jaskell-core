@@ -86,6 +86,10 @@ class CroupierSpec extends AnyFlatSpec with Matchers {
     val buffer: Seq[(Int, Int)] = (0 until 10).map(idx => (idx, random.nextInt(10)))
 
     val counter = new mutable.TreeMap[Int, (Int, Int)]()
+    for (pair <- buffer) {
+      counter.put(pair._1, (pair._2, 0))
+    }
+
     val croupier: Croupier[(Int, Int)] = Croupier.byWeight(_._2)
     for (_ <- 0 until 1000) {
       val item = croupier.randSelect(buffer)
@@ -96,6 +100,53 @@ class CroupierSpec extends AnyFlatSpec with Matchers {
       }
     }
     for((idx, (weight, count)) <- counter) {
+      println(s"weight croupier rand select item[$idx] weight $weight times $count")
+    }
+  }
+
+  it should "also work in lite scale as scale" in {
+    val random = new Random()
+    val buffer: Seq[(Int, Int)] = (0 until 10).map(idx => (idx, random.nextInt(10)))
+
+    val counter = new mutable.TreeMap[Int, (Int, Int)]()
+    for (pair <- buffer) {
+      counter.put(pair._1, (pair._2, 0))
+    }
+
+    val croupier: Croupier[(Int, Int)] = Croupier.byWeightLite(_._2)
+    for (_ <- 0 until 1000) {
+      val item = croupier.randSelect(buffer)
+      item should not be (None)
+      item foreach { value =>
+        val old = counter.getOrElse(value._1, (value._2, 0))
+        counter.put(value._1, old.copy(_2 = old._2 + 1))
+      }
+    }
+    for ((idx, (weight, count)) <- counter) {
+      println(s"weight croupier rand select item[$idx] weight $weight times $count")
+    }
+  }
+
+  it should "also work if binary scale as scale" in {
+    val random = new Random()
+    val buffer: Seq[(Int, Int)] = (0 until 10).map(idx => (idx, random.nextInt(10)))
+    println(buffer)
+
+    val counter = new mutable.TreeMap[Int, (Int, Int)]()
+    for (pair <- buffer) {
+      counter.put(pair._1, (pair._2, 0))
+    }
+
+    val croupier: Croupier[(Int, Int)] = Croupier.byWeightBinary(_._2)
+    for (_ <- 0 until 1000) {
+      val item = croupier.randSelect(buffer)
+      item should not be (None)
+      item foreach { value =>
+        val old = counter.getOrElse(value._1, (value._2, 0))
+        counter.put(value._1, old.copy(_2 = old._2 + 1))
+      }
+    }
+    for ((idx, (weight, count)) <- counter) {
       println(s"weight croupier rand select item[$idx] weight $weight times $count")
     }
   }

@@ -85,7 +85,19 @@ object Croupier {
 
   def byWeight[T](scale: Scale[T], random: Random) = new Croupier[T](new Scaled[T](scale, random))
 
-  def byWeight[T](scale: Scale[T], seed: Long) = new Croupier[T](new Scaled[T](scale, new Random(seed)))
+  def byWeight[T](scale: Scale[T], seed: Long) = new Croupier[T](new LiteScaled[T](scale, new Random(seed)))
+
+  def byWeightLite[T](scale: Scale[T]) = new Croupier[T](new LiteScaled[T](scale, new Random()))
+
+  def byWeightLite[T](scale: Scale[T], random: Random) = new Croupier[T](new LiteScaled[T](scale, random))
+
+  def byWeightLite[T](scale: Scale[T], seed: Long) = new Croupier[T](new Scaled[T](scale, new Random(seed)))
+
+  def byWeightBinary[T](scale: Scale[T]) = new Croupier[T](new BinaryScaled[T](scale, new Random()))
+
+  def byWeightBinary[T](scale: Scale[T], random: Random) = new Croupier[T](new BinaryScaled[T](scale, random))
+
+  def byWeightBinary[T](scale: Scale[T], seed: Long) = new Croupier[T](new BinaryScaled[T](scale, new Random(seed)))
 
   def byRank[T](ranker: Ranker[T]) = new Croupier[T](new Ranked[T](ranker, new Random()))
 

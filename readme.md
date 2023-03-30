@@ -209,3 +209,7 @@ maven_jar(
 ### 0.8.0
 
  - add croupier type for custom random select algo
+
+### 0.8.1
+
+ - add lite scaled algo

@@ -95,7 +95,7 @@ class CroupierSpec extends AnyFlatSpec with Matchers {
         counter.put(value._1, old.copy(_2 = old._2 + 1))
       }
     }
-    for((idx, (weight, count)) <- counter) {
+    for ((idx, (weight, count)) <- counter) {
       println(s"weight croupier rand select item[$idx] weight $weight times $count")
     }
   }
@@ -104,7 +104,8 @@ class CroupierSpec extends AnyFlatSpec with Matchers {
     val random = new Random()
     val buffer: Seq[(Int, Double)] = (0 until 10).map(idx => (idx, random.nextDouble() * 10))
 
-    val counter = new mutable.TreeMap[Int, (Double, Int)]()
+    val counter = mutable.TreeMap.from(for(pair <- buffer) yield (pair._1, (pair._2, 0)))
+
     val croupier: Croupier[(Int, Double)] = Croupier.byRank(_._2)
     for (_ <- 0 until 1000) {
       val item = croupier.randSelect(buffer)
@@ -116,6 +117,48 @@ class CroupierSpec extends AnyFlatSpec with Matchers {
     }
     for ((idx, (weight, count)) <- counter) {
       println(s"weight croupier rand select item[$idx] rank $weight times $count")
+    }
+  }
+
+
+  it should "also work if lite scale as scale" in {
+    val random = new Random()
+    val buffer: Seq[(Int, Int)] = (0 until 10).map(idx => (idx, random.nextInt(10)))
+
+    val counter = mutable.TreeMap.from(for(pair <- buffer) yield (pair._1, (pair._2, 0)))
+
+    val croupier: Croupier[(Int, Int)] = Croupier.byWeightLite(_._2)
+    for (_ <- 0 until 1000) {
+      val item = croupier.randSelect(buffer)
+      item should not be (None)
+      item foreach { value =>
+        val old = counter.getOrElse(value._1, (value._2, 0))
+        counter.put(value._1, old.copy(_2 = old._2 + 1))
+      }
+    }
+    for ((idx, (weight, count)) <- counter) {
+      println(s"weight croupier rand select item[$idx] weight $weight times $count")
+    }
+  }
+
+  it should "also work if binary scale as scale" in {
+    val random = new Random()
+    val buffer: Seq[(Int, Int)] = (0 until 10).map(idx => (idx, random.nextInt(10)))
+    println(buffer)
+
+    val counter = mutable.TreeMap.from(for(pair <- buffer) yield (pair._1, (pair._2, 0)))
+
+    val croupier: Croupier[(Int, Int)] = Croupier.byWeightBinary(_._2)
+    for (_ <- 0 until 1000) {
+      val item = croupier.randSelect(buffer)
+      item should not be (None)
+      item foreach { value =>
+        val old = counter.getOrElse(value._1, (value._2, 0))
+        counter.put(value._1, old.copy(_2 = old._2 + 1))
+      }
+    }
+    for ((idx, (weight, count)) <- counter) {
+      println(s"weight croupier rand select item[$idx] weight $weight times $count")
     }
   }
 
