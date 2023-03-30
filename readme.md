@@ -213,3 +213,5 @@ maven_jar(
 ### 0.8.1
 
  - add lite scaled algo
+ - add binary scaled
+ - add binary rank

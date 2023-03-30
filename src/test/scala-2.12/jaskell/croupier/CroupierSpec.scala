@@ -68,7 +68,7 @@ class CroupierSpec extends AnyFlatSpec with Matchers {
     val croupier = Croupier.damping[Int]
     val counter: mutable.Map[Int, Int] = new mutable.TreeMap[Int, Int]()
     for (_ <- 0 until 10) {
-      val (items, rest) = croupier.randDeal(buffer, 10)
+      val (items, rest) = croupier.randDraw(buffer, 10)
       items.size should be(10)
       rest.size should be(990)
       items foreach { item =>
@@ -151,6 +151,25 @@ class CroupierSpec extends AnyFlatSpec with Matchers {
     }
   }
 
+  it should "rand select items by zip scale" in {
+    val random = new Random()
+    val buffer: Seq[(Int, Int)] = (0 until 100).map(idx => (idx, random.nextInt(10)))
+
+    val counter = new mutable.TreeMap[Int, (Int, Int)]()
+    val croupier: Croupier[(Int, Int)] = Croupier.byZipScaled(_._2)
+    for (_ <- 0 until 10000) {
+      val item = croupier.randSelect(buffer)
+      item should not be (None)
+      item foreach { value =>
+        val old = counter.getOrElse(value._1, (value._2, 0))
+        counter.put(value._1, old.copy(_2 = old._2 + 1))
+      }
+    }
+    for ((idx, (weight, count)) <- counter) {
+      println(s"weight croupier rand select item[$idx] weight $weight times $count")
+    }
+  }
+
   it should "rand select items by rank" in {
     val random = new Random()
     val buffer: Seq[(Int, Double)] = (0 until 10).map(idx => (idx, random.nextDouble() * 10))
@@ -170,12 +189,12 @@ class CroupierSpec extends AnyFlatSpec with Matchers {
     }
   }
 
-  it should "rand select items by zip scale" in {
+  it should "rand select items by binary rank same as rank" in {
     val random = new Random()
-    val buffer: Seq[(Int, Int)] = (0 until 100).map(idx => (idx, random.nextInt(10)))
+    val buffer: Seq[(Int, Double)] = (0 until 10).map(idx => (idx, random.nextDouble() * 10))
 
-    val counter = new mutable.TreeMap[Int, (Int, Int)]()
-    val croupier: Croupier[(Int, Int)] = Croupier.byZipScaler(_._2)
+    val counter = new mutable.TreeMap[Int, (Double, Int)]()
+    val croupier: Croupier[(Int, Double)] = Croupier.byRankBinary(_._2)
     for (_ <- 0 until 10000) {
       val item = croupier.randSelect(buffer)
       item should not be (None)
@@ -185,7 +204,7 @@ class CroupierSpec extends AnyFlatSpec with Matchers {
       }
     }
     for ((idx, (weight, count)) <- counter) {
-      println(s"weight croupier rand select item[$idx] weight $weight times $count")
+      println(s"weight croupier rand select item[$idx] rank $weight times $count")
     }
   }
 }

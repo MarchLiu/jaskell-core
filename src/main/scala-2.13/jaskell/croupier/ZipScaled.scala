@@ -28,7 +28,11 @@ class ZipScaled[T](scale: Scale[T], val random: Random = new Random()) extends P
       val w = steps(position)
       group.put(w, group.getOrElse(w, Seq()).appended(position))
     }
-    val pairs: Seq[(Int, Int)] = (for ((weight, positions) <- group) yield (weight, weight * positions.size)).toSeq
+    val pairs: Seq[(Int, Int)] =
+      (for ((weight, positions) <- group)
+        yield (weight, weight * positions.size)
+        ).toSeq
+
     scaled.select(pairs)
       .map(pairs)
       .map({ weight =>
