@@ -90,7 +90,7 @@ class CroupierSpec extends AnyFlatSpec with Matchers {
     val croupier: Croupier[(Int, Int)] = Croupier.byWeight(new Scale[(Int, Int)] {
       override def weight(item: (Int, Int)): Int = item._2
     })
-    for (_ <- 0 until 1000) {
+    for (_ <- 0 until 10000) {
       val item = croupier.randSelect(buffer)
       item should not be (None)
       item foreach { value =>
@@ -112,7 +112,7 @@ class CroupierSpec extends AnyFlatSpec with Matchers {
       override def weight(item: (Int, Int)): Int = item._2
     }
     val croupier: Croupier[(Int, Int)] = Croupier.byWeightLite(scale)
-    for (_ <- 0 until 1000) {
+    for (_ <- 0 until 10000) {
       val item = croupier.randSelect(buffer)
       item should not be (None)
       item foreach { value =>
@@ -141,7 +141,7 @@ class CroupierSpec extends AnyFlatSpec with Matchers {
     }
 
     val croupier: Croupier[(Int, Int)] = Croupier.byWeightBinary(scale)
-    for (_ <- 0 until 1000) {
+    for (_ <- 0 until 10000) {
       val item = croupier.randSelect(buffer)
       item should not be (None)
       item foreach { value =>
@@ -162,7 +162,7 @@ class CroupierSpec extends AnyFlatSpec with Matchers {
     val croupier: Croupier[(Int, Double)] = Croupier.byRank(new Ranker[(Int, Double)] {
       override def rank(item: (Int, Double)): Double = item._2
     })
-    for (_ <- 0 until 1000) {
+    for (_ <- 0 until 10000) {
       val item = croupier.randSelect(buffer)
       item should not be (None)
       item foreach { value =>

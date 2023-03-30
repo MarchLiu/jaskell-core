@@ -87,7 +87,7 @@ class CroupierSpec extends AnyFlatSpec with Matchers {
 
     val counter = new mutable.TreeMap[Int, (Int, Int)]()
     val croupier: Croupier[(Int, Int)] = Croupier.byWeight(_._2)
-    for (_ <- 0 until 1000) {
+    for (_ <- 0 until 10000) {
       val item = croupier.randSelect(buffer)
       item should not be (None)
       item foreach { value =>
@@ -107,7 +107,7 @@ class CroupierSpec extends AnyFlatSpec with Matchers {
     val counter = mutable.TreeMap.from(for(pair <- buffer) yield (pair._1, (pair._2, 0)))
 
     val croupier: Croupier[(Int, Double)] = Croupier.byRank(_._2)
-    for (_ <- 0 until 1000) {
+    for (_ <- 0 until 10000) {
       val item = croupier.randSelect(buffer)
       item should not be (None)
       item foreach { value =>
@@ -128,7 +128,7 @@ class CroupierSpec extends AnyFlatSpec with Matchers {
     val counter = mutable.TreeMap.from(for(pair <- buffer) yield (pair._1, (pair._2, 0)))
 
     val croupier: Croupier[(Int, Int)] = Croupier.byWeightLite(_._2)
-    for (_ <- 0 until 1000) {
+    for (_ <- 0 until 10000) {
       val item = croupier.randSelect(buffer)
       item should not be (None)
       item foreach { value =>
@@ -144,12 +144,11 @@ class CroupierSpec extends AnyFlatSpec with Matchers {
   it should "also work if binary scale as scale" in {
     val random = new Random()
     val buffer: Seq[(Int, Int)] = (0 until 10).map(idx => (idx, random.nextInt(10)))
-    println(buffer)
 
     val counter = mutable.TreeMap.from(for(pair <- buffer) yield (pair._1, (pair._2, 0)))
 
     val croupier: Croupier[(Int, Int)] = Croupier.byWeightBinary(_._2)
-    for (_ <- 0 until 1000) {
+    for (_ <- 0 until 10000) {
       val item = croupier.randSelect(buffer)
       item should not be (None)
       item foreach { value =>

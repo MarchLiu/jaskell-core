@@ -91,7 +91,7 @@ class CroupierSpec extends AnyFlatSpec with Matchers {
     }
 
     val croupier: Croupier[(Int, Int)] = Croupier.byWeight(_._2)
-    for (_ <- 0 until 1000) {
+    for (_ <- 0 until 10000) {
       val item = croupier.randSelect(buffer)
       item should not be (None)
       item foreach { value =>
@@ -114,7 +114,7 @@ class CroupierSpec extends AnyFlatSpec with Matchers {
     }
 
     val croupier: Croupier[(Int, Int)] = Croupier.byWeightLite(_._2)
-    for (_ <- 0 until 1000) {
+    for (_ <- 0 until 10000) {
       val item = croupier.randSelect(buffer)
       item should not be (None)
       item foreach { value =>
@@ -138,7 +138,7 @@ class CroupierSpec extends AnyFlatSpec with Matchers {
     }
 
     val croupier: Croupier[(Int, Int)] = Croupier.byWeightBinary(_._2)
-    for (_ <- 0 until 1000) {
+    for (_ <- 0 until 10000) {
       val item = croupier.randSelect(buffer)
       item should not be (None)
       item foreach { value =>
@@ -157,7 +157,7 @@ class CroupierSpec extends AnyFlatSpec with Matchers {
 
     val counter = new mutable.TreeMap[Int, (Double, Int)]()
     val croupier: Croupier[(Int, Double)] = Croupier.byRank(_._2)
-    for (_ <- 0 until 1000) {
+    for (_ <- 0 until 10000) {
       val item = croupier.randSelect(buffer)
       item should not be (None)
       item foreach { value =>
