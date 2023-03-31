@@ -15,52 +15,52 @@ library, a SQL helper library and a arithmetic expressions parser.
 <dependency>
   <groupId>io.github.marchliu</groupId>
   <artifactId>jaskell-core_2.13</artifactId>
-  <version>0.7.4</version>
+  <version>0.8.1</version>
 </dependency>
 ```
 
 ## Gradle
 
 ```groovy
-implementation 'io.github.marchliu:jaskell-core_2.13:0.7.4'
+implementation 'io.github.marchliu:jaskell-core_2.13:0.8.1'
 ```
 
 ## Gradle Kotlin
 
 ```
-implementation("io.github.marchliu:jaskell-core_2.13:0.7.4")
+implementation("io.github.marchliu:jaskell-core_2.13:0.8.1")
 ```
 
 ## SBT
 
 ```sbtshell
-libraryDependencies += "io.github.marchliu" % "jaskell-core_2.13" % "0.7.4"
+libraryDependencies += "io.github.marchliu" % "jaskell-core_2.13" % "0.8.1"
 ```
 
 ## Apache Ivy
 
 ```xml
-<dependency org="io.github.marchliu" name="jaskell-core_2.13" rev="0.7.4" />
+<dependency org="io.github.marchliu" name="jaskell-core_2.13" rev="0.8.1" />
 ```
 
 ## Groovy Grap
 
 ```groovy
 @Grapes(
-  @Grab(group='io.github.marchliu', module='jaskell-core_2.13', version='0.7.4')
+  @Grab(group='io.github.marchliu', module='jaskell-core_2.13', version='0.8.1')
 )
 ```
 
 ## Leiningen
 
 ```clojure
-[io.github.marchliu/jaskell-core_2.13 "0.7.4"]
+[io.github.marchliu/jaskell-core_2.13 "0.8.1"]
 ```
 
 ## Apache Bluildr
 
 ```
-'io.github.marchliu:jaskell-core_2.13:jar:0.7.4'
+'io.github.marchliu:jaskell-core_2.13:jar:0.8.1'
 ```
 
 ## Maven Central Badge
@@ -72,7 +72,7 @@ libraryDependencies += "io.github.marchliu" % "jaskell-core_2.13" % "0.7.4"
 ## PURL
 
 ```
-pkg:maven/io.github.marchliu/jaskell-core_2.13@0.7.4
+pkg:maven/io.github.marchliu/jaskell-core_2.13@0.8.1
 ```
 
 ### Bazel
@@ -80,7 +80,7 @@ pkg:maven/io.github.marchliu/jaskell-core_2.13@0.7.4
 ```
 maven_jar(
     name = "jaskell-core_2.13",
-    artifact = "io.github.marchliu:jaskell-core_2.13:0.7.4",
+    artifact = "io.github.marchliu:jaskell-core_2.13:0.8.1",
     sha1 = "b58ed93199e445d043949561fdc1fea710d60442",
 )
 ```
@@ -169,7 +169,7 @@ maven_jar(
  
  - make future monad auto create monad instance implicitly
 
-### 0.7.4
+### 0.8.1
 
  - code clean
 
@@ -196,7 +196,7 @@ maven_jar(
 
  - compatibility 2.12 and 2.13 
 
-### 0.7.4
+### 0.8.1
 
  - compatibility 2.11, 2.12 and 2.13 
 
