@@ -18,8 +18,9 @@ class Invert[T](val random: Random) extends Poker[T] {
       return Some(0)
     }
 
-    val range = Math.exp(cards.size)
-    val value = Math.log(random.nextDouble() * range)
-    Some(Math.floor(value).intValue())
+    val range = Math.log(cards.size + 1)
+    val value = Math.exp(random.nextDouble() * range)
+    val score = cards.size - value
+    Some(Math.floor(score).intValue() + 1)
   }
 }

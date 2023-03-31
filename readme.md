@@ -215,3 +215,8 @@ maven_jar(
  - add lite scaled algo
  - add binary scaled
  - add binary rank
+
+### 0.8.2
+
+ - fixed edge condition mistake in damping
+ - make invert smoothness. now it just be a negative damping

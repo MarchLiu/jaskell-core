@@ -18,8 +18,8 @@ class Damping[T](val random: Random) extends Poker[T] {
       return Some(0)
     }
 
-    val range = Math.log(cards.size)
+    val range = Math.log(cards.size + 1)
     val value = Math.exp(random.nextDouble() * range)
-    Some(Math.floor(value).intValue())
+    Some(Math.floor(value).intValue() - 1)
   }
 }

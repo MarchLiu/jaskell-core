@@ -6,7 +6,7 @@ lazy val scala211 = "2.11.12"
 lazy val scala312 = "3.1.2"
 lazy val supportedScalaVersions = List(scala213, scala212, scala211)
 
-version := "0.8.1"
+version := "0.8.2"
 scalaVersion := scala213
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.15" % "test"
