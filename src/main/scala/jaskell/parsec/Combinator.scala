@@ -23,6 +23,14 @@ object Combinator {
     new Choice[E, T](parsers)
   }
 
+  def enumerate[E, T](parsers: Parsec[E, T]*): Enumerate[E, T] = {
+    new Enumerate[E, T](parsers: _*)()
+  }
+
+  def enumerate[E, T](parsers: Parsec[E, T]*)(by: Parsec[E, _]): Enumerate[E, T] = {
+    new Enumerate[E, T](parsers: _*)(by)
+  }
+
   def many[E, T](parser: Parsec[E, T]): Parsec[E, Seq[T]] = {
     new Many[E, T](parser)
   }

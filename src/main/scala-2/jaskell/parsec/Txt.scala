@@ -59,6 +59,26 @@ object Txt {
 
   def chars(chs: String, caseSensitive: Boolean = true): CharsIn = CharsIn(chs, caseSensitive)
 
+  def enumerate(chars: String): Enumerate[Char, Char] = {
+    val enumerates = chars.map(c => Ch(c))
+    new Enumerate(enumerates: _*)()
+  }
+
+  def enumerate(chars: String, by: Char): Enumerate[Char, Char] = {
+    val enumerates = chars.map(c => Ch(c))
+    new Enumerate(enumerates: _*)(Ch(by))
+  }
+
+  def enumerate(chars: String, by: String): Enumerate[Char, Char] = {
+    val enumerates = chars.map(c => Ch(c))
+    new Enumerate(enumerates: _*)(Text(by))
+  }
+
+  def enumerate(chars: String, by: Parsec[Char, _]): Enumerate[Char, Char] = {
+    val enumerates = chars.map(c => Ch(c))
+    new Enumerate(enumerates: _*)(by)
+  }
+
   def mkString: Binder[Char, Seq[Char], String] = new MkString
 
   implicit def stringToText(content: String): Parsec[Char, String] = Text(content)

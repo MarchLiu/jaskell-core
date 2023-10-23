@@ -220,3 +220,8 @@ maven_jar(
 
  - fixed edge condition mistake in damping
  - make invert smoothness. now it just be a negative damping
+
+### 0.8.3
+
+ - add enumerate parser
+ - add enumerate utils methods in object Txt and Combinator
