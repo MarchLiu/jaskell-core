@@ -1,5 +1,7 @@
 package jaskell.parsec
 
+import scala.language.implicitConversions
+
 /**
  * Functions Helper include parsers for Text
  *
@@ -60,23 +62,23 @@ object Txt {
   def chars(chs: String, caseSensitive: Boolean = true): CharsIn = CharsIn(chs, caseSensitive)
 
   def enumerate(chars: String): Enumerate[Char, Char] = {
-    val enumerates = chars.map(c => Ch(c))
-    new Enumerate(enumerates: _*)()
+    val enumerates = chars.toCharArray.map(c => Ch(c))
+    new Enumerate(enumerates)
   }
 
   def enumerate(chars: String, by: Char): Enumerate[Char, Char] = {
-    val enumerates = chars.map(c => Ch(c))
-    new Enumerate(enumerates: _*)(Ch(by))
+    val enumerates = chars.toCharArray.map(c => Ch(c))
+    new Enumerate(enumerates, Ch(by))
   }
 
   def enumerate(chars: String, by: String): Enumerate[Char, Char] = {
-    val enumerates = chars.map(c => Ch(c))
-    new Enumerate(enumerates: _*)(Text(by))
+    val enumerates = chars.toCharArray.map(c => Ch(c))
+    new Enumerate(enumerates, Text(by))
   }
 
   def enumerate(chars: String, by: Parsec[Char, _]): Enumerate[Char, Char] = {
-    val enumerates = chars.map(c => Ch(c))
-    new Enumerate(enumerates: _*)(by)
+    val enumerates = chars.toCharArray.map(c => Ch(c))
+    new Enumerate(enumerates, by)
   }
 
   def mkString: Binder[Char, Seq[Char], String] = new MkString

@@ -13,7 +13,7 @@ import scala.util.{Failure, Success, Try}
  * @version 1.0.0
  * @since 2023/10/22 00:43
  */
-class Enumerate[E, T](val parsecs: Parsec[E, T]*)(val sep: Parsec[E, _] = Return[E, Unit](())) extends Parsec[E, Set[T]] {
+class Enumerate[E, T](val parsecs: Seq[Parsec[E, T]], val sep: Parsec[E, _] = Return[E, Unit](())) extends Parsec[E, Set[T]] {
 
   override def apply(s: State[E]): Try[Set[T]] = {
     if (parsecs.isEmpty) {
@@ -26,7 +26,7 @@ class Enumerate[E, T](val parsecs: Parsec[E, T]*)(val sep: Parsec[E, _] = Return
     }
   }
 
-  def by(sep: Parsec[E, _]): Enumerate[E, T] = new Enumerate[E, T](parsecs: _*)(sep)
+  def by(sep: Parsec[E, _]): Enumerate[E, T] = new Enumerate[E, T](parsecs, sep)
 
   @tailrec
   private def headHelper(parsers: Seq[Parsec[E, T]], s: State[E]): Try[T] = {

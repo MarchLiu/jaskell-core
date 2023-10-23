@@ -24,11 +24,11 @@ object Combinator {
   }
 
   def enumerate[E, T](parsers: Parsec[E, T]*): Enumerate[E, T] = {
-    new Enumerate[E, T](parsers: _*)()
+    new Enumerate[E, T](parsers)
   }
 
   def enumerate[E, T](parsers: Parsec[E, T]*)(by: Parsec[E, _]): Enumerate[E, T] = {
-    new Enumerate[E, T](parsers: _*)(by)
+    new Enumerate[E, T](parsers, by)
   }
 
   def many[E, T](parser: Parsec[E, T]): Parsec[E, Seq[T]] = {
